@@ -1,5 +1,6 @@
 // PowerMenu.qml
 import QtQuick
+import QtQuick.Shapes
 import Quickshell
 
 Scope {
@@ -11,53 +12,42 @@ Scope {
 
     color: "transparent"
 
-    implicitHeight: quarterCircle.height / 2
-    implicitWidth: quarterCircle.width / 2
+    implicitHeight: quarterCircle.height
+    implicitWidth: quarterCircle.width
 
     mask: Region {  
-      x: quarterCircle.x  
-      y: quarterCircle.y  
-      width: quarterCircle.width  
-      height: quarterCircle.height  
-      shape: RegionShape.Ellipse  // This might get you closer to a rounded shape  
+      x: quarterCircle.x
+      y: quarterCircle.y - quarterCircle.height
+      width: quarterCircle.width * 2
+      height: quarterCircle.height * 2
+      shape: RegionShape.Ellipse
     }
 
-    Rectangle {
+    Shape {
       id: quarterCircle
+
+      width: 315
+      height: 315
 
       anchors.right: parent.right
       anchors.top: parent.top
 
-      anchors.topMargin: -height / 2
-      anchors.rightMargin: -height / 2
-      
-      implicitHeight: 630
-      implicitWidth: implicitHeight
+      preferredRendererType: Shape.CurveRenderer
 
-      color: "#d1ddbe"
+      ShapePath {
+        fillColor: "#d1ddbe"
+        strokeColor: "transparent"
 
-      radius: height / 2
-
-      property bool open: false
-
-      ScaleAnimator {
-        id: openAnimation
-        target: quarterCircle;
-        from: 0;
-        to: 1;
-        duration: 500
-        running: true
-        easing.type: Easing.OutCubic
-      }
-
-      ScaleAnimator {
-        id: closeAnimation
-        target: quarterCircle;
-        from: 1;
-        to: 0;
-        duration: 500
-        running: false
-        easing.type: Easing.OutCubic
+        startX: quarterCircle.width
+        startY: 0
+        PathLine {x: quarterCircle.width; y: quarterCircle.height}
+        PathArc {
+          radiusX: quarterCircle.width
+          radiusY: quarterCircle.height
+          x: 0
+          y: 0
+        }
+        PathLine {x: quarterCircle.width; y: 0}
       }
     }
   }
