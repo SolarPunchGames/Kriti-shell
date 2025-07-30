@@ -15,6 +15,11 @@ AbstractButton {
     font.pointSize: button.fontSize
     font.family: "JetBrainsMono Nerd Font"
 
+    topPadding: button.textTopPadding
+    bottomPadding: button.textBottomPadding
+    leftPadding: button.textLeftPadding
+    rightPadding: button.textRightPadding
+
     horizontalAlignment: Text.AlignHCenter
     verticalAlignment: Text.AlignVCenter
 
@@ -22,6 +27,11 @@ AbstractButton {
   }
 
   property alias cursorShape: mouseArea.cursorShape
+
+  property real textTopPadding
+  property real textBottomPadding
+  property real textLeftPadding
+  property real textRightPadding
 
   HoverHandler {
       id: mouseArea

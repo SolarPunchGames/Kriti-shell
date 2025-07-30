@@ -23,6 +23,8 @@ Item {
       onWheel: (event)=> Audio.setVolume(0.5)
     }
 
+    onPressed: Quickshell.execDetached(["pavucontrol"])
+
     // onPressed: // make custom volume window
   }
 }

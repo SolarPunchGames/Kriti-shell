@@ -13,6 +13,8 @@ Item {
     fontSize: 9.5
     text: "⏻"
 
-    onPressed: command("sh", "~/.config/waybar/power-menu/Power-Menu.sh")
+    textRightPadding: 3
+
+    onPressed: Quickshell.execDetached(["sh ~/.config/waybar/power-menu/Power-Menu.sh"])
   }
 }
