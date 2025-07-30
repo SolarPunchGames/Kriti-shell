@@ -1,6 +1,7 @@
 // Bar.qml
 import QtQuick
 import Quickshell
+import "../PowerMenu/"
 
 Scope {
   Variants {
@@ -38,6 +39,7 @@ Scope {
         Separator {}
         Separator {}
       }
+      PowerMenu {}
     }
   }
 }
