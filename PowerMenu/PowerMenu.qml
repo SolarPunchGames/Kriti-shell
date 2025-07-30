@@ -4,50 +4,90 @@ import QtQuick.Shapes
 import Quickshell
 
 Scope {
-  PanelWindow {
-    anchors {
-      top: true
-      right: true
+
+  function toggleOpen() {
+    if (quarterCircle.state == "open") {
+      quarterCircle.state = ""
+    } else {
+      quarterCircle.state = "open"
     }
+  }
 
-    color: "transparent"
+  property alias powerMenuVariants: variants
+  
+  Variants {
+    id: variants
+    model: Quickshell.screens
 
-    implicitHeight: quarterCircle.height
-    implicitWidth: quarterCircle.width
+    PanelWindow {
+      id: window
 
-    mask: Region {  
-      x: quarterCircle.x
-      y: quarterCircle.y - quarterCircle.height
-      width: quarterCircle.width * 2
-      height: quarterCircle.height * 2
-      shape: RegionShape.Ellipse
-    }
+      property var modelData
+      screen: modelData
 
-    Shape {
-      id: quarterCircle
+      anchors {
+        top: true
+        right: true
+      }
 
-      width: 315
-      height: 315
+      color: "transparent"
 
-      anchors.right: parent.right
-      anchors.top: parent.top
+      implicitHeight: quarterCircle.height
+      implicitWidth: quarterCircle.width
 
-      preferredRendererType: Shape.CurveRenderer
+      mask: Region {  
+        x: quarterCircle.x
+        y: quarterCircle.y - quarterCircle.height
+        width: quarterCircle.width * 2 * quarterCircle.scale
+        height: quarterCircle.height * 2 * quarterCircle.scale
+        shape: RegionShape.Ellipse
+      }
 
-      ShapePath {
-        fillColor: "#d1ddbe"
-        strokeColor: "transparent"
+      Shape {
+        id: quarterCircle
 
-        startX: quarterCircle.width
-        startY: 0
-        PathLine {x: quarterCircle.width; y: quarterCircle.height}
-        PathArc {
-          radiusX: quarterCircle.width
-          radiusY: quarterCircle.height
-          x: 0
-          y: 0
+        width: 315
+        height: 315
+
+        anchors.right: parent.right
+        anchors.top: parent.top
+
+        preferredRendererType: Shape.CurveRenderer
+
+        ShapePath {
+          fillColor: "#d1ddbe"
+          strokeColor: "transparent"
+
+          startX: quarterCircle.width
+          startY: 0
+          PathLine {x: quarterCircle.width; y: quarterCircle.height}
+          PathArc {
+            radiusX: quarterCircle.width
+            radiusY: quarterCircle.height
+            x: 0
+            y: 0
+          }
+          PathLine {x: quarterCircle.width; y: 0}
         }
-        PathLine {x: quarterCircle.width; y: 0}
+
+        transformOrigin: Item.TopRight
+
+        scale: 1
+
+        states: [
+          State {
+            name: "open"
+            PropertyChanges {target: quarterCircle; scale: 1}
+          }
+        ]
+
+        transitions: Transition {
+          PropertyAnimation {
+            property: "scale"
+            duration: 250
+            easing.type: Easing.OutCubic
+          }
+        }
       }
     }
   }

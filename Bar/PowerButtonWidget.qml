@@ -8,6 +8,8 @@ import ".."
 Item {
   MarginWrapperManager { margin: 5 }
 
+  property var currentScreen
+
   BaseButton {
     anchors.centerIn: parent
     fontSize: 9.5
@@ -15,6 +17,23 @@ Item {
 
     textRightPadding: 3
 
-    onPressed: Quickshell.execDetached(["sh ~/.config/waybar/power-menu/Power-Menu.sh"])
+    LazyLoader {  
+      id: powerMenuLoader  
+      source: "../PowerMenu/PowerMenu.qml"  
+      loading: true 
+    }
+ 
+    onClicked: {  
+      if (powerMenuLoader.item) {          
+        // Find the variant instance that matches this screen  
+        for (var i = 0; i < powerMenuLoader.item.powerMenuVariants.instances.length; i++) {  
+          var instance = powerMenuLoader.item.powerMenuVariants.instances[i]  
+          if (instance.modelData === currentScreen) {  
+            instance.toggleOpen()  
+            break  
+          }  
+        }  
+      }  
+    }  
   }
 }

@@ -35,11 +35,10 @@ Scope {
         VolumeWidget {}
         ClockWidget {}
         DateWidget {}
-        PowerButtonWidget {}
+        PowerButtonWidget {currentScreen: screen}
         Separator {}
         Separator {}
       }
-      PowerMenu {}
     }
   }
 }
