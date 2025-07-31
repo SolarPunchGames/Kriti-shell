@@ -15,14 +15,14 @@ Item {
     radius: 10
 
     implicitHeight: 30
-    implicitWidth: 100
+    implicitWidth: mainText.width + 45
 
     Text {
       id: mainText
 
       anchors.centerIn: parent
 
-      font.pointSize: 11
+      font.pointSize: 10.5
       font.family: "JetBrainsMono Nerd Font"
 
       leftPadding: -10
@@ -31,6 +31,7 @@ Item {
     }
 
     Text {
+      id: smallText
       anchors.verticalCenter: parent.verticalCenter
       anchors.left: mainText.right
 

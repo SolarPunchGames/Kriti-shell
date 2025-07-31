@@ -13,18 +13,40 @@ Item {
     id: button
 
     implicitHeight: 30
-    implicitWidth: 85
+    implicitWidth: 70
 
     anchors.centerIn: parent
 
-    text: " " + Audio.sink.audio.volume.toFixed(2) * 1000 / 10 + "%" // ik this looks dumb, but 0.58 * 100 is apparently 57.9999999.. this fixes that.
+    Process {
+      id: getVolProc
+
+      command: ["wpctl", "get-volume", "@DEFAULT_SINK@"]
+
+      running: true
+
+      stdout: StdioCollector {
+        onStreamFinished: button.text = " " + this.text.slice(8, 12) * 1000 / 10 + "%" // ik this looks dumb, but 0.58 * 100 is apparently 57.9999999.. this fixes that.
+      }
+    }
+
+    Timer {
+      interval: 50
+
+      running: true
+
+      repeat: true
+
+      onTriggered: getVolProc.running = true
+    }
+
+    // text: " " + Audio.sink.audio.volume.toFixed(2)
 
     WheelHandler {
       blocking: false
       onWheel: (event)=> Audio.setVolume(0.5)
     }
 
-    onPressed: Quickshell.execDetached(["pavucontrol"])
+    onClicked: Quickshell.execDetached(["pavucontrol"])
 
     // onPressed: // make custom volume window
   }

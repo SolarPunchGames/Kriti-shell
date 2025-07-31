@@ -58,7 +58,7 @@ Item {
                 "#fbfff4"
               }
               else {
-                "#e5f0be"
+                "#dfe9d1"
               }
             }
           }

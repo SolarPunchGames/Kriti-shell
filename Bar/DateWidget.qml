@@ -12,14 +12,14 @@ Item {
     radius: 10
 
     implicitHeight: 30
-    implicitWidth: 140
+    implicitWidth: date.width + 30
 
     Text {
       id: date
 
       anchors.centerIn: parent
 
-      font.pointSize: 11
+      font.pointSize: 10
       font.family: "JetBrainsMono Nerd Font"
 
       text: " " + Time.date

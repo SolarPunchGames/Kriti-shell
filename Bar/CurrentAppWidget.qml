@@ -20,12 +20,12 @@ Item {
   transitions: Transition {
     PropertyAnimation {
       property: "maxLetters"
-      duration: 1000
+      duration: 500
       easing.type: Easing.OutCubic
     }
   }
 
-  function truncate(text:string, maxLetters:int) {
+  function truncate(text:string, maxLetters:int) : string {
     if (text.length > maxLetters + 1) {
       return text.slice(0, maxLetters) + ".."
     }
