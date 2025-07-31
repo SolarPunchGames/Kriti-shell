@@ -19,7 +19,7 @@ Item {
 
       anchors.centerIn: parent
 
-      font.pointSize: 10
+      font.pointSize: 11
       font.family: "JetBrainsMono Nerd Font"
 
       text: " " + Time.date

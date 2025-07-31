@@ -21,7 +21,7 @@ Item {
     PropertyAnimation {
       property: "maxLetters"
       duration: 500
-      easing.type: Easing.OutCubic
+      easing.type: Easing.InCubic
     }
   }
 

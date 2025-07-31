@@ -3,6 +3,7 @@ import QtQuick
 import Quickshell
 import "../PowerMenu/"
 import "Workspaces"
+import ".."
 
 Scope {
   Variants {
@@ -17,6 +18,10 @@ Scope {
         top: true
         left: true
         right: true
+      }
+
+      InvertedRounding {
+        roundingColor: mainWindow.color
       }
 
       color: "#d1ddbe"

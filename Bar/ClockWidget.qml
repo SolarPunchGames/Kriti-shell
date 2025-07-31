@@ -22,7 +22,7 @@ Item {
 
       anchors.centerIn: parent
 
-      font.pointSize: 10.5
+      font.pointSize: 11
       font.family: "JetBrainsMono Nerd Font"
 
       leftPadding: -10
