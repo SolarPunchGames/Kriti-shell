@@ -1,5 +1,6 @@
 // RoundMouseArea.qml
 import QtQuick
+import QtQuick.Controls
 
 Item {
   id: roundMouseArea
@@ -25,10 +26,21 @@ Item {
 
   signal clicked
 
+  property var cursorShape: Qt.PointingHandCursor
+
   MouseArea {
     id: mouseArea
     anchors.fill: parent
     hoverEnabled: true
+    propagateComposedEvents: false
+    cursorShape: {
+      if (containsMouse) {
+        roundMouseArea.cursorShape
+      }
+      else {
+        Qt.ArrowCursor
+      }
+    }
     acceptedButtons: Qt.LeftButton | Qt.RightButton
     onClicked: if (roundMouseArea.containsMouse) roundMouseArea.clicked()
   }

@@ -102,7 +102,7 @@ Scope {
             columnSpacing: 5
             rowSpacing: 5
 
-            BaseButton { // rebootButton
+            TextIconButton { // rebootButton
               id: rebootButton
               text: "Reboot"
 
@@ -113,51 +113,21 @@ Scope {
               Layout.horizontalStretchFactor: 1
               Layout.verticalStretchFactor: 1
 
-              onClicked: Quickshell.execDetached(["systemctl", "reboot"]) | toggleOpen()
-
-              Text {
-                id: bigRebootText
-
-                anchors.centerIn: parent
-
-                scale: 0
-
-                font.pointSize: 60
-
-                text: "󰑓"
-
-                bottomPadding: 7
-                leftPadding: 7
-
-                states: State{
-                  name: "hovered"
-                  when: rebootButton.mouseAreaAlias.hovered
-                  PropertyChanges {target: bigRebootText; scale: 1}
-                }
-
-                transitions: Transition {
-                  PropertyAnimation {
-                    property: "scale"
-                    duration: 250
-                    easing.type: Easing.OutCubic
-                  }
-                }
+              onClicked: {
+                Quickshell.execDetached(["systemctl", "reboot"])
+                toggleOpen()
               }
 
-              states: State{
-                name: "hovered"
-                when: rebootButton.mouseAreaAlias.hovered
-                PropertyChanges {target: rebootButton; textAlias.scale: 0}
-              }
-              transitions: Transition {
-                PropertyAnimation {
-                  property: "textAlias.scale"
-                  duration: 250
-                  easing.type: Easing.OutCubic
-                }
-              }
+
+              bigTextItem.font.pointSize: 60
+
+              bigTextItem.text: "󰑓"
+
+              bigTextItem.bottomPadding: 7
+              bigTextItem.leftPadding: 7
             }
-            BaseButton { // sleepButton
+
+            TextIconButton { // sleepButton
               id: sleepButton
               text: "Sleep"
 
@@ -173,51 +143,18 @@ Scope {
                 toggleOpen()
               }
 
-              Text {
-                id: bigSleepText
+              bigTextItem.font.pointSize: 60
 
-                anchors.centerIn: parent
+              bigTextItem.text: "󰤄"
 
-                scale: 0
-
-                font.pointSize: 60
-
-                text: "󰤄"
-
-                bottomPadding: 7
-                leftPadding: 7
-
-                states: State{
-                  name: "hovered"
-                  when: sleepButton.mouseAreaAlias.hovered
-                  PropertyChanges {target: bigSleepText; scale: 1}
-                }
-
-                transitions: Transition {
-                  PropertyAnimation {
-                    property: "scale"
-                    duration: 250
-                    easing.type: Easing.OutCubic
-                  }
-                }
-              }
-
-              states: State{
-                name: "hovered"
-                when: sleepButton.mouseAreaAlias.hovered
-                PropertyChanges {target: sleepButton; textAlias.scale: 0}
-              }
-              transitions: Transition {
-                PropertyAnimation {
-                  property: "textAlias.scale"
-                  duration: 250
-                  easing.type: Easing.OutCubic
-                }
-              }
+              bigTextItem.bottomPadding: 7
+              bigTextItem.leftPadding: 7
             }
-            BaseButton { // logoutButton
+
+            TextIconButton { // logoutButton
               id: logoutButton
               text: "Logout"
+
               Layout.fillWidth: true
               Layout.fillHeight: true
               Layout.preferredWidth: 315 / 2
@@ -230,49 +167,15 @@ Scope {
                 toggleOpen()
               }
 
-              Text {
-                id: bigLogoutText
+              bigTextItem.font.pointSize: 60
 
-                anchors.centerIn: parent
+              bigTextItem.text: "󰍃"
 
-                scale: 0
-
-                font.pointSize: 60
-
-                text: "󰍃"
-
-                bottomPadding: 5
-                leftPadding: 0
-
-                states: State{
-                  name: "hovered"
-                  when: logoutButton.mouseAreaAlias.hovered
-                  PropertyChanges {target: bigLogoutText; scale: 1}
-                }
-
-                transitions: Transition {
-                  PropertyAnimation {
-                    property: "scale"
-                    duration: 250
-                    easing.type: Easing.OutCubic
-                  }
-                }
-              }
-
-              states: State{
-                name: "hovered"
-                when: logoutButton.mouseAreaAlias.hovered
-                PropertyChanges {target: logoutButton; textAlias.scale: 0}
-              }
-              transitions: Transition {
-                PropertyAnimation {
-                  property: "textAlias.scale"
-                  duration: 250
-                  easing.type: Easing.OutCubic
-                }
-              }
+              bigTextItem.bottomPadding: 5
+              bigTextItem.leftPadding: 0
             }
-            BaseButton { // lockButton
+
+            TextIconButton { // lockButton
               id: lockButton
               text: "Lock"
 
@@ -288,47 +191,12 @@ Scope {
                 toggleOpen()
               }
 
-              Text {
-                id: bigLockText
+              bigTextItem.font.pointSize: 60
 
-                anchors.centerIn: parent
+              bigTextItem.text: ""
 
-                scale: 0
-
-                font.pointSize: 60
-
-                text: ""
-
-                bottomPadding: 7
-                leftPadding: 3
-
-                states: State{
-                  name: "hovered"
-                  when: lockButton.mouseAreaAlias.hovered
-                  PropertyChanges {target: bigLockText; scale: 1}
-                }
-
-                transitions: Transition {
-                  PropertyAnimation {
-                    property: "scale"
-                    duration: 250
-                    easing.type: Easing.OutCubic
-                  }
-                }
-              }
-
-              states: State{
-                name: "hovered"
-                when: lockButton.mouseAreaAlias.hovered
-                PropertyChanges {target: lockButton; textAlias.scale: 0}
-              }
-              transitions: Transition {
-                PropertyAnimation {
-                  property: "textAlias.scale"
-                  duration: 250
-                  easing.type: Easing.OutCubic
-                }
-              }
+              bigTextItem.bottomPadding: 7
+              bigTextItem.leftPadding: 3
             }
           }
         }
@@ -360,8 +228,9 @@ Scope {
           RoundMouseArea {
             id: shutdownRoundMouseArea
             anchors.fill: parent
+            cursorShape: Qt.PointingHandCursor
             onClicked: {
-              Quickshell.execDetached(["systemctl", "shutdown"])
+              // Quickshell.execDetached(["systemctl", "shutdown"])
               toggleOpen()
             }
           }
