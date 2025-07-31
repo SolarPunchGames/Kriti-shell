@@ -15,6 +15,9 @@ Item {
     fontSize: 9.5
     text: "⏻"
 
+    implicitHeight: 30
+    implicitWidth: 30
+
     textRightPadding: 3
 
     LazyLoader {  
@@ -25,10 +28,10 @@ Item {
  
     onClicked: {  
       if (powerMenuLoader.item) {          
-        // Find the variant instance that matches this screen  
+        // Find the variant instance that matches this screen 
         for (var i = 0; i < powerMenuLoader.item.powerMenuVariants.instances.length; i++) {  
           var instance = powerMenuLoader.item.powerMenuVariants.instances[i]  
-          if (instance.modelData === currentScreen) {  
+          if (instance.modelData.name === currentScreen) {  
             instance.toggleOpen()  
             break  
           }  

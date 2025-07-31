@@ -2,6 +2,7 @@
 import QtQuick
 import Quickshell
 import "../PowerMenu/"
+import "Workspaces"
 
 Scope {
   Variants {
@@ -24,7 +25,12 @@ Scope {
       
       // Left widgets
       Row {
-
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.left: parent.left
+        Separator {}
+        WorkspaceWidget {currentScreen: screen}
+        Separator {}
+        CurrentAppWidget {}
       }
 
       // Right widgets
@@ -35,7 +41,7 @@ Scope {
         VolumeWidget {}
         ClockWidget {}
         DateWidget {}
-        PowerButtonWidget {currentScreen: screen}
+        PowerButtonWidget {currentScreen: screen.name}
         Separator {}
         Separator {}
       }

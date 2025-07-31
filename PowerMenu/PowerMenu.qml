@@ -2,17 +2,9 @@
 import QtQuick
 import QtQuick.Shapes
 import Quickshell
+import ".."
 
 Scope {
-
-  function toggleOpen() {
-    if (quarterCircle.state == "open") {
-      quarterCircle.state = ""
-    } else {
-      quarterCircle.state = "open"
-    }
-  }
-
   property alias powerMenuVariants: variants
   
   Variants {
@@ -41,6 +33,14 @@ Scope {
         width: quarterCircle.width * 2 * quarterCircle.scale
         height: quarterCircle.height * 2 * quarterCircle.scale
         shape: RegionShape.Ellipse
+      }
+
+      function toggleOpen() {
+        if (quarterCircle.state == "open") {
+          quarterCircle.state = ""
+        } else {
+          quarterCircle.state = "open"
+        }
       }
 
       Shape {
@@ -72,7 +72,7 @@ Scope {
 
         transformOrigin: Item.TopRight
 
-        scale: 1
+        scale: 0
 
         states: [
           State {
@@ -88,6 +88,72 @@ Scope {
             easing.type: Easing.OutCubic
           }
         }
+
+        BaseButton {
+          id: bigButton
+
+          x: quarterCircle.width
+
+          background: Shape {
+            ShapePath {
+              fillColor: {
+                if (bigButton.down) {
+                  "#cfff7d"
+                }
+                else if (bigButton.mouseAreaAlias.hovered) {
+                  "#efffd3"
+                }
+                else {
+                  "#fbfff4"
+                }
+              }
+              strokeColor: "transparent"
+
+              startX: -5
+              startY: 5
+              PathLine {x: -5; y: quarterCircle.height / 2 - 5}
+              PathArc {
+                radiusX: quarterCircle.width / 2 - 5
+                radiusY: quarterCircle.height / 2 - 5
+                x: -quarterCircle.width / 2 - 5
+                y: 5
+              }
+              PathLine {x: -5; y: 5}
+            }
+          }
+        }
+        
+//        BaseButton {
+//          id: smallButtonRight
+//
+//          background: Shape {
+//            ShapePath {
+//              fillColor: {
+//                if (button.down) {
+//                  "#cfff7d"
+//                }
+//                else if (button.mouseAreaAlias.hovered) {
+//                  "#efffd3"
+//                }
+//                else {
+//                  "#fbfff4"
+//                }
+//              }
+//              strokeColor: "transparent"
+//
+//              startX: quarterCircle.width - 5
+//              startY: 5
+//              PathLine {x: quarterCircle.width - 5; y: quarterCircle.height / 2 - 5}
+//              PathArc {
+//                radiusX: quarterCircle.width / 2 - 5
+//                radiusY: quarterCircle.height / 2 - 5
+//                x: quarterCircle.width / 2
+//                y: 5
+//              }
+//              PathLine {x: quarterCircle.width - 5; y: 5}
+//            }
+//          }
+//        }
       }
     }
   }

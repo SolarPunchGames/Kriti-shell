@@ -6,12 +6,15 @@ import Quickshell.Widgets
 
 AbstractButton {
   id: button
-  implicitHeight: 30
-  implicitWidth: 30
   
   property real fontSize: 11
 
+  property alias mouseAreaAlias: mouseArea
+  property alias backgroundAlias: rectangle
+  property alias textAlias: textItem
+
   contentItem: Text {
+    id: textItem
     font.pointSize: button.fontSize
     font.family: "JetBrainsMono Nerd Font"
 
@@ -34,12 +37,13 @@ AbstractButton {
   property real textRightPadding
 
   HoverHandler {
-      id: mouseArea
-      blocking: false
-      cursorShape: Qt.PointingHandCursor
+    id: mouseArea
+    blocking: false
+    cursorShape: Qt.PointingHandCursor
   }
 
   background: Rectangle {
+    id: rectangle
     color: {
       if (button.down) {
         "#cfff7d"

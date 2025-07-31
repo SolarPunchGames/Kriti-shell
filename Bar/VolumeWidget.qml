@@ -12,6 +12,7 @@ Item {
   BaseButton {
     id: button
 
+    implicitHeight: 30
     implicitWidth: 85
 
     anchors.centerIn: parent
