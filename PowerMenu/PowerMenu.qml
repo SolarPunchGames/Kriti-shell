@@ -230,7 +230,7 @@ Scope {
             anchors.fill: parent
             cursorShape: Qt.PointingHandCursor
             onClicked: {
-              // Quickshell.execDetached(["systemctl", "shutdown"])
+              Quickshell.execDetached(["systemctl", "poweroff"])
               toggleOpen()
             }
           }
