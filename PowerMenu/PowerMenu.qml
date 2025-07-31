@@ -1,7 +1,8 @@
 // PowerMenu.qml
 import QtQuick
-import QtQuick.Shapes
+import QtQuick.Layouts
 import Quickshell
+import Quickshell.Widgets
 import ".."
 
 Scope {
@@ -24,51 +25,36 @@ Scope {
 
       color: "transparent"
 
-      implicitHeight: quarterCircle.height
-      implicitWidth: quarterCircle.width
+      implicitHeight: mainPanel.height
+      implicitWidth: mainPanel.width
 
       mask: Region {  
-        x: quarterCircle.x
-        y: quarterCircle.y - quarterCircle.height
-        width: quarterCircle.width * 2 * quarterCircle.scale
-        height: quarterCircle.height * 2 * quarterCircle.scale
-        shape: RegionShape.Ellipse
+        x: mainPanel.x
+        y: mainPanel.y - mainPanel.height
+        width: mainPanel.width * 2 * mainPanel.scale
+        height: mainPanel.height * 2 * mainPanel.scale
       }
 
       function toggleOpen() {
-        if (quarterCircle.state == "open") {
-          quarterCircle.state = ""
+        if (mainPanel.state == "open") {
+          mainPanel.state = ""
         } else {
-          quarterCircle.state = "open"
+          mainPanel.state = "open"
         }
       }
 
-      Shape {
-        id: quarterCircle
+      Rectangle {
+        id: mainPanel
 
         width: 315
         height: 315
 
+        color: "#d1ddbe"
+
+        bottomLeftRadius: 20
+
         anchors.right: parent.right
         anchors.top: parent.top
-
-        preferredRendererType: Shape.CurveRenderer
-
-        ShapePath {
-          fillColor: "#d1ddbe"
-          strokeColor: "transparent"
-
-          startX: quarterCircle.width
-          startY: 0
-          PathLine {x: quarterCircle.width; y: quarterCircle.height}
-          PathArc {
-            radiusX: quarterCircle.width
-            radiusY: quarterCircle.height
-            x: 0
-            y: 0
-          }
-          PathLine {x: quarterCircle.width; y: 0}
-        }
 
         transformOrigin: Item.TopRight
 
@@ -77,7 +63,7 @@ Scope {
         states: [
           State {
             name: "open"
-            PropertyChanges {target: quarterCircle; scale: 1}
+            PropertyChanges {target: mainPanel; scale: 1}
           }
         ]
 
@@ -89,71 +75,55 @@ Scope {
           }
         }
 
-        BaseButton {
-          id: bigButton
+        Item {
+          MarginWrapperManager { margin: 5 }
 
-          x: quarterCircle.width
+          anchors.fill: parent
 
-          background: Shape {
-            ShapePath {
-              fillColor: {
-                if (bigButton.down) {
-                  "#cfff7d"
-                }
-                else if (bigButton.mouseAreaAlias.hovered) {
-                  "#efffd3"
-                }
-                else {
-                  "#fbfff4"
-                }
-              }
-              strokeColor: "transparent"
+          GridLayout {
+            columns: 2
+            rows: 2
+            columnSpacing: 5
+            rowSpacing: 5
 
-              startX: -5
-              startY: 5
-              PathLine {x: -5; y: quarterCircle.height / 2 - 5}
-              PathArc {
-                radiusX: quarterCircle.width / 2 - 5
-                radiusY: quarterCircle.height / 2 - 5
-                x: -quarterCircle.width / 2 - 5
-                y: 5
-              }
-              PathLine {x: -5; y: 5}
+            BaseButton {
+              text: "Reboot"
+              Layout.fillWidth: true
+              Layout.fillHeight: true
+              Layout.preferredWidth: 315 / 2
+              Layout.preferredHeight: 315 / 2
+              Layout.horizontalStretchFactor: 1
+              Layout.verticalStretchFactor: 1
+            }
+            BaseButton {
+              text: "Shutdown"
+              Layout.fillWidth: true
+              Layout.fillHeight: true
+              Layout.preferredWidth: 315 / 2
+              Layout.preferredHeight: 315 / 2
+              Layout.horizontalStretchFactor: 1
+              Layout.verticalStretchFactor: 1
+            }
+            BaseButton {
+              text: "Sleep"
+              Layout.fillWidth: true
+              Layout.fillHeight: true
+              Layout.preferredWidth: 315 / 2
+              Layout.preferredHeight: 315 / 2
+              Layout.horizontalStretchFactor: 1
+              Layout.verticalStretchFactor: 1
+            }
+            BaseButton {
+              text: "Logout"
+              Layout.fillWidth: true
+              Layout.fillHeight: true
+              Layout.preferredWidth: 315 / 2
+              Layout.preferredHeight: 315 / 2
+              Layout.horizontalStretchFactor: 1
+              Layout.verticalStretchFactor: 1
             }
           }
         }
-        
-//        BaseButton {
-//          id: smallButtonRight
-//
-//          background: Shape {
-//            ShapePath {
-//              fillColor: {
-//                if (button.down) {
-//                  "#cfff7d"
-//                }
-//                else if (button.mouseAreaAlias.hovered) {
-//                  "#efffd3"
-//                }
-//                else {
-//                  "#fbfff4"
-//                }
-//              }
-//              strokeColor: "transparent"
-//
-//              startX: quarterCircle.width - 5
-//              startY: 5
-//              PathLine {x: quarterCircle.width - 5; y: quarterCircle.height / 2 - 5}
-//              PathArc {
-//                radiusX: quarterCircle.width / 2 - 5
-//                radiusY: quarterCircle.height / 2 - 5
-//                x: quarterCircle.width / 2
-//                y: 5
-//              }
-//              PathLine {x: quarterCircle.width - 5; y: 5}
-//            }
-//          }
-//        }
       }
     }
   }
