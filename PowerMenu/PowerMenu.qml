@@ -3,6 +3,7 @@ import QtQuick
 import QtQuick.Layouts
 import Quickshell
 import Quickshell.Widgets
+import qs.Services
 import ".."
 import "../.."
 
@@ -67,9 +68,10 @@ Scope {
         width: 315
         height: 315
 
-        color: "#d1ddbe"
+        color: Colors.mainPanelBackground
 
-        bottomLeftRadius: 15
+        bottomLeftRadius: 13
+        bottomRightRadius: bottomLeftRadius
 
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: parent.top
@@ -211,17 +213,17 @@ Scope {
           height: width
 
           backgroundAlias.radius: width / 2
-          backgroundAlias.border.color: "#d1ddbe"
+          backgroundAlias.border.color: Colors.mainPanelBackground
           backgroundAlias.border.width: 5
           backgroundAlias.color: {
             if (shutdownButton.down) {
-              "#cfff7d"
+              Colors.itemPressedBackground
             }
             else if (shutdownRoundMouseArea.containsMouse) {
-              "#efffd3"
+              Colors.itemHoveredBackground
             }
             else {
-              "#fbfff4"
+              Colors.itemBackground
             }
           }
 

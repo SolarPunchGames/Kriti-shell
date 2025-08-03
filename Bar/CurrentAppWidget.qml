@@ -9,11 +9,13 @@ Item {
   MarginWrapperManager {margin: 5}
 
   property int maxLetters: 30
+  property int expandedMaxLetters: 60
+  readonly property string appTitle: Hyprland.activeToplevel.title
 
   states: State{
     name: "expanded"
     when: (mouseArea.hovered)
-    PropertyChanges {target: root; maxLetters: 70}
+    PropertyChanges {target: root; maxLetters: appTitle.length < expandedMaxLetters ? appTitle.length : expandedMaxLetters}
     PropertyChanges {target: rectangle; color: "#efffd3"}
   }
 
@@ -51,7 +53,7 @@ Item {
     Text {
       id: textItem
       anchors.centerIn: parent
-      text: Hyprland.activeToplevel ? truncate(Hyprland.activeToplevel.title, maxLetters) : "No active window"
+      text: Hyprland.activeToplevel ? truncate(appTitle, maxLetters) : "No active window"
       font.pointSize: 11
       font.family: "JetBrainsMono Nerd Font"
     }

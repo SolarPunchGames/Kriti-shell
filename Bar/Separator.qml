@@ -1,5 +1,6 @@
 // Separator.qml
 
+import qs.Services
 import QtQuick
 import Quickshell
 
@@ -8,5 +9,5 @@ Text {
 
     text: "|"
 
-    color: "#537517"
+    color: Colors.separator
 }

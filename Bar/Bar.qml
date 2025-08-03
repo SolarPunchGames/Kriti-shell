@@ -1,6 +1,7 @@
 // Bar.qml
 import QtQuick
 import Quickshell
+import qs.Services
 import "../PowerMenu/"
 import "Workspaces"
 import ".."
@@ -24,7 +25,7 @@ Scope {
         roundingColor: mainWindow.color
       }
 
-      color: "#d1ddbe"
+      color: Colors.mainPanelBackground
 
       implicitHeight: 36
       
