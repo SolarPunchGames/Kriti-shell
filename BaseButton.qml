@@ -3,6 +3,7 @@ import QtQuick
 import QtQuick.Controls
 import Quickshell
 import Quickshell.Widgets
+import qs.Services
 
 AbstractButton {
   id: button
@@ -13,10 +14,14 @@ AbstractButton {
   property alias backgroundAlias: rectangle
   property alias textAlias: textItem
 
+  property bool buttonHovered: mouseArea.hovered
+
   contentItem: Text {
     id: textItem
     font.pointSize: button.fontSize
     font.family: "JetBrainsMono Nerd Font"
+
+    color: Colors.text
 
     topPadding: button.textTopPadding
     bottomPadding: button.textBottomPadding
@@ -46,13 +51,13 @@ AbstractButton {
     id: rectangle
     color: {
       if (button.down) {
-        "#cfff7d"
+        Colors.itemPressedBackground
       }
-      else if (mouseArea.hovered) {
-        "#efffd3"
+      else if (button.buttonHovered) {
+        Colors.itemHoveredBackground
       }
       else {
-        "#fbfff4"
+        Colors.itemBackground
       }
     }
 

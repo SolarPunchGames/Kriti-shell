@@ -3,6 +3,7 @@ import QtQuick
 import Quickshell
 import Quickshell.Widgets
 import Quickshell.Hyprland
+import qs.Services
 
 Item {
   id: root
@@ -16,7 +17,6 @@ Item {
     name: "expanded"
     when: (mouseArea.hovered)
     PropertyChanges {target: root; maxLetters: appTitle.length < expandedMaxLetters ? appTitle.length : expandedMaxLetters}
-    PropertyChanges {target: rectangle; color: "#efffd3"}
   }
 
   transitions: Transition {
@@ -44,7 +44,15 @@ Item {
 
     implicitWidth: textItem.width + 30
 
-    color: "#fbfff4"
+    color: {
+      if (root.state == "expanded") {
+        Colors.itemHoveredBackground
+      }
+      else {
+        Colors.itemBackground
+      }
+
+    }
 
     HoverHandler {
       id: mouseArea
@@ -55,6 +63,7 @@ Item {
       anchors.centerIn: parent
       text: Hyprland.activeToplevel ? truncate(appTitle, maxLetters) : "No active window"
       font.pointSize: 11
+      color: Colors.text
       font.family: "JetBrainsMono Nerd Font"
     }
 

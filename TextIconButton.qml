@@ -1,5 +1,6 @@
 // TextIconButton.qml
 import QtQuick
+import qs.Services
 
 BaseButton {
   id: button
@@ -13,11 +14,13 @@ BaseButton {
 
     scale: 0
 
+    color: Colors.bigText
+
     font.pointSize: 60
 
     states: State{
       name: "hovered"
-      when: button.mouseAreaAlias.hovered
+      when: button.buttonHovered
       PropertyChanges {target: bigText; scale: 1}
     }
 
@@ -32,7 +35,7 @@ BaseButton {
 
   states: State{
     name: "hovered"
-    when: button.mouseAreaAlias.hovered
+    when: button.buttonHovered
     PropertyChanges {target: button; textAlias.scale: 0}
   }
 

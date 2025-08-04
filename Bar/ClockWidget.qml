@@ -2,15 +2,16 @@
 import QtQuick
 import Quickshell
 import Quickshell.Widgets
+import qs.Services
 import ".."
 
 Item {
   MarginWrapperManager { margin: 5 }
 
-  readonly property string warningBackColor: "#af4b44"
+  readonly property string warningBackgroundColor: "#af4b44"
 
   Rectangle {
-    color: Time.isLate ? warningBackColor : "#fbfff4"
+    color: Time.isLate ? warningBackgroundColor : Colors.itemBackground
     
     radius: 10
 
@@ -21,6 +22,8 @@ Item {
       id: mainText
 
       anchors.centerIn: parent
+
+      color: Colors.text
 
       font.pointSize: 11
       font.family: "JetBrainsMono Nerd Font"
@@ -34,6 +37,8 @@ Item {
       id: smallText
       anchors.verticalCenter: parent.verticalCenter
       anchors.left: mainText.right
+      
+      color: Colors.smallText
 
       font.pointSize: 7
       font.italic: true

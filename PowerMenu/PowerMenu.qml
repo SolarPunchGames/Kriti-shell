@@ -203,7 +203,7 @@ Scope {
           }
         }
 
-        BaseButton { // shutdownButton
+        TextIconButton { // shutdownButton
           id: shutdownButton
           text: "Shutdown"
 
@@ -215,17 +215,8 @@ Scope {
           backgroundAlias.radius: width / 2
           backgroundAlias.border.color: Colors.mainPanelBackground
           backgroundAlias.border.width: 5
-          backgroundAlias.color: {
-            if (shutdownButton.down) {
-              Colors.itemPressedBackground
-            }
-            else if (shutdownRoundMouseArea.containsMouse) {
-              Colors.itemHoveredBackground
-            }
-            else {
-              Colors.itemBackground
-            }
-          }
+
+          buttonHovered: shutdownRoundMouseArea.containsMouse
 
           RoundMouseArea {
             id: shutdownRoundMouseArea
@@ -237,48 +228,12 @@ Scope {
             }
           }
 
+          bigTextItem.font.pointSize: 65
 
-          Text {
-            id: bigShutdownText
+          bigTextItem.text: "󰐥"
 
-            anchors.centerIn: parent
-
-            scale: 0
-
-            font.pointSize: 65
-
-            text: "󰐥"
-
-            bottomPadding: 7
-            leftPadding: 4
-
-            states: State{
-              name: "hovered"
-              when: shutdownRoundMouseArea.containsMouse
-              PropertyChanges {target: bigShutdownText; scale: 1}
-            }
-
-            transitions: Transition {
-              PropertyAnimation {
-                property: "scale"
-                duration: 250
-                easing.type: Easing.OutCubic
-              }
-            }
-          }
-
-          states: State{
-            name: "hovered"
-            when: shutdownRoundMouseArea.containsMouse
-            PropertyChanges {target: shutdownButton; textAlias.scale: 0}
-          }
-          transitions: Transition {
-            PropertyAnimation {
-              property: "textAlias.scale"
-              duration: 250
-              easing.type: Easing.OutCubic
-            }
-          }
+          bigTextItem.bottomPadding: 7
+          bigTextItem.leftPadding: 4
         }
       }
     }

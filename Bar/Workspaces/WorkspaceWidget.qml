@@ -3,6 +3,7 @@ import QtQuick
 import Quickshell
 import Quickshell.Widgets
 import Quickshell.Hyprland
+import qs.Services
 import "../.."
 
 Item {
@@ -49,16 +50,16 @@ Item {
           backgroundAlias.color: {
             color: {
               if (button.down) {
-                "#cfff7d"
+                Colors.itemPressedBackground
               }
               else if (mouseAreaAlias.hovered) {
-                "#efffd3"
+                Colors.itemHoveredBackground
               }
               else if (highlighted) {
-                "#fbfff4"
+                Colors.itemBackground
               }
               else {
-                "#dfe9d1"
+                Colors.itemDisabledBackground
               }
             }
           }
