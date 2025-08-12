@@ -48,19 +48,17 @@ Item {
           rotation: 45
 
           backgroundAlias.color: {
-            color: {
-              if (button.down) {
-                Colors.itemPressedBackground
-              }
-              else if (mouseAreaAlias.hovered) {
-                Colors.itemHoveredBackground
-              }
-              else if (highlighted) {
-                Colors.itemBackground
-              }
-              else {
-                Colors.itemDisabledBackground
-              }
+            if (button.down) {
+              Colors.itemPressedBackground
+            }
+            else if (mouseAreaAlias.hovered) {
+              Colors.itemHoveredBackground
+            }
+            else if (highlighted) {
+              Colors.itemBackground
+            }
+            else {
+              Colors.itemDisabledBackground
             }
           }
 
