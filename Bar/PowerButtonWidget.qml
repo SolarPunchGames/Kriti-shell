@@ -18,11 +18,11 @@ Item {
     implicitHeight: 30
     implicitWidth: 30
 
-    textRightPadding: 3
+    textRightPadding: 0
 
     LazyLoader {  
       id: powerMenuLoader  
-      source: "../PowerMenu/PowerMenu.qml"  
+      source: "PowerMenu.qml"
       loading: true 
     }
  

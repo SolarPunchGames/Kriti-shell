@@ -2,8 +2,6 @@
 import QtQuick
 import Quickshell
 import qs.Services
-import "../PowerMenu/"
-import "Workspaces"
 import ".."
 
 Scope {

@@ -4,7 +4,7 @@ import Quickshell
 import Quickshell.Widgets
 import Quickshell.Hyprland
 import qs.Services
-import "../.."
+import ".."
 
 Item {
   MarginWrapperManager {margin: 5}

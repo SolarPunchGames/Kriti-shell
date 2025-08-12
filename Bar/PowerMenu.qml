@@ -5,7 +5,6 @@ import Quickshell
 import Quickshell.Widgets
 import qs.Services
 import ".."
-import "../.."
 
 Scope {
   property alias powerMenuVariants: variants
