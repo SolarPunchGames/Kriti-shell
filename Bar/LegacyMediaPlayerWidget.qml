@@ -34,7 +34,11 @@ Item {
       cursorShape: Qt.PointingHandCursor
       hoverEnabled: true
 
-      onClicked: Quickshell.execDetached(["bash", "/home/alien/.config/waybar/media-player/media-player.sh", "-c", "play-pause"])
+      onClicked: (mouse)=> {
+        if (mouse.button == Qt.LeftButton) {
+          Quickshell.execDetached(["bash", "/home/alien/.config/waybar/media-player/media-player.sh", "-c", "play-pause"])
+        }
+      }
 
       onWheel: (wheel)=> {
         if (wheel.angleDelta.y < 0) {
@@ -56,8 +60,6 @@ Item {
 
       font.pointSize: 11
       font.family: "JetBrainsMono Nerd Font"
-
-      text: "yay"
 
       Process {
         id: mainMediaProc
