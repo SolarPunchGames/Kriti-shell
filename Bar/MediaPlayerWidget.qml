@@ -38,7 +38,7 @@ Item {
       PropertyAnimation {
         property: "y"
         duration: 200
-        easing.type: Easing.InOutCubic
+        easing.type: Easing.OutCubic
       }
     }
 
