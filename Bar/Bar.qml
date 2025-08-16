@@ -26,29 +26,39 @@ Scope {
       color: Colors.mainPanelBackground
 
       implicitHeight: 36
-      
-      // Left widgets
-      Row {
-        anchors.verticalCenter: parent.verticalCenter
-        anchors.left: parent.left
-        Separator {}
-        WorkspaceWidget {currentScreen: screen}
-        Separator {}
-        CurrentAppWidget {}
-      }
 
-      // Right widgets
       Row {
-        anchors.verticalCenter: parent.verticalCenter
-        anchors.right: parent.right
-        Separator {}
-        VolumeWidget {}
-        ClockWidget {}
-        DateWidget {}
-        PowerButtonWidget {currentScreen: screen.name}
-        Separator {}
-        TrayWidget {}
-        Separator {}
+        anchors.fill: parent
+        
+        // Left widgets
+        Row {
+          anchors.verticalCenter: parent.verticalCenter
+          anchors.left: parent.left
+          Separator {}
+          WorkspaceWidget {currentScreen: screen}
+          Separator {}
+          CurrentAppWidget {}
+        }
+
+        // Center widgets
+        Row {
+          anchors.centerIn: parent
+          LegacyMediaPlayerWidget {}
+        }
+
+        // Right widgets
+        Row {
+          anchors.verticalCenter: parent.verticalCenter
+          anchors.right: parent.right
+          Separator {}
+          VolumeWidget {}
+          ClockWidget {}
+          DateWidget {}
+          PowerButtonWidget {currentScreen: screen.name}
+          Separator {}
+          TrayWidget {}
+          Separator {}
+        }
       }
     }
   }
