@@ -27,15 +27,6 @@ Item {
     }
   }
 
-  function truncate(text:string, maxLetters:int) : string {
-    if (text.length > maxLetters + 1) {
-      return text.slice(0, maxLetters) + ".."
-    }
-    else {
-      return text
-    }
-  }
-
   Rectangle {
     id: rectangle
     radius: 10
@@ -61,11 +52,10 @@ Item {
     Text {
       id: textItem
       anchors.centerIn: parent
-      text: Hyprland.activeToplevel ? truncate(appTitle, maxLetters) : "No active window"
+      text: Hyprland.activeToplevel ? TextServices.truncate(appTitle, maxLetters) : "No active window"
       font.pointSize: 11
       color: Colors.text
       font.family: "JetBrainsMono Nerd Font"
     }
-
   }
 }

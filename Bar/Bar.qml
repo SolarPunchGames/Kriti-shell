@@ -27,38 +27,35 @@ Scope {
 
       implicitHeight: 36
 
+      // Left widgets
       Row {
-        anchors.fill: parent
-        
-        // Left widgets
-        Row {
-          anchors.verticalCenter: parent.verticalCenter
-          anchors.left: parent.left
-          Separator {}
-          WorkspaceWidget {currentScreen: screen}
-          Separator {}
-          CurrentAppWidget {}
-        }
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.left: parent.left
+        Separator {}
+        WorkspaceWidget {currentScreen: screen}
+        Separator {}
+        CurrentAppWidget {}
+      }
 
-        // Center widgets
-        Row {
-          anchors.centerIn: parent
-          LegacyMediaPlayerWidget {}
-        }
+      // Center widgets
+      Row {
+        anchors.centerIn: parent
+        //LegacyMediaPlayerWidget {}
+        MediaPlayerWidget {}
+      }
 
-        // Right widgets
-        Row {
-          anchors.verticalCenter: parent.verticalCenter
-          anchors.right: parent.right
-          Separator {}
-          VolumeWidget {}
-          ClockWidget {}
-          DateWidget {}
-          PowerButtonWidget {currentScreen: screen.name}
-          Separator {}
-          TrayWidget {}
-          Separator {}
-        }
+      // Right widgets
+      Row {
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.right: parent.right
+        Separator {}
+        VolumeWidget {}
+        ClockWidget {}
+        DateWidget {}
+        PowerButtonWidget {currentScreen: screen.name}
+        Separator {}
+        TrayWidget {}
+        Separator {}
       }
     }
   }

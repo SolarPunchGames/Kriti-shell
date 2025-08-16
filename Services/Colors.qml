@@ -11,7 +11,7 @@ Singleton {
   readonly property bool isDark: false
   readonly property color mainPanelBackground: "#d1ddbe"
   readonly property color itemBackground: "#fbfff4"
-  readonly property color itemHoveredBackground: "#efffd3"
+  readonly property color itemHoveredBackground: "#e9facb"
   readonly property color itemPressedBackground: "#cfff7d"
   readonly property color itemDisabledBackground: "#deebce"
   readonly property color text: "#000000"
