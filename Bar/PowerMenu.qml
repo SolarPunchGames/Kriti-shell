@@ -32,8 +32,20 @@ Scope {
       mask: Region {  
         x: mainPanel.x
         y: mainPanel.y - mainPanel.height
-        width: mainPanel.width * 2 * mainPanel.scale
-        height: mainPanel.height * 2 * mainPanel.scale
+        width: {
+          if (scaleItem.state == "open") {
+            mainPanel.width * 2
+          } else {
+            0
+          }
+        }
+        height: {
+          if (scaleItem.state == "open") {
+            mainPanel.height * 2
+          } else {
+            0
+          }
+        }
       }
 
       function toggleOpen() {
