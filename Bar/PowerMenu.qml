@@ -24,14 +24,10 @@ Scope {
         right: true
       }
 
-      margins {
-        right: -50
-      }
+      color: "#00000000"
 
-      color: "transparent"
-
-      implicitHeight: mainPanel.height + 100
-      implicitWidth: mainPanel.width + 100
+      implicitHeight: mainPanel.height + 50
+      implicitWidth: mainPanel.width + 50
 
       mask: Region {  
         x: mainPanel.x
@@ -41,50 +37,28 @@ Scope {
       }
 
       function toggleOpen() {
-        if (mainPanel.state == "open") {
-          mainPanel.state = ""
+        if (scaleItem.state == "open") {
+          scaleItem.state = ""
         } else {
-          mainPanel.state = "open"
+          scaleItem.state = "open"
         }
       }
 
-      Rectangle {
-        id: mainPanel
+      Item {
+        id: scaleItem
 
-        InvertedRounding {
-          anchors.top: parent.top
-          anchors.right: parent.left
-          roundingColor: parent.color
-          rounding: 13
-        }
-
-        InvertedRounding {
-          anchors.top: parent.top
-          anchors.left: parent.right
-          roundingColor: parent.color
-          rounding: 13
-          rotation: -90
-        }
-
-        width: 315
-        height: 315
-
-        color: Colors.mainPanelBackground
-
-        bottomLeftRadius: 13
-        bottomRightRadius: bottomLeftRadius
-
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.top: parent.top
+        anchors.fill: parent
 
         transformOrigin: Item.TopRight
 
-        scale: 0
+        scale: 0.6
+        opacity: 0
 
         states: State {
-            name: "open"
-            PropertyChanges {target: mainPanel; scale: 1}
-          }
+          name: "open"
+          PropertyChanges {target: scaleItem; scale: 1}
+          PropertyChanges {target: scaleItem; opacity: 1}
+        }
 
         transitions: Transition {
           PropertyAnimation {
@@ -92,149 +66,189 @@ Scope {
             duration: 250
             easing.type: Easing.OutCubic
           }
-        }
-
-        Item {
-          MarginWrapperManager { margin: 5 }
-
-          anchors.fill: parent
-
-          GridLayout {
-            columns: 2
-            rows: 2
-            columnSpacing: 5
-            rowSpacing: 5
-
-            TextIconButton { // rebootButton
-              id: rebootButton
-              text: "Reboot"
-
-              Layout.fillWidth: true
-              Layout.fillHeight: true
-              Layout.preferredWidth: 315 / 2
-              Layout.preferredHeight: 315 / 2
-              Layout.horizontalStretchFactor: 1
-              Layout.verticalStretchFactor: 1
-
-              onClicked: {
-                Quickshell.execDetached(["systemctl", "reboot"])
-                toggleOpen()
-              }
-
-
-              bigTextItem.font.pointSize: 60
-
-              bigTextItem.text: "󰑓"
-
-              bigTextItem.bottomPadding: 7
-              bigTextItem.leftPadding: 7
-            }
-
-            TextIconButton { // sleepButton
-              id: sleepButton
-              text: "Sleep"
-
-              Layout.fillWidth: true
-              Layout.fillHeight: true
-              Layout.preferredWidth: 315 / 2
-              Layout.preferredHeight: 315 / 2
-              Layout.horizontalStretchFactor: 1
-              Layout.verticalStretchFactor: 1
-
-              onClicked: {
-                Quickshell.execDetached(["systemctl", "suspend"])
-                toggleOpen()
-              }
-
-              bigTextItem.font.pointSize: 60
-
-              bigTextItem.text: "󰤄"
-
-              bigTextItem.bottomPadding: 7
-              bigTextItem.leftPadding: 7
-            }
-
-            TextIconButton { // logoutButton
-              id: logoutButton
-              text: "Logout"
-
-              Layout.fillWidth: true
-              Layout.fillHeight: true
-              Layout.preferredWidth: 315 / 2
-              Layout.preferredHeight: 315 / 2
-              Layout.horizontalStretchFactor: 1
-              Layout.verticalStretchFactor: 1
-
-              onClicked: {
-                Quickshell.execDetached(["hyprctl", "dispatch", "exit"])
-                toggleOpen()
-              }
-
-              bigTextItem.font.pointSize: 60
-
-              bigTextItem.text: "󰍃"
-
-              bigTextItem.bottomPadding: 5
-              bigTextItem.leftPadding: 0
-            }
-
-            TextIconButton { // lockButton
-              id: lockButton
-              text: "Lock"
-
-              Layout.fillWidth: true
-              Layout.fillHeight: true
-              Layout.preferredWidth: 315 / 2
-              Layout.preferredHeight: 315 / 2
-              Layout.horizontalStretchFactor: 1
-              Layout.verticalStretchFactor: 1
-
-              onClicked: {
-                Quickshell.execDetached(["hyprlock"])
-                toggleOpen()
-              }
-
-              bigTextItem.font.pointSize: 60
-
-              bigTextItem.text: ""
-
-              bigTextItem.bottomPadding: 7
-              bigTextItem.leftPadding: 3
-            }
+          PropertyAnimation {
+            property: "opacity"
+            duration: 250
+            easing.type: Easing.OutCubic
           }
         }
 
-        TextIconButton { // shutdownButton
-          id: shutdownButton
-          text: "Shutdown"
+        InvertedRounding {
+          anchors.top: mainPanel.top
+          anchors.right: mainPanel.left
+          roundingColor: mainPanel.color
+          opacity: mainPanel.opacity
+          rounding: 13
+        }
 
-          anchors.centerIn: parent
+        InvertedRounding {
+          anchors.top: mainPanel.top
+          anchors.left: mainPanel.right
+          roundingColor: mainPanel.color
+          opacity: mainPanel.opacity
+          rounding: 13
+          rotation: -90
+        }
 
-          width: 150
-          height: width
+        Rectangle {
+          id: mainPanel
 
-          backgroundAlias.radius: width / 2
-          backgroundAlias.border.color: Colors.mainPanelBackground
-          backgroundAlias.border.width: 5
+          width: 315
+          height: 315
 
-          buttonHovered: shutdownRoundMouseArea.containsMouse
+          color: Colors.mainPanelBackground
 
-          RoundMouseArea {
-            id: shutdownRoundMouseArea
+          bottomLeftRadius: 13
+          bottomRightRadius: bottomLeftRadius
+
+          anchors.right: parent.right
+          anchors.top: parent.top
+
+          layer.enabled: true
+
+
+          Item {
+            MarginWrapperManager { margin: 5 }
+
             anchors.fill: parent
-            cursorShape: Qt.PointingHandCursor
-            onClicked: {
-              Quickshell.execDetached(["systemctl", "poweroff"])
-              toggleOpen()
+
+            GridLayout {
+              columns: 2
+              rows: 2
+              columnSpacing: 5
+              rowSpacing: 5
+
+              TextIconButton { // rebootButton
+                id: rebootButton
+                text: "Reboot"
+
+                Layout.fillWidth: true
+                Layout.fillHeight: true
+                Layout.preferredWidth: 315 / 2
+                Layout.preferredHeight: 315 / 2
+                Layout.horizontalStretchFactor: 1
+                Layout.verticalStretchFactor: 1
+
+                onClicked: {
+                  Quickshell.execDetached(["systemctl", "reboot"])
+                  toggleOpen()
+                }
+
+
+                bigTextItem.font.pointSize: 60
+
+                bigTextItem.text: "󰑓"
+
+                bigTextItem.bottomPadding: 7
+                bigTextItem.leftPadding: 7
+              }
+
+              TextIconButton { // sleepButton
+                id: sleepButton
+                text: "Sleep"
+
+                Layout.fillWidth: true
+                Layout.fillHeight: true
+                Layout.preferredWidth: 315 / 2
+                Layout.preferredHeight: 315 / 2
+                Layout.horizontalStretchFactor: 1
+                Layout.verticalStretchFactor: 1
+
+                onClicked: {
+                  Quickshell.execDetached(["systemctl", "suspend"])
+                  toggleOpen()
+                }
+
+                bigTextItem.font.pointSize: 60
+
+                bigTextItem.text: "󰤄"
+
+                bigTextItem.bottomPadding: 7
+                bigTextItem.leftPadding: 7
+              }
+
+              TextIconButton { // logoutButton
+                id: logoutButton
+                text: "Logout"
+
+                Layout.fillWidth: true
+                Layout.fillHeight: true
+                Layout.preferredWidth: 315 / 2
+                Layout.preferredHeight: 315 / 2
+                Layout.horizontalStretchFactor: 1
+                Layout.verticalStretchFactor: 1
+
+                onClicked: {
+                  Quickshell.execDetached(["hyprctl", "dispatch", "exit"])
+                  toggleOpen()
+                }
+
+                bigTextItem.font.pointSize: 60
+
+                bigTextItem.text: "󰍃"
+
+                bigTextItem.bottomPadding: 5
+                bigTextItem.leftPadding: 0
+              }
+
+              TextIconButton { // lockButton
+                id: lockButton
+                text: "Lock"
+
+                Layout.fillWidth: true
+                Layout.fillHeight: true
+                Layout.preferredWidth: 315 / 2
+                Layout.preferredHeight: 315 / 2
+                Layout.horizontalStretchFactor: 1
+                Layout.verticalStretchFactor: 1
+
+                onClicked: {
+                  Quickshell.execDetached(["hyprlock"])
+                  toggleOpen()
+                }
+
+                bigTextItem.font.pointSize: 60
+
+                bigTextItem.text: ""
+
+                bigTextItem.bottomPadding: 7
+                bigTextItem.leftPadding: 3
+              }
             }
           }
 
-          bigTextItem.font.pointSize: 65
+          TextIconButton { // shutdownButton
+            id: shutdownButton
+            text: "Shutdown"
 
-          bigTextItem.text: "󰐥"
+            anchors.centerIn: parent
 
-          bigTextItem.bottomPadding: 7
-          bigTextItem.leftPadding: 4
+            width: 150
+            height: width
+
+            backgroundAlias.radius: width / 2
+            backgroundAlias.border.color: Colors.mainPanelBackground
+            backgroundAlias.border.width: 5
+
+            buttonHovered: shutdownRoundMouseArea.containsMouse
+
+            RoundMouseArea {
+              id: shutdownRoundMouseArea
+              anchors.fill: parent
+              cursorShape: Qt.PointingHandCursor
+              onClicked: {
+                Quickshell.execDetached(["systemctl", "poweroff"])
+                toggleOpen()
+              }
+            }
+
+            bigTextItem.font.pointSize: 65
+
+            bigTextItem.text: "󰐥"
+
+            bigTextItem.bottomPadding: 7
+            bigTextItem.leftPadding: 4
+          }
         }
       }
     }
