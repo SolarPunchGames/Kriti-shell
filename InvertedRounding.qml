@@ -6,10 +6,11 @@ import Qt5Compat.GraphicalEffects
 
 Item {
   id: root
-  implicitWidth: 15
-  implicitHeight: 15
+  implicitWidth: rounding
+  implicitHeight: rounding
 
   property color roundingColor
+  property int rounding: 10
 
   Rectangle {
     id: background

@@ -55,12 +55,14 @@ Scope {
           anchors.top: parent.top
           anchors.right: parent.left
           roundingColor: parent.color
+          rounding: 13
         }
 
         InvertedRounding {
           anchors.top: parent.top
           anchors.left: parent.right
           roundingColor: parent.color
+          rounding: 13
           rotation: -90
         }
 

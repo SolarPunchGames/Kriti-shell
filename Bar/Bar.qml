@@ -47,6 +47,7 @@ Scope {
         DateWidget {}
         PowerButtonWidget {currentScreen: screen.name}
         Separator {}
+        TrayWidget {}
         Separator {}
       }
     }
