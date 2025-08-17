@@ -52,6 +52,8 @@ Item {
             color: {
               if (!Colors.isDark && modelData.title == "Free Download Manager") {
                 "#517ac5"
+              } else {
+                "transparent"
               }
             }
           }

@@ -9,6 +9,8 @@ import ".."
 
 Item {
   MarginWrapperManager { margin: 5 }
+
+  property var currentScreen
   
   Rectangle {
     id: rect
@@ -33,10 +35,10 @@ Item {
       color: "transparent"
 
       width: {
-        console.log(Players.player.position - Players.pausedTime)
-        console.log(Players.prevPosition)
-        console.log(Players.pausedTime)
-        parent.width * ((Players.player.position - Players.pausedTime) / Players.player.length)
+        //console.log(Players.player.position - Players.pausedTime)
+        //console.log(Players.prevPosition)
+        //onsole.log(Players.pausedTime)
+        0 //parent.width * ((Players.player.position - Players.pausedTime) / Players.player.length) // Problem with position not being updated correctly
       }
 
       Rectangle {
@@ -79,6 +81,12 @@ Item {
 
       acceptedButtons: Qt.AllButtons
 
+      LazyLoader {  
+        id: powerMenuLoader  
+        source: "MediaMenu.qml"
+        loading: true 
+      }
+
       onClicked: (mouse)=> {
         if (mouse.button == Qt.LeftButton) {
           if (rect.state == "closed") {
@@ -86,6 +94,17 @@ Item {
           } else {
             Players.player.togglePlaying()
           }
+        } else if (mouse.button == Qt.RightButton) {
+          if (powerMenuLoader.item) {          
+            // Find the variant instance that matches this screen 
+            for (var i = 0; i < powerMenuLoader.item.powerMenuVariants.instances.length; i++) {  
+              var instance = powerMenuLoader.item.powerMenuVariants.instances[i]  
+              if (instance.modelData.name === currentScreen) {  
+                instance.toggleOpen()  
+                break  
+              }  
+            }  
+          }  
         } else if (mouse.button == Qt.MiddleButton) {
           if (rect.state == "closed") {
             rect.state = ""
