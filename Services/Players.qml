@@ -62,18 +62,15 @@ Singleton {
     }
   }
 
-  //FrameAnimation {
-  //  running: true
-
-  //  onTriggered: {
-  //    if (wasPlaying == true && player.isPlaying == false && player.position >= 1) {
-  //      console.log("paused")
-  //      previousPosition = player.position
-  //    } else if (wasPlaying == false && player.isPlaying == true && previousPosition >= 1) {
-  //      console.log("unpaused")
-  //      player.position = previousPosition
-  //    }
-  //    wasPlaying = player.isPlaying
-  //  }
-  //}
+  FrameAnimation {
+    running: true
+    onTriggered: {
+      if (wasPlaying == true && player.isPlaying == false && player.position >= 1 && trackLyrics.plainLyrics) {
+        previousPosition = player.position
+      } else if (wasPlaying == false && player.isPlaying == true && previousPosition >= 1 && trackLyrics.plainLyrics) {
+        player.position = previousPosition
+      }
+      wasPlaying = player.isPlaying
+    }
+  }
 }
