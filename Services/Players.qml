@@ -4,6 +4,7 @@ pragma Singleton
 import QtQuick
 import QtQml
 import Quickshell
+import Quickshell.Io
 import Quickshell.Services.Mpris
 
 Singleton {
@@ -13,7 +14,45 @@ Singleton {
   property real pausedTime: 0.0
   readonly property MprisPlayer player: Mpris.players.values[playerId]
 
+  property real previousPosition
+  property bool wasPlaying
+
   property real prevPosition // : player.position
+
+  Connections {  
+    target: player  
+    function onPostTrackChanged() {
+        lyricsTimer.running = true  
+        Players.player.position = 0
+      }  
+    }
+
+  property string trackLyrics
+
+  Timer {
+    id: lyricsTimer
+    interval: 2000
+    running: {
+      //console.log("\"https://lrclib.net/api/get?artist_name=" + player.trackArtist.replace(/ /g, "+").replace(/ä/g, "%C3%A4").replace(/'/g, "%27") + "&track_name=" + player.trackTitle.replace(/ /g, "+").replace(/ä/g, "%C3%A4").replace(/'/g, "%27") + "&album_name=" + player.trackAlbum.replace(/ /g, "+").replace(/ä/g, "%C3%A4").replace(/'/g, "%27") + "&duration=" + player.length + "\"")
+      true
+    }
+    onTriggered: {
+      lyricsProc.running = true
+    }
+  }
+
+  Process {
+    id: lyricsProc
+    running: false
+    command: [ "curl", "https://lrclib.net/api/get?artist_name=" + encodeURI(player.trackArtist) + "&track_name=" + encodeURI(player.trackTitle) + "&album_name=" + encodeURI(player.trackAlbum) + "&duration=" + player.length]
+    stdout: StdioCollector {
+      waitForEnd: true
+      onStreamFinished: {
+        console.log(text)
+        trackLyrics = text
+      }
+    }
+  }
 
   FrameAnimation {
     running: player.playbackState == MprisPlaybackState.Playing
@@ -23,33 +62,18 @@ Singleton {
     }
   }
 
-  Timer {
-    running: true //player.playbackState == MprisPlaybackState.Playing
-    interval: 10
-    repeat: true
+  //FrameAnimation {
+  //  running: true
 
-    onTriggered: {
-      if (prevPosition > (player.position + 1) || prevPosition < (player.position - 1)) {
-        pausedTime = 0
-      }
-    }
-  }
-
-  Timer {
-    running: true //player.playbackState == MprisPlaybackState.Playing
-    interval: 20
-    repeat: true
-
-    onTriggered: {
-      prevPosition = player.position
-    }
-  }
-
-  Timer {
-    running: player.playbackState == MprisPlaybackState.Paused
-    interval: 100
-    repeat: true
-
-    onTriggered: pausedTime += 0.1
-  }
+  //  onTriggered: {
+  //    if (wasPlaying == true && player.isPlaying == false && player.position >= 1) {
+  //      console.log("paused")
+  //      previousPosition = player.position
+  //    } else if (wasPlaying == false && player.isPlaying == true && previousPosition >= 1) {
+  //      console.log("unpaused")
+  //      player.position = previousPosition
+  //    }
+  //    wasPlaying = player.isPlaying
+  //  }
+  //}
 }

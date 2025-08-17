@@ -79,6 +79,8 @@ Scope {
               implicitWidth: mainPanel.width / 2 - 7.5
               implicitHeight: parent.height - 10
 
+              color: Colors.itemBackground
+
               radius: 10
 
               ColumnLayout {
@@ -120,7 +122,7 @@ Scope {
                   color: Colors.text
                 }
                 Text {
-                  text: TextServices.truncate(Players.player.trackArtist, 35)
+                  text: TextServices.truncate(Players.player.trackArtist, 20) + " - " + TextServices.formatSecondsToMinutesAndSeconds(Math.round(Players.player.position)) + "/" + TextServices.formatSecondsToMinutesAndSeconds(Players.player.length)
 
                   Layout.preferredWidth: parent.width
                   
@@ -205,51 +207,154 @@ Scope {
 
               radius: 10
 
-              ScrollView {
-                id: lyricsScrollView
+              color: Colors.itemBackground
 
+              clip: true
+
+              ListView {
+                id: lyricsView
                 anchors.fill: parent
 
-                Column {
-                  id: lyricsColumn
+                topMargin: 20
+                rightMargin: 15
+                leftMargin: 15
 
-                  anchors.fill: parent
+                maximumFlickVelocity: 2000
 
-                  spacing: 10
-                  topPadding: 20
-                  bottomPadding: 20
+                highlightMoveDuration: 2000
+                highlightRangeMode: ListView.ApplyRange
 
-                  FileView {
-                    id: lyricsFileView
-                    path: Qt.resolvedUrl("/home/alien/Quickshell-Rice/LyricsCache/" + Players.player.trackTitle + ".txt")
+                currentIndex: -1
 
-                    blockLoading: true
-                  }
+                preferredHighlightBegin: height / 3
+                preferredHighlightEnd: height / 2
 
-                  Repeater {
-                    model: ListModel {
-                      id: lyricsList
-                    }
-                    Component.onCompleted: {
-                      var lyrics = lyricsFileView.text()
-                      var lines = lyrics.split("\n");
+                model: ListModel {
+                  id: lyricsList
+                }
+
+                Connections {  
+                  target: Players.player 
+                  function onTrackChanged() {  
+                    lyricsList.clear()
+                    showLyricsTimer.running = true
+                  }  
+                }
+
+                Timer {
+                  id: showLyricsTimer
+                  interval: 10000
+                  running: true
+
+                  onTriggered: {
+                    var lyricsJson = Players.trackLyrics
+                    var parsedJson = JSON.parse(lyricsJson)
+                    //console.log(plainLyrics)
+                    if (parsedJson.syncedLyrics) {
+                      var syncedLyrics = parsedJson.syncedLyrics
+                      var lines = syncedLyrics.split("\n");
                       for (var i = 0; i < lines.length; i++) {
-                        lyricsList.append({ text: lines[i] });
+                        lyricsList.append({ "lyricText": lines[i].substring(11), "time": 60 * parseFloat(lines[i].substring(1,3)) + parseFloat(lines[i].substring(4,9)), "index": i });
+                      }
+                    } else {
+                      var plainLyrics = parsedJson.plainLyrics
+                      var lines = plainLyrics.split("\n");
+                      for (var i = 0; i < lines.length; i++) {
+                        lyricsList.append({ "lyricText": lines[i], "time": 0, "index": i });
                       }
                     }
-                    delegate: Text {
-                      required property string modelData
-                      text: modelData 
+                  }
+                }
 
-                      font.pointSize: 9
-                      font.family: "JetBrainsMono Nerd Font"
+                delegate: Text {
+                  id: lyric
+                  required property string lyricText
+                  required property real time
+                  required property int  index
+                  text: lyricText
 
-                      width: lyricsRect.width
-                      height: 20
+                  property var isCurrentItem: ListView.isCurrentItem
 
-                      horizontalAlignment: Text.AlignHCenter
+                  state: {
+                    if (isCurrentItem) {
+                      "highlighted"
+                    } else if (Players.player.position > time && time != 0) {
+                      "faded"
+                    } else {
+                      ""
+                    }
+                  }
 
-                      color: Colors.text
+                  Timer {
+                    running: true
+                    interval: 10
+                    repeat: true
+                    
+                    onTriggered: {
+                      if (time) {
+                        if (Players.player.position >= time -0.1 && Players.player.position <= time + 0.5) {
+                          lyricsView.currentIndex = index
+                        }  
+                      }
+                    }
+                  }
+
+                  states: [ State {
+                    name: "highlighted"
+
+                    PropertyChanges {target: lyric; scale: 1.1}
+                    PropertyChanges {target: lyric; font.weight: 800}
+                  },
+                  State {
+                    name: "faded"
+
+                    PropertyChanges {target: lyric; scale: 0.9}
+                    PropertyChanges {target: lyric; font.weight: 300}
+                    PropertyChanges {target: lyric; opacity: 0.5}
+                  }
+                  ]
+
+                  transitions: Transition {
+                    PropertyAnimation {
+                      property: "scale"
+                      duration: 250
+                      easing.type: Easing.InOutCubic
+                    }
+                    PropertyAnimation {
+                      property: "font.weight"
+                      duration: 250
+                      easing.type: Easing.InOutCubic
+                    }
+                  }
+
+                  font.weight: 300
+
+                  font.pointSize: 10
+                  //font.family: "JetBrainsMono Nerd Font"
+
+                  width: lyricsRect.width - lyricsView.rightMargin - lyricsView.leftMargin
+                  height: 30 * lineCount
+
+                  wrapMode: Text.WordWrap
+
+                  horizontalAlignment: Text.AlignHCenter
+                  verticalAlignment: Text.AlignVCenter
+
+                  color: Colors.text
+
+                  MouseArea {
+                    anchors.fill: parent
+
+                    cursorShape: {
+                      if (time) {
+                        Qt.PointingHandCursor
+                      }
+                    }
+
+                    onClicked: {
+                      if (time) {
+                        Players.player.position = time
+                      }
                     }
                   }
                 }
