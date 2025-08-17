@@ -47,17 +47,21 @@ AbstractButton {
     cursorShape: Qt.PointingHandCursor
   }
 
+  property color pressedBackgroundColor: Colors.itemPressedBackground
+  property color hoveredBackgroundColor: Colors.itemHoveredBackground
+  property color backgroundColor: Colors.itemBackground
+
   background: Rectangle {
     id: rectangle
     color: {
       if (button.down) {
-        Colors.itemPressedBackground
+        pressedBackgroundColor
       }
       else if (button.buttonHovered) {
-        Colors.itemHoveredBackground
+        hoveredBackgroundColor
       }
       else {
-        Colors.itemBackground
+        backgroundColor
       }
     }
 
