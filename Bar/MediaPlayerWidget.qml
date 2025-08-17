@@ -13,17 +13,44 @@ Item {
   Rectangle {
     id: rect
 
-    color: {
-      if (mouseArea.pressed) {
-        Colors.itemHoveredBackground
-      }
-//      else if (mouseArea.containsMouse) {
-//        Colors.itemHoveredBackground
-//      }
-      else {
-        Colors.itemBackground
+    color: Colors.itemBackground
+
+    visible: {
+      if (Players.player) {
+        true
+      } else {
+        false
       }
     }
+
+    Rectangle {
+      anchors.top: parent.top
+      anchors.bottom: parent.bottom
+      anchors.left: parent.left
+
+      clip: true
+
+      color: "transparent"
+
+      width: {
+        console.log(Players.player.position - Players.pausedTime)
+        console.log(Players.prevPosition)
+        console.log(Players.pausedTime)
+        parent.width * ((Players.player.position - Players.pausedTime) / Players.player.length)
+      }
+
+      Rectangle {
+        anchors.top: parent.top
+        anchors.bottom: parent.bottom
+        anchors.left: parent.left
+
+        width: rect.width
+
+        color: Colors.itemHoveredBackground
+        radius: rect.radius
+      }
+    }
+
     radius: 10
 
     implicitHeight: 30
@@ -101,8 +128,9 @@ Item {
         height: 24
         width: height
 
-        backgroundAlias.radius: buttonRadius
+        backgroundAlias.radius: row.buttonRadius
 
+        backgroundColor: "transparent"
         hoveredBackgroundColor: Colors.itemDisabledBackground
 
         anchors.verticalCenter: parent.verticalCenter
@@ -117,8 +145,9 @@ Item {
         height: 24
         width: height
 
-        backgroundAlias.radius: buttonRadius
+        backgroundAlias.radius: row.buttonRadius
 
+        backgroundColor: "transparent"
         hoveredBackgroundColor: Colors.itemDisabledBackground
 
         anchors.verticalCenter: parent.verticalCenter
@@ -139,8 +168,9 @@ Item {
         height: 24
         width: height
 
-        backgroundAlias.radius: buttonRadius
+        backgroundAlias.radius: row.buttonRadius
 
+        backgroundColor: "transparent"
         hoveredBackgroundColor: Colors.itemDisabledBackground
 
         anchors.verticalCenter: parent.verticalCenter
