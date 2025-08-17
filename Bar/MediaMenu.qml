@@ -216,8 +216,8 @@ Scope {
                 anchors.fill: parent
 
                 topMargin: 20
-                rightMargin: 15
-                leftMargin: 15
+                rightMargin: 20
+                leftMargin: 20
 
                 maximumFlickVelocity: 2000
 
@@ -247,17 +247,14 @@ Scope {
                   running: true
 
                   onTriggered: {
-                    var lyricsJson = Players.trackLyrics
-                    var parsedJson = JSON.parse(lyricsJson)
-                    //console.log(plainLyrics)
-                    if (parsedJson.syncedLyrics) {
-                      var syncedLyrics = parsedJson.syncedLyrics
+                    if (Players.trackLyrics.syncedLyrics) {
+                      var syncedLyrics = Players.trackLyrics.syncedLyrics
                       var lines = syncedLyrics.split("\n");
                       for (var i = 0; i < lines.length; i++) {
                         lyricsList.append({ "lyricText": lines[i].substring(11), "time": 60 * parseFloat(lines[i].substring(1,3)) + parseFloat(lines[i].substring(4,9)), "index": i });
                       }
                     } else {
-                      var plainLyrics = parsedJson.plainLyrics
+                      var plainLyrics = Players.trackLyrics.plainLyrics
                       var lines = plainLyrics.split("\n");
                       for (var i = 0; i < lines.length; i++) {
                         lyricsList.append({ "lyricText": lines[i], "time": 0, "index": i });

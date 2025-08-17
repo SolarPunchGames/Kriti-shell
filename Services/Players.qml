@@ -27,7 +27,7 @@ Singleton {
       }  
     }
 
-  property string trackLyrics
+  property var trackLyrics
 
   Timer {
     id: lyricsTimer
@@ -49,7 +49,7 @@ Singleton {
       waitForEnd: true
       onStreamFinished: {
         console.log(text)
-        trackLyrics = text
+        trackLyrics = JSON.parse(text)
       }
     }
   }
