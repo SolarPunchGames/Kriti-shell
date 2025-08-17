@@ -209,6 +209,7 @@ Scope {
                 id: lyricsScrollView
 
                 anchors.fill: parent
+
                 Column {
                   id: lyricsColumn
 
@@ -219,8 +220,8 @@ Scope {
                   bottomPadding: 20
 
                   FileView {
-                    id: minunSuomeniLyrics
-                    path: Qt.resolvedUrl("/home/alien/Quickshell-Rice/LyricsCache/Minun Suomeni.txt")
+                    id: lyricsFileView
+                    path: Qt.resolvedUrl("/home/alien/Quickshell-Rice/LyricsCache/" + Players.player.trackTitle + ".txt")
 
                     blockLoading: true
                   }
@@ -230,7 +231,7 @@ Scope {
                       id: lyricsList
                     }
                     Component.onCompleted: {
-                      var lyrics = minunSuomeniLyrics.text()
+                      var lyrics = lyricsFileView.text()
                       var lines = lyrics.split("\n");
                       for (var i = 0; i < lines.length; i++) {
                         lyricsList.append({ text: lines[i] });
