@@ -272,13 +272,13 @@ Scope {
                   Behavior on y {
                     SpringAnimation {
                       spring: 5
-                      damping: 0.5
+                      damping: 0.37
                     }
                   }
                   Behavior on width {
                     SpringAnimation { 
                       spring: 3
-                      damping: 0.3
+                      damping: 0.26
                     }
                   }
                   Behavior on height {

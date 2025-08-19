@@ -42,7 +42,7 @@ Singleton {
     id: lyricsTimer
     interval: 500
     running: {
-      console.log("https://lrclib.net/api/get?artist_name=" + encodeURI(player.trackArtist) + "&track_name=" + encodeURI(player.trackTitle) + "&album_name=" + encodeURI(player.trackAlbum) + "&duration=" + player.length)
+      //console.log("https://lrclib.net/api/get?artist_name=" + encodeURI(player.trackArtist) + "&track_name=" + encodeURI(player.trackTitle) + "&album_name=" + encodeURI(player.trackAlbum) + "&duration=" + player.length)
       true
     }
     onTriggered: {
@@ -57,10 +57,10 @@ Singleton {
     stdout: StdioCollector {
       waitForEnd: true
       onStreamFinished: {
-        console.log(text)
+        //console.log(text)
         if (JSON.parse(text).statusCode) {
           trackLyrics = 404
-          console.log("lyrics failed")
+          //console.log("lyrics failed")
         } else {
           trackLyrics = JSON.parse(text)
         }
