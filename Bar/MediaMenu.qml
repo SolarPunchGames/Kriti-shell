@@ -247,6 +247,22 @@ Scope {
                 color: Colors.text
               }
 
+              Component {
+                id: highlight
+                Rectangle {
+                  width: lyricsRect.width - 20; height: 30
+                  anchors.horizontalCenter: parent.horizontalCenter
+                  color: Colors.itemHoveredBackground; radius: 5
+                  y: lyricsView.currentItem.y
+                  Behavior on y {
+                    SpringAnimation {
+                      spring: 4
+                      damping: 0.3
+                    }
+                  }
+                }
+              }
+
               ListView {
                 id: lyricsView
                 anchors.fill: parent
@@ -257,18 +273,48 @@ Scope {
 
                 maximumFlickVelocity: 2000
 
-                highlightMoveDuration: 500
-                highlightMoveVelocity: -1
+                //highlightMoveDuration: 500
+                //highlightMoveVelocity: -1
                 highlightRangeMode: ListView.ApplyRange
 
                 currentIndex: -1
 
+                cacheBuffer: 1000
+
+                highlight: highlight
+                highlightFollowsCurrentItem: false
+
                 preferredHighlightBegin: height / 2
-                preferredHighlightEnd: height / 5 * 3
+                preferredHighlightEnd: height / 2
 
                 model: ListModel {
                   id: lyricsList
                 }
+
+                //add: Transition {
+                //  id: lyricAddTrans
+                //  SequentialAnimation {
+                //    PropertyAnimation { properties: "x"; to: 1000; duration: 0 }
+                //    PauseAnimation { duration: lyricAddTrans.ViewTransition.index * 50}
+                //    PropertyAnimation { 
+                //      properties: "x"
+                //      from: 100
+                //      to: 0
+                //      duration: 250
+                //      easing.type: Easing.OutCubic
+                //    }
+                //  }
+                //  //SequentialAnimation {
+                //  //  id: lyricOpacityAnim
+                //  //  PropertyAnimation { properties: "opacity"; to: 0; duration: 0 }
+                //  //  PauseAnimation { duration: lyricAddTrans.ViewTransition.index * 50}
+                //  //  PropertyAnimation { 
+                //  //    properties: "opacity"; 
+                //  //    to: lyricOpacityAnim.prevOpacity
+                //  //    duration: 250;
+                //  //  }
+                //  //}
+                //}
 
                 Connections {  
                   target: Players.player 
@@ -286,6 +332,19 @@ Scope {
                   running: true
 
                   onTriggered: {
+
+                    //function Timer() {
+                    //  return Qt.createQmlObject("import QtQuick; Timer {}", lyricsList);
+                    //}
+
+                    //function delay(delayTime, cb) {
+                    //  var timer: new Timer();
+                    //  timer.interval = delayTime;
+                    //  timer.repeat = false;
+                    //  timer.triggered.connect(cb);
+                    //  timer.start();
+                    //}
+
                     if (Players.trackLyrics.plainLyrics) {
 
                       lyricsLoadingText.visible = false
@@ -297,19 +356,26 @@ Scope {
                         for (var i = 0; i < lines.length; i++) {
                           if (lines[i + 1]) {
                             var nextTime = 60 * parseFloat(lines[i + 1].substring(1,3)) + parseFloat(lines[i + 1].substring(4,9))
+                          } else {
+                            var nextTime = 0
                           }
-                          lyricsList.append({ 
-                            "lyricText": lines[i].substring(11), 
-                            "time": 60 * parseFloat(lines[i].substring(1,3)) + parseFloat(lines[i].substring(4,9)), 
-                            "index": i, 
-                            "nextTime": nextTime
-                          });
 
-//                          console.log("lyricText: " + lines[i].substring(11))
-//                          console.log("time: " + 60 * parseFloat(lines[i].substring(1,3)) + parseFloat(lines[i].substring(4,9)))
-//                          console.log("index: " + i)
-//                          console.log("nextTime: " + nextTime)
-//                          console.log()
+                          function appendLyricItem() {
+                            lyricsList.append({ 
+                              "lyricText": lines[i].substring(11), 
+                              "time": 60 * parseFloat(lines[i].substring(1,3)) + parseFloat(lines[i].substring(4,9)), 
+                              "index": i, 
+                              "nextTime": nextTime
+                            });;
+                          }
+
+                          appendLyricItem()
+
+
+//                        console.log("lyricText: " + lines[i].substring(11))
+//                        console.log("time: " + 60 * parseFloat(lines[i].substring(1,3)) + parseFloat(lines[i].substring(4,9)))
+//                        console.log("index: " + i)
+//                        console.log("nextTime: " + nextTime)
                         }
 
                       } else {
@@ -322,6 +388,9 @@ Scope {
                             "index": i,
                             "nextTime": 0
                           })
+                          setTimeout(function() {
+                            b = a + 4;
+                          }, 100);
                         }
                       }
                     } else if (Players.trackLyrics == 1) {
@@ -338,14 +407,33 @@ Scope {
                   required property real time
                   required property real nextTime
                   required property int  index
-                  text: lyricText
+
+                  property bool isEmpty: lyricText == ""
+
+                  text: {
+                    if (isEmpty) {
+                      "󰽴"
+                    } else {
+                      lyricText
+                    }
+                  }
+
+                  scale: {
+                    if (isEmpty) {
+                      0.9
+                    } else {
+                      1
+                    }
+                  }
+
+
 
                   property var isCurrentItem: ListView.isCurrentItem
 
                   state: {
                     if (isCurrentItem) {
                       "highlighted"
-                    } else if (Players.player.position > time && time != 0) {
+                    } else if (index < lyricsView.currentIndex) {
                       "faded"
                     } else {
                       ""
@@ -359,9 +447,9 @@ Scope {
                     
                     onTriggered: {
                       if (time) {
-                        if (Players.player.position >= time && Players.player.position <= nextTime) {
+                        if ((Players.player.position >= time && Players.player.position <= nextTime) || (nextTime == 0 && Players.player.position >= time && Players.player.position <= time + 1)) {
                           lyricsView.currentIndex = index
-                        } else if (Players.player.position < time - 0.1 && index == 1) {
+                        } else if (Players.player.position < time - 0.1 && index == 0) {
                           lyricsView.currentIndex = -1
                         }
                       } 
