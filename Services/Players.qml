@@ -14,26 +14,35 @@ Singleton {
   property real pausedTime: 0.0
   readonly property MprisPlayer player: Mpris.players.values[playerId]
 
+//  readonly property bool isYtMusic: {
+//    if (player.metadata) {
+//      console.log("url: " + player.metadata.xesam)
+//      false
+//    }
+//    false
+//  }
+
   property real previousPosition
   property bool wasPlaying
-
-  property real prevPosition // : player.position
 
   Connections {  
     target: player  
     function onPostTrackChanged() {
-        lyricsTimer.running = true  
+        lyricsTimer.running = true
+        lyricsProc.running = false
+        trackLyrics = 1
         Players.player.position = 0
+        console.log("track changed")
       }  
     }
 
-  property var trackLyrics
+  property var trackLyrics: 1
 
   Timer {
     id: lyricsTimer
-    interval: 2000
+    interval: 500
     running: {
-      //console.log("\"https://lrclib.net/api/get?artist_name=" + player.trackArtist.replace(/ /g, "+").replace(/ä/g, "%C3%A4").replace(/'/g, "%27") + "&track_name=" + player.trackTitle.replace(/ /g, "+").replace(/ä/g, "%C3%A4").replace(/'/g, "%27") + "&album_name=" + player.trackAlbum.replace(/ /g, "+").replace(/ä/g, "%C3%A4").replace(/'/g, "%27") + "&duration=" + player.length + "\"")
+      console.log("https://lrclib.net/api/get?artist_name=" + encodeURI(player.trackArtist) + "&track_name=" + encodeURI(player.trackTitle) + "&album_name=" + encodeURI(player.trackAlbum) + "&duration=" + player.length)
       true
     }
     onTriggered: {
@@ -49,7 +58,12 @@ Singleton {
       waitForEnd: true
       onStreamFinished: {
         console.log(text)
-        trackLyrics = JSON.parse(text)
+        if (JSON.parse(text).statusCode) {
+          trackLyrics = 404
+          console.log("lyrics failed")
+        } else {
+          trackLyrics = JSON.parse(text)
+        }
       }
     }
   }

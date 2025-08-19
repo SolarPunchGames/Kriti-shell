@@ -211,6 +211,42 @@ Scope {
 
               clip: true
 
+              Text {
+                id: lyricsLoadingText
+
+                anchors.fill: lyricsRect
+
+                state: "loading"
+
+                states: [ 
+                  State {
+                    name: "loading"
+
+                    PropertyChanges {target: lyricsLoadingText; text: "Loading lyrics..."}
+                  },
+                  State {
+                    name: "failed"
+
+                    PropertyChanges {target: lyricsLoadingText; text: "Lyrics not found"}
+                  }
+                ]
+
+                font.weight: 800
+
+                font.pointSize:15
+                font.family: "JetBrainsMono Nerd Font"
+
+                width: lyricsRect.width - lyricsView.rightMargin - lyricsView.leftMargin
+                height: 30 * lineCount
+
+                wrapMode: Text.WordWrap
+
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+
+                color: Colors.text
+              }
+
               ListView {
                 id: lyricsView
                 anchors.fill: parent
@@ -221,13 +257,14 @@ Scope {
 
                 maximumFlickVelocity: 2000
 
-                highlightMoveDuration: 2000
+                highlightMoveDuration: 500
+                highlightMoveVelocity: -1
                 highlightRangeMode: ListView.ApplyRange
 
                 currentIndex: -1
 
-                preferredHighlightBegin: height / 3
-                preferredHighlightEnd: height / 2
+                preferredHighlightBegin: height / 2
+                preferredHighlightEnd: height / 5 * 3
 
                 model: ListModel {
                   id: lyricsList
@@ -238,27 +275,59 @@ Scope {
                   function onTrackChanged() {  
                     lyricsList.clear()
                     showLyricsTimer.running = true
+                    lyricsLoadingText.visible = true
+                    lyricsLoadingText.state = "loading"
                   }  
                 }
 
                 Timer {
                   id: showLyricsTimer
-                  interval: 10000
+                  interval: 100
                   running: true
 
                   onTriggered: {
-                    if (Players.trackLyrics.syncedLyrics) {
-                      var syncedLyrics = Players.trackLyrics.syncedLyrics
-                      var lines = syncedLyrics.split("\n");
-                      for (var i = 0; i < lines.length; i++) {
-                        lyricsList.append({ "lyricText": lines[i].substring(11), "time": 60 * parseFloat(lines[i].substring(1,3)) + parseFloat(lines[i].substring(4,9)), "index": i });
+                    if (Players.trackLyrics.plainLyrics) {
+
+                      lyricsLoadingText.visible = false
+
+
+                      if (Players.trackLyrics.syncedLyrics) {
+                        var syncedLyrics = Players.trackLyrics.syncedLyrics;
+                        var lines = syncedLyrics.split("\n");
+                        for (var i = 0; i < lines.length; i++) {
+                          if (lines[i + 1]) {
+                            var nextTime = 60 * parseFloat(lines[i + 1].substring(1,3)) + parseFloat(lines[i + 1].substring(4,9))
+                          }
+                          lyricsList.append({ 
+                            "lyricText": lines[i].substring(11), 
+                            "time": 60 * parseFloat(lines[i].substring(1,3)) + parseFloat(lines[i].substring(4,9)), 
+                            "index": i, 
+                            "nextTime": nextTime
+                          });
+
+//                          console.log("lyricText: " + lines[i].substring(11))
+//                          console.log("time: " + 60 * parseFloat(lines[i].substring(1,3)) + parseFloat(lines[i].substring(4,9)))
+//                          console.log("index: " + i)
+//                          console.log("nextTime: " + nextTime)
+//                          console.log()
+                        }
+
+                      } else {
+                        var plainLyrics = Players.trackLyrics.plainLyrics
+                        var lines = plainLyrics.split("\n");
+                        for (var i = 0; i < lines.length; i++) {
+                          lyricsList.append({ 
+                            "lyricText": lines[i], 
+                            "time": 0, 
+                            "index": i,
+                            "nextTime": 0
+                          })
+                        }
                       }
-                    } else {
-                      var plainLyrics = Players.trackLyrics.plainLyrics
-                      var lines = plainLyrics.split("\n");
-                      for (var i = 0; i < lines.length; i++) {
-                        lyricsList.append({ "lyricText": lines[i], "time": 0, "index": i });
-                      }
+                    } else if (Players.trackLyrics == 1) {
+                      showLyricsTimer.running = true
+                    } else if (Players.trackLyrics == 404) {
+                      lyricsLoadingText.state = "failed"
                     }
                   }
                 }
@@ -267,6 +336,7 @@ Scope {
                   id: lyric
                   required property string lyricText
                   required property real time
+                  required property real nextTime
                   required property int  index
                   text: lyricText
 
@@ -289,26 +359,29 @@ Scope {
                     
                     onTriggered: {
                       if (time) {
-                        if (Players.player.position >= time -0.1 && Players.player.position <= time + 0.5) {
+                        if (Players.player.position >= time && Players.player.position <= nextTime) {
                           lyricsView.currentIndex = index
-                        }  
-                      }
+                        } else if (Players.player.position < time - 0.1 && index == 1) {
+                          lyricsView.currentIndex = -1
+                        }
+                      } 
                     }
                   }
 
-                  states: [ State {
-                    name: "highlighted"
+                  states: [ 
+                    State {
+                      name: "highlighted"
 
-                    PropertyChanges {target: lyric; scale: 1.1}
-                    PropertyChanges {target: lyric; font.weight: 800}
-                  },
-                  State {
-                    name: "faded"
+                      PropertyChanges {target: lyric; scale: 1.1}
+                      PropertyChanges {target: lyric; font.weight: 800}
+                    },
+                    State {
+                      name: "faded"
 
-                    PropertyChanges {target: lyric; scale: 0.9}
-                    PropertyChanges {target: lyric; font.weight: 300}
-                    PropertyChanges {target: lyric; opacity: 0.5}
-                  }
+                      PropertyChanges {target: lyric; scale: 0.9}
+                      PropertyChanges {target: lyric; font.weight: 300}
+                      PropertyChanges {target: lyric; opacity: 0.5}
+                    }
                   ]
 
                   transitions: Transition {
@@ -342,15 +415,21 @@ Scope {
                   MouseArea {
                     anchors.fill: parent
 
+                    acceptedButtons: Qt.LeftButton | Qt.RightButton
+
                     cursorShape: {
                       if (time) {
                         Qt.PointingHandCursor
                       }
                     }
 
-                    onClicked: {
+                    onClicked: (mouse)=> {
                       if (time) {
+                        Players.previousPosition = time
                         Players.player.position = time
+                        if (mouse.button == Qt.RightButton) {
+                          Players.player.isPlaying = true
+                        }
                       }
                     }
                   }
