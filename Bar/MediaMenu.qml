@@ -256,16 +256,29 @@ Scope {
                   height: lyricsView.currentItem.height
 
                   anchors.horizontalCenter: parent.horizontalCenter
-                  color: Colors.itemHoveredBackground; radius: 10
+                  color: {
+                    if (Players.player.isPlaying) {
+                      Colors.itemHoveredBackground
+                    } else {
+                      Colors.separator
+                    }
+                  } 
+
+                  radius: 10
+
                   y: lyricsView.currentItem.y
 
                   opacity: lyricsView.currentItem.contentWidth == 0 ? 0 : 1
 
+                  Behavior on color {
+                    PropertyAnimation {
+                      duration: 100;
+                    }
+                  }
+
                   Behavior on opacity {
                     PropertyAnimation {
-                      properties: "opacity"; 
                       duration: 250;
-                      
                     }
                   }
 

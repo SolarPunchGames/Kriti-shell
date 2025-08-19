@@ -30,8 +30,8 @@ Singleton {
     function onPostTrackChanged() {
         lyricsTimer.running = true
         lyricsProc.running = false
+        player.position = 0
         trackLyrics = 1
-        Players.player.position = 0
         console.log("track changed")
       }  
     }
@@ -79,10 +79,10 @@ Singleton {
   FrameAnimation {
     running: true
     onTriggered: {
-      if (wasPlaying == true && player.isPlaying == false && player.position >= 1 && trackLyrics.plainLyrics) {
-        previousPosition = player.position
-      } else if (wasPlaying == false && player.isPlaying == true && previousPosition >= 1 && trackLyrics.plainLyrics) {
+      if (wasPlaying == false && player.isPlaying && previousPosition >= 0.5 && trackLyrics.plainLyrics) {
         player.position = previousPosition
+      } else if (!player.isPlaying && player.position >= 0.5 && trackLyrics.plainLyrics) {
+        previousPosition = player.position
       }
       wasPlaying = player.isPlaying
     }
