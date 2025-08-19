@@ -41,7 +41,7 @@ Scope {
       Row {
         anchors.centerIn: parent
         //LegacyMediaPlayerWidget {}
-        MediaPlayerWidget {}
+        MediaPlayerWidget {currentScreen: screen.name}
       }
 
       // Right widgets

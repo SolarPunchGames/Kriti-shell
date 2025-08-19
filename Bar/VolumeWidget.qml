@@ -4,6 +4,7 @@ import QtQuick.Controls
 import Quickshell
 import Quickshell.Io
 import Quickshell.Widgets
+import qs.Services
 import ".."
 
 Item {
@@ -39,15 +40,31 @@ Item {
       onTriggered: getVolProc.running = true
     }
 
-    // text: " " + Audio.sink.audio.volume.toFixed(2)
+    MouseArea {
+      id: mouseArea
 
-    WheelHandler {
-      blocking: false
-      onWheel: (event)=> Audio.setVolume(0.5)
+      anchors.fill: parent
+
+      cursorShape: Qt.PointingHandCursor
+      hoverEnabled: true
+
+      // onPressed: // make custom volume window
+
+      //LazyLoader {  
+      //  id: powerMenuLoader  
+      //  source: "MediaMenu.qml"
+      //  loading: true 
+      //}
+
+      onClicked: Quickshell.execDetached(["pavucontrol"])
+
+      onWheel: (wheel)=> {
+        if (wheel.angleDelta.y < 0) {
+          Audio.setVolume(Audio.volume - 0.01)
+        } else {
+          Audio.setVolume(Audio.volume + 0.01)
+        }
+      }
     }
-
-    onClicked: Quickshell.execDetached(["pavucontrol"])
-
-    // onPressed: // make custom volume window
   }
 }

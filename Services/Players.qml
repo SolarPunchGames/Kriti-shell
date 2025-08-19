@@ -4,6 +4,7 @@ pragma Singleton
 import QtQuick
 import QtQml
 import Quickshell
+import Quickshell.Io
 import Quickshell.Services.Mpris
 
 Singleton {
@@ -13,7 +14,59 @@ Singleton {
   property real pausedTime: 0.0
   readonly property MprisPlayer player: Mpris.players.values[playerId]
 
-  property real prevPosition // : player.position
+//  readonly property bool isYtMusic: {
+//    if (player.metadata) {
+//      console.log("url: " + player.metadata.xesam)
+//      false
+//    }
+//    false
+//  }
+
+  property real previousPosition
+  property bool wasPlaying
+
+  Connections {  
+    target: player  
+    function onPostTrackChanged() {
+        lyricsTimer.running = true
+        lyricsProc.running = false
+        trackLyrics = 1
+        Players.player.position = 0
+        console.log("track changed")
+      }  
+    }
+
+  property var trackLyrics: 1
+
+  Timer {
+    id: lyricsTimer
+    interval: 500
+    running: {
+      console.log("https://lrclib.net/api/get?artist_name=" + encodeURI(player.trackArtist) + "&track_name=" + encodeURI(player.trackTitle) + "&album_name=" + encodeURI(player.trackAlbum) + "&duration=" + player.length)
+      true
+    }
+    onTriggered: {
+      lyricsProc.running = true
+    }
+  }
+
+  Process {
+    id: lyricsProc
+    running: false
+    command: [ "curl", "https://lrclib.net/api/get?artist_name=" + encodeURI(player.trackArtist) + "&track_name=" + encodeURI(player.trackTitle) + "&album_name=" + encodeURI(player.trackAlbum) + "&duration=" + player.length]
+    stdout: StdioCollector {
+      waitForEnd: true
+      onStreamFinished: {
+        console.log(text)
+        if (JSON.parse(text).statusCode) {
+          trackLyrics = 404
+          console.log("lyrics failed")
+        } else {
+          trackLyrics = JSON.parse(text)
+        }
+      }
+    }
+  }
 
   FrameAnimation {
     running: player.playbackState == MprisPlaybackState.Playing
@@ -23,33 +76,15 @@ Singleton {
     }
   }
 
-  Timer {
-    running: true //player.playbackState == MprisPlaybackState.Playing
-    interval: 10
-    repeat: true
-
+  FrameAnimation {
+    running: true
     onTriggered: {
-      if (prevPosition > (player.position + 1) || prevPosition < (player.position - 1)) {
-        pausedTime = 0
+      if (wasPlaying == true && player.isPlaying == false && player.position >= 1 && trackLyrics.plainLyrics) {
+        previousPosition = player.position
+      } else if (wasPlaying == false && player.isPlaying == true && previousPosition >= 1 && trackLyrics.plainLyrics) {
+        player.position = previousPosition
       }
+      wasPlaying = player.isPlaying
     }
-  }
-
-  Timer {
-    running: true //player.playbackState == MprisPlaybackState.Playing
-    interval: 20
-    repeat: true
-
-    onTriggered: {
-      prevPosition = player.position
-    }
-  }
-
-  Timer {
-    running: player.playbackState == MprisPlaybackState.Paused
-    interval: 100
-    repeat: true
-
-    onTriggered: pausedTime += 0.1
   }
 }

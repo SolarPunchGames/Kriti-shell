@@ -7,4 +7,5 @@ import "Bar"
 Scope {
   Bar {}
   PowerMenu {}
+  MediaMenu {}
 }

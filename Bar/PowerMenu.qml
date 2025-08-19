@@ -13,77 +13,21 @@ Scope {
     id: variants
     model: Quickshell.screens
 
-    PanelWindow {
+    ScalePanelWindow {
       id: window
 
       property var modelData
       screen: modelData
 
-      anchors {
-        top: true
-        right: true
-      }
+      scaleItemAlias: scaleItem
+      mainPanelAlias: mainPanel
 
-      color: "#00000000"
-
-      implicitHeight: mainPanel.height + 50
-      implicitWidth: mainPanel.width + 50
-
-      mask: Region {  
-        x: mainPanel.x
-        y: mainPanel.y - mainPanel.height
-        width: {
-          if (scaleItem.state == "open") {
-            mainPanel.width * 2
-          } else {
-            0
-          }
-        }
-        height: {
-          if (scaleItem.state == "open") {
-            mainPanel.height * 2
-          } else {
-            0
-          }
-        }
-      }
-
-      function toggleOpen() {
-        if (scaleItem.state == "open") {
-          scaleItem.state = ""
-        } else {
-          scaleItem.state = "open"
-        }
-      }
-
-      Item {
+      PanelScaleItem {
         id: scaleItem
 
         anchors.fill: parent
 
         transformOrigin: Item.TopRight
-
-        scale: 0.6
-        opacity: 0
-
-        states: State {
-          name: "open"
-          PropertyChanges {target: scaleItem; scale: 1}
-          PropertyChanges {target: scaleItem; opacity: 1}
-        }
-
-        transitions: Transition {
-          PropertyAnimation {
-            property: "scale"
-            duration: 250
-            easing.type: Easing.OutCubic
-          }
-          PropertyAnimation {
-            property: "opacity"
-            duration: 250
-            easing.type: Easing.OutCubic
-          }
-        }
 
         InvertedRounding {
           anchors.top: mainPanel.top
