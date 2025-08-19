@@ -250,13 +250,40 @@ Scope {
               Component {
                 id: highlight
                 Rectangle {
-                  width: lyricsRect.width - 20; height: 30
+                  id: highlightRect
+
+                  width: lyricsView.currentItem.contentWidth + 40
+                  height: lyricsView.currentItem.height
+
                   anchors.horizontalCenter: parent.horizontalCenter
-                  color: Colors.itemHoveredBackground; radius: 5
+                  color: Colors.itemHoveredBackground; radius: 10
                   y: lyricsView.currentItem.y
+
+                  opacity: lyricsView.currentItem.contentWidth == 0 ? 0 : 1
+
+                  Behavior on opacity {
+                    PropertyAnimation {
+                      properties: "opacity"; 
+                      duration: 250;
+                      
+                    }
+                  }
+
                   Behavior on y {
                     SpringAnimation {
-                      spring: 4
+                      spring: 5
+                      damping: 0.5
+                    }
+                  }
+                  Behavior on width {
+                    SpringAnimation { 
+                      spring: 3
+                      damping: 0.3
+                    }
+                  }
+                  Behavior on height {
+                    SpringAnimation { 
+                      spring: 3
                       damping: 0.3
                     }
                   }
@@ -268,8 +295,7 @@ Scope {
                 anchors.fill: parent
 
                 topMargin: 20
-                rightMargin: 20
-                leftMargin: 20
+                bottomMargin: 20
 
                 maximumFlickVelocity: 2000
 
@@ -291,35 +317,36 @@ Scope {
                   id: lyricsList
                 }
 
-                //add: Transition {
-                //  id: lyricAddTrans
-                //  SequentialAnimation {
-                //    PropertyAnimation { properties: "x"; to: 1000; duration: 0 }
-                //    PauseAnimation { duration: lyricAddTrans.ViewTransition.index * 50}
-                //    PropertyAnimation { 
-                //      properties: "x"
-                //      from: 100
-                //      to: 0
-                //      duration: 250
-                //      easing.type: Easing.OutCubic
-                //    }
-                //  }
-                //  //SequentialAnimation {
-                //  //  id: lyricOpacityAnim
-                //  //  PropertyAnimation { properties: "opacity"; to: 0; duration: 0 }
-                //  //  PauseAnimation { duration: lyricAddTrans.ViewTransition.index * 50}
-                //  //  PropertyAnimation { 
-                //  //    properties: "opacity"; 
-                //  //    to: lyricOpacityAnim.prevOpacity
-                //  //    duration: 250;
-                //  //  }
-                //  //}
-                //}
+                add: Transition {
+                  id: lyricAddTrans
+                  SequentialAnimation {
+                    PropertyAnimation { properties: "x"; to: 1000; duration: 0 }
+                    PauseAnimation { duration: lyricAddTrans.ViewTransition.index * 50}
+                    PropertyAnimation { 
+                      properties: "x"
+                      from: 100
+                      to: 0
+                      duration: 250
+                      easing.type: Easing.OutCubic
+                    }
+                  }
+                  //SequentialAnimation {
+                  //  id: lyricOpacityAnim
+                  //  PropertyAnimation { properties: "opacity"; to: 0; duration: 0 }
+                  //  PauseAnimation { duration: lyricAddTrans.ViewTransition.index * 50}
+                  //  PropertyAnimation { 
+                  //    properties: "opacity"; 
+                  //    to: lyricOpacityAnim.prevOpacity
+                  //    duration: 250;
+                  //  }
+                  //}
+                }
 
                 Connections {  
                   target: Players.player 
                   function onTrackChanged() {  
                     lyricsList.clear()
+                    lyricsView.currentIndex = -1
                     showLyricsTimer.running = true
                     lyricsLoadingText.visible = true
                     lyricsLoadingText.state = "loading"
@@ -332,18 +359,6 @@ Scope {
                   running: true
 
                   onTriggered: {
-
-                    //function Timer() {
-                    //  return Qt.createQmlObject("import QtQuick; Timer {}", lyricsList);
-                    //}
-
-                    //function delay(delayTime, cb) {
-                    //  var timer: new Timer();
-                    //  timer.interval = delayTime;
-                    //  timer.repeat = false;
-                    //  timer.triggered.connect(cb);
-                    //  timer.start();
-                    //}
 
                     if (Players.trackLyrics.plainLyrics) {
 
@@ -360,16 +375,12 @@ Scope {
                             var nextTime = 0
                           }
 
-                          function appendLyricItem() {
-                            lyricsList.append({ 
-                              "lyricText": lines[i].substring(11), 
-                              "time": 60 * parseFloat(lines[i].substring(1,3)) + parseFloat(lines[i].substring(4,9)), 
-                              "index": i, 
-                              "nextTime": nextTime
-                            });;
-                          }
-
-                          appendLyricItem()
+                          lyricsList.append({ 
+                            "lyricText": lines[i].substring(11), 
+                            "time": 60 * parseFloat(lines[i].substring(1,3)) + parseFloat(lines[i].substring(4,9)), 
+                            "index": i, 
+                            "nextTime": nextTime
+                          });;
 
 
 //                        console.log("lyricText: " + lines[i].substring(11))
@@ -388,9 +399,6 @@ Scope {
                             "index": i,
                             "nextTime": 0
                           })
-                          setTimeout(function() {
-                            b = a + 4;
-                          }, 100);
                         }
                       }
                     } else if (Players.trackLyrics == 1) {
@@ -410,28 +418,28 @@ Scope {
 
                   property bool isEmpty: lyricText == ""
 
-                  text: {
-                    if (isEmpty) {
-                      "󰽴"
-                    } else {
-                      lyricText
-                    }
-                  }
+                  text: lyricText //{
+//                    if (isEmpty) {
+//                      "󰽴"
+//                    } else {
+//                      lyricText
+//                    }
+//                  }
 
-                  scale: {
-                    if (isEmpty) {
-                      0.9
-                    } else {
-                      1
-                    }
-                  }
+//                  scale: {
+//                    if (isEmpty) {
+//                      0.9
+//                    } else {
+//                      1
+//                    }
+//                  }
 
 
 
                   property var isCurrentItem: ListView.isCurrentItem
 
                   state: {
-                    if (isCurrentItem) {
+                    if (index == lyricsView.currentIndex) {
                       "highlighted"
                     } else if (index < lyricsView.currentIndex) {
                       "faded"
@@ -447,7 +455,7 @@ Scope {
                     
                     onTriggered: {
                       if (time) {
-                        if ((Players.player.position >= time && Players.player.position <= nextTime) || (nextTime == 0 && Players.player.position >= time && Players.player.position <= time + 1)) {
+                        if ((Players.player.position >= time && Players.player.position <= nextTime - 0.1) || (nextTime == 0 && Players.player.position >= time && Players.player.position <= time + 1)) {
                           lyricsView.currentIndex = index
                         } else if (Players.player.position < time - 0.1 && index == 0) {
                           lyricsView.currentIndex = -1
@@ -490,8 +498,11 @@ Scope {
                   font.pointSize: 10
                   //font.family: "JetBrainsMono Nerd Font"
 
-                  width: lyricsRect.width - lyricsView.rightMargin - lyricsView.leftMargin
-                  height: 30 * lineCount
+                  width: lyricsView.width
+                  height: contentHeight + 20
+
+                  leftPadding: 30
+                  rightPadding: 30
 
                   wrapMode: Text.WordWrap
 
@@ -515,6 +526,7 @@ Scope {
                       if (time) {
                         Players.previousPosition = time
                         Players.player.position = time
+                        lyricsView.currentIndex = index
                         if (mouse.button == Qt.RightButton) {
                           Players.player.isPlaying = true
                         }
