@@ -30,7 +30,9 @@ Singleton {
     function onPostTrackChanged() {
         lyricsTimer.running = true
         lyricsProc.running = false
-        player.position = 0
+        if (Config.media.playback.resetPositionOnTrackChange.value) {
+          player.position = 0
+        }
         trackLyrics = 1
         console.log("track changed")
       }  
