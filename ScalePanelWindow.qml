@@ -50,4 +50,10 @@ PanelWindow {
       scaleItemAlias.state = "open"
     }
   }
+  function open() {
+    scaleItemAlias.state = "open"
+  }
+  function close() {
+  scaleItemAlias.state = ""
+  }
 }

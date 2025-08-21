@@ -25,6 +25,19 @@ Scope {
       scaleItemAlias: scaleItem
       mainPanelAlias: mainPanel
 
+        Timer {
+          running: true
+          interval: 100
+          repeat: true
+
+          onTriggered: {
+            if (!Players.player) {
+              console.log("closed")
+              window.close()
+            }
+          }
+        }
+
       PanelScaleItem {
         id: scaleItem
 
@@ -52,7 +65,7 @@ Scope {
         Rectangle {
           id: mainPanel
 
-          width: 580
+          width: mainRow.width
           height: 400
 
           color: Colors.mainPanelBackground
@@ -74,9 +87,12 @@ Scope {
 
             padding: 5
 
-            Rectangle {
+            width: children.width
 
-              implicitWidth: mainPanel.width / 2 - 7.5
+            Rectangle {
+              id: mediaRect
+
+              implicitWidth: mediaColumn.width + 10
               implicitHeight: parent.height - 10
 
               color: Colors.itemBackground
@@ -92,7 +108,8 @@ Scope {
                 y: 5
                 
                 Item {
-                  Layout.preferredWidth: parent.parent.width - 10
+                  id: imgItem
+                  Layout.preferredWidth: 270
                   Layout.preferredHeight: width
 
                   Layout.alignment: Qt.AlignHCenter
@@ -202,7 +219,7 @@ Scope {
 
             Rectangle {
               id: lyricsRect
-              implicitWidth: mediaColumn.width + 10
+              implicitWidth: mediaRect.width
               implicitHeight: parent.height - 10
 
               radius: 10
