@@ -285,7 +285,7 @@ Scope {
 
                   y: lyricsView.currentItem.y
 
-                  opacity: lyricsView.currentItem.contentWidth == 0 ? 0 : 1
+                  opacity: lyricsView.currentItem.contentWidth == 0 || !Config.media.lyrics.highlightRectangle.value ? 0 : 1
 
                   Behavior on color {
                     PropertyAnimation {
@@ -302,7 +302,7 @@ Scope {
                   Behavior on y {
                     SpringAnimation {
                       spring: 5
-                      damping: 0.37
+                      damping: 0.4
                     }
                   }
                   Behavior on width {
@@ -448,23 +448,13 @@ Scope {
 
                   property bool isEmpty: lyricText == ""
 
-                  text: lyricText //{
-//                    if (isEmpty) {
-//                      "󰽴"
-//                    } else {
-//                      lyricText
-//                    }
-//                  }
-
-//                  scale: {
-//                    if (isEmpty) {
-//                      0.9
-//                    } else {
-//                      1
-//                    }
-//                  }
-
-
+                  text: {
+                    if (isEmpty) {
+                      Config.media.lyrics.characterBetween.value
+                    } else {
+                      lyricText
+                    }
+                  }
 
                   property var isCurrentItem: ListView.isCurrentItem
 

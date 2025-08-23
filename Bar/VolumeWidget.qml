@@ -60,9 +60,9 @@ Item {
 
       onWheel: (wheel)=> {
         if (wheel.angleDelta.y < 0) {
-          Audio.setVolume(Audio.volume - 0.01)
+          Audio.setVolume(Audio.volume - Config.audio.volumeWidget.scrollIncrement.value * 0.01)
         } else {
-          Audio.setVolume(Audio.volume + 0.01)
+          Audio.setVolume(Audio.volume + Config.audio.volumeWidget.scrollIncrement.value * 0.01)
         }
       }
     }

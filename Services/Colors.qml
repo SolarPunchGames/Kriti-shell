@@ -8,6 +8,7 @@ Singleton {
   id: root
 
   // Main colors
+  
   //readonly property bool isDark: false
   //readonly property color mainPanelBackground: "#d1ddbe"
   //readonly property color itemBackground: "#fbfff4"
