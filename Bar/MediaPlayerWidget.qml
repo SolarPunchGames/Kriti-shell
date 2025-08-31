@@ -138,7 +138,7 @@ Item {
         font.pointSize: 11
         font.family: "JetBrainsMono Nerd Font"
 
-        text: TextServices.truncate(Players.player.trackTitle, 30) + " "
+        text: TextServices.truncate(Players.player.trackTitle, 25) + " "
       }
 
       property int buttonRadius: 5

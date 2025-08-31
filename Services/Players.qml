@@ -12,15 +12,8 @@ Singleton {
 
   property int playerId: 0
   property real pausedTime: 0.0
-  readonly property MprisPlayer player: Mpris.players.values[playerId]
-
-//  readonly property bool isYtMusic: {
-//    if (player.metadata) {
-//      console.log("url: " + player.metadata.xesam)
-//      false
-//    }
-//    false
-//  }
+  readonly property var players: Mpris.players.values
+  readonly property MprisPlayer player: players[playerId]
 
   property real previousPosition
   property bool wasPlaying

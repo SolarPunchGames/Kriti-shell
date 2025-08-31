@@ -124,6 +124,27 @@ Scope {
 
                     radius: 7
                   }
+
+                  //ComboBox {
+                  //  anchors.left: parent.left
+                  //  anchors.top: parent.top
+//
+                  //  anchors.leftMargin: 5
+                  //  anchors.topMargin: 5
+//
+                  //  width: 200
+                  //  height: 30
+//
+                  //  model: Players.players
+//
+                  //  background: Rectangle {
+                  //    radius: 5
+//
+                  //    color: Colors.itemBackground
+//
+                  //    opacity: 0.5
+                  //  }
+                  //}
                 }
 
                 Text {
@@ -139,7 +160,7 @@ Scope {
                   color: Colors.text
                 }
                 Text {
-                  text: TextServices.truncate(Players.player.trackArtist, 20) + " - " + TextServices.formatSecondsToMinutesAndSeconds(Math.round(Players.player.position)) + "/" + TextServices.formatSecondsToMinutesAndSeconds(Players.player.length)
+                  text: TextServices.truncate(Players.player.trackArtist, 20) + " - " + TextServices.secondsToMinutesSeconds(Math.round(Players.player.position)) + "/" + TextServices.secondsToMinutesSeconds(Players.player.length)
 
                   Layout.preferredWidth: parent.width
                   

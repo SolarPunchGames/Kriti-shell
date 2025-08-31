@@ -8,10 +8,8 @@ import ".."
 Item {
   MarginWrapperManager { margin: 5 }
 
-  readonly property string warningBackgroundColor: "#af4b44"
-
   Rectangle {
-    color: Time.isLate ? warningBackgroundColor : Colors.itemBackground
+    color: Time.isLate ? Colors.itemWarningBackground : Colors.itemBackground
     
     radius: 10
 

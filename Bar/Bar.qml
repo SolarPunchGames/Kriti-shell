@@ -48,6 +48,7 @@ Scope {
       Row {
         anchors.verticalCenter: parent.verticalCenter
         anchors.right: parent.right
+        ShutdownTimerWidget {}
         Separator {}
         VolumeWidget {}
         ClockWidget {}
