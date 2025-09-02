@@ -10,7 +10,7 @@ Singleton {
 
   FileView {
     id: configFile
-    path: Qt.resolvedUrl("./settings.json")
+    path: Qt.resolvedUrl("../settings.json")
     blockLoading: true
 
     watchChanges: true
