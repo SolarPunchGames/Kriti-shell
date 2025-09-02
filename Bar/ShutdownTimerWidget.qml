@@ -35,16 +35,16 @@ Item {
       running: true
 
       onTriggered: {
-        if (button.shutdown.timeToTargetTimeSeconds <= 0) {
+        if (button.shutdown.timeToTargetTimeSeconds < 0) {
           Quickshell.execDetached(["systemctl", "poweroff"])
         }
       }
     }
     
     onClicked: {
-      //if (shutdown.timeToTargetTimeSeconds < shutdown.responseTime) {
+      if (shutdown.timeToTargetTimeSeconds < shutdown.responseTime) {
         shutdown.targetTime = TextServices.secondsToHoursMinutesSeconds(shutdown.timeSeconds + shutdown.responseTime)
-      //}
+      }
     }
   }
 }
