@@ -11,7 +11,8 @@ Item {
 
   property int maxLetters: 30
   property int expandedMaxLetters: 60
-  readonly property string appTitle: Hyprland.activeToplevel.title
+  readonly property var currentApp: Hyprland.activeToplevel
+  readonly property string appTitle: currentApp?.title ?? ""
 
   states: State{
     name: "expanded"
@@ -33,7 +34,7 @@ Item {
 
     implicitHeight: 30
 
-    implicitWidth: textItem.width + 30
+    implicitWidth: appTitle.length > 0 ? textItem.contentWidth + 30 : 0
 
     color: {
       if (root.state == "expanded") {
@@ -52,7 +53,7 @@ Item {
     Text {
       id: textItem
       anchors.centerIn: parent
-      text: Hyprland.activeToplevel ? TextServices.truncate(appTitle, maxLetters) : "No active window"
+      text: Hyprland.activeToplevel ? TextServices.truncate(appTitle, maxLetters) : ""
       font.pointSize: 11
       color: Colors.text
       font.family: "JetBrainsMono Nerd Font"
