@@ -134,7 +134,6 @@ Scope {
                     anchors.rightMargin: 5
 
                     backgroundAlias.radius: 5
-                    backgroundColor: "#7a000000"
 
                     width: textAlias.contentWidth + 15
                     height: width
