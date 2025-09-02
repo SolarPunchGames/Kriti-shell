@@ -25,18 +25,18 @@ Scope {
       scaleItemAlias: scaleItem
       mainPanelAlias: mainPanel
 
-        Timer {
-          running: true
-          interval: 100
-          repeat: true
+      Timer {
+        running: true
+        interval: 100
+        repeat: true
 
-          onTriggered: {
-            if (!Players.player) {
-              console.log("closed")
-              window.close()
-            }
+        onTriggered: {
+          if (!Players.player) {
+            console.log("closed")
+            window.close()
           }
         }
+      }
 
       PanelScaleItem {
         id: scaleItem
