@@ -125,6 +125,26 @@ Scope {
                     radius: 7
                   }
 
+                  BaseButton {
+                    id: lyricsButton
+
+                    anchors.top: parent.top
+                    anchors.right: parent.right
+                    anchors.topMargin: 5
+                    anchors.rightMargin: 5
+
+                    backgroundAlias.radius: 5
+                    backgroundColor: "#7a000000"
+
+                    width: textAlias.contentWidth + 15
+                    height: width
+
+                    textAlias.rightPadding: 5
+                    text: ""
+
+                    onClicked: lyricsRect.toggleOpen()
+                  }
+
                   //ComboBox {
                   //  anchors.left: parent.left
                   //  anchors.top: parent.top
@@ -240,10 +260,26 @@ Scope {
 
             Rectangle {
               id: lyricsRect
-              implicitWidth: mediaRect.width
+              implicitWidth: closed ? 0 : mediaRect.width
               implicitHeight: parent.height - 10
 
+              Behavior on implicitWidth {
+                PropertyAnimation {
+                  duration: 100
+                }
+              }
+
               radius: 10
+
+              function toggleOpen() {
+                if (closed) {
+                  closed = false
+                } else {
+                  closed = true
+                }
+              }
+
+              property bool closed: false
 
               color: Colors.itemBackground
 
@@ -276,8 +312,6 @@ Scope {
 
                 width: lyricsRect.width - lyricsView.rightMargin - lyricsView.leftMargin
                 height: 30 * lineCount
-
-                wrapMode: Text.WordWrap
 
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
