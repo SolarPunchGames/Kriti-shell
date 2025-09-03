@@ -265,8 +265,9 @@ Scope {
               implicitHeight: parent.height - 10
 
               Behavior on implicitWidth {
-                PropertyAnimation {
-                  duration: 100
+                SpringAnimation {
+                  spring: 10
+                  damping: 0.6
                 }
               }
 
