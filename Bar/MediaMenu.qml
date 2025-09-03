@@ -614,6 +614,27 @@ Scope {
                   }
                 }
               }
+
+              BaseButton {
+                id: lyricsReloadButton
+
+                anchors.top: parent.top
+                anchors.right: parent.right
+                anchors.topMargin: 5
+                anchors.rightMargin: 5
+
+                backgroundAlias.radius: 7
+
+                width: textAlias.contentWidth + 15
+                height: width
+
+                textAlias.rightPadding: 3
+                text: "󰑓"
+
+                onClicked: {
+                  Players.reloadLyrics()
+                }
+              }
             }
           }
         }
