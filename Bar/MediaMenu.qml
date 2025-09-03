@@ -141,7 +141,9 @@ Scope {
                     textAlias.rightPadding: 5
                     text: ""
 
-                    onClicked: lyricsRect.toggleOpen()
+                    onClicked: {
+                      lyricsRect.toggleOpen()
+                    }
                   }
 
                   //ComboBox {
@@ -273,8 +275,10 @@ Scope {
               function toggleOpen() {
                 if (closed) {
                   closed = false
+                  Players.reloadLyrics()
                 } else {
                   closed = true
+                  lyricsList.clear()
                 }
               }
 
@@ -427,8 +431,8 @@ Scope {
                 }
 
                 Connections {  
-                  target: Players.player 
-                  function onTrackChanged() {  
+                  target: Players
+                  function onLyricsChanged() {  
                     lyricsList.clear()
                     lyricsView.currentIndex = -1
                     showLyricsTimer.running = true

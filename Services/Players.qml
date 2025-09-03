@@ -18,18 +18,30 @@ Singleton {
   property real previousPosition
   property bool wasPlaying
 
+  signal lyricsChanged()
+
   Connections {  
     target: player  
     function onPostTrackChanged() {
-        lyricsTimer.running = true
-        lyricsProc.running = false
-        if (Config.media.playback.resetPositionOnTrackChange.value) {
-          player.position = 0
-        }
-        trackLyrics = 1
-        console.log("track changed")
-      }  
-    }
+      reloadLyrics() 
+
+      if (Config.media.playback.resetPositionOnTrackChange.value) {
+        player.position = 0
+      }
+
+      console.log("track changed")
+    }  
+  }
+  
+  function reloadLyrics() {
+    lyricsTimer.running = true
+    lyricsProc.running = false
+    trackLyrics = 1
+
+    lyricsChanged()
+
+    console.log("reload lyrics")
+  }
 
   property var trackLyrics: 1
 

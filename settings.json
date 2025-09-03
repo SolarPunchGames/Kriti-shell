@@ -1,5 +1,12 @@
 {
   "media": {
+    "widget": {
+      "progressBar": {
+        "name": "Progress colored on media player widget",
+        "type": "boolean",
+        "value": true
+      }
+    },
     "lyrics": {
       "highlightRectangle": {
         "name": "Lyrics highlight rectangle",

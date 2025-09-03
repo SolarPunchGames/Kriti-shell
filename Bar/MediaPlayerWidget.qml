@@ -37,8 +37,8 @@ Item {
       width: {
         //console.log(Players.player.position - Players.pausedTime)
         //console.log(Players.prevPosition)
-        //onsole.log(Players.pausedTime)
-        0 //parent.width * ((Players.player.position - Players.pausedTime) / Players.player.length) // Problem with position not being updated correctly
+        //console.log(Players.pausedTime)
+        parent.width * ((Players.player.position - Players.pausedTime) / Players.player.length) // Problem with position not being updated correctly
       }
 
       Rectangle {
@@ -48,7 +48,20 @@ Item {
 
         width: rect.width
 
-        color: Colors.itemHoveredBackground
+        color: {
+          if (Config.media.widget.progressBar.value) {
+            Colors.itemHoveredBackground
+          } else {
+            "transparent"
+          }
+        }
+
+        Behavior on color {
+          PropertyAnimation {
+            duration: 200
+          }
+        }
+
         radius: rect.radius
       }
     }
@@ -57,6 +70,13 @@ Item {
 
     implicitHeight: 30
     implicitWidth: row.width + 30
+
+    Behavior on implicitWidth {
+      SpringAnimation {
+        spring: 5
+        damping: 0.4
+      }
+    }
 
     states: State {
       name: "closed"
