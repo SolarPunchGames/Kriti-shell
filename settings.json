@@ -4,7 +4,7 @@
       "progressBar": {
         "name": "Progress colored on media player widget (Warning! For this to work correctly on media with no lyrics found, you must enable the \"Fix positon bug on media with no lyrics found\")",
         "type": "multiChoice",
-        "value": 2,
+        "value": 1,
         "choices": [
           "Always",
           "On media with lyrics",
