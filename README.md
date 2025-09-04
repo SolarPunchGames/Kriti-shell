@@ -2,6 +2,8 @@
  
 This is my first Quickshell config. It has many features I have not seen in other configs of any widget system, like built in _**LYRICS**_!
 
+[insert cool showcase vid]
+
 ## Features
 
 ### Media player with (synced) lyrics
@@ -15,6 +17,8 @@ The media player loads lyrics from lrclib. Also works with local files with corr
 <img width="343" height="355" alt="image" src="https://github.com/user-attachments/assets/73f38000-2008-4625-8f7f-48baa49ee47a" />
 
 The buttons show an icon when hovered on!
+
+### And many others...
 
 ## Known issues
 
