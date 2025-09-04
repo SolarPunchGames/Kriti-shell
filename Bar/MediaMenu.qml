@@ -276,7 +276,7 @@ Scope {
               function toggleOpen() {
                 if (closed) {
                   closed = false
-                  Players.reloadLyrics()
+                  Players.lyricsChanged()
                 } else {
                   closed = true
                   lyricsList.clear()
