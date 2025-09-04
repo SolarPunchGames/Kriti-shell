@@ -63,7 +63,7 @@ Singleton {
 
     property int responseTime: 60
 
-    property string targetTime: "21:30:00"
+    property string targetTime: "23:00:00"
 
     readonly property int targetTimeSeconds: TextServices.hoursMinutesSecondsToSeconds(targetTime)
     readonly property int timeSeconds: TextServices.hoursMinutesSecondsToSeconds(Time.hoursMinutesSeconds)

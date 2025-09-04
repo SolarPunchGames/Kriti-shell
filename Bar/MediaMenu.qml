@@ -83,7 +83,20 @@ Scope {
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.top: parent.top
             anchors.bottom: parent.bottom
-            spacing: 5
+
+            spacing: {
+              if (lyricsRect.closed) {
+                0
+              } else {
+                5
+              }
+            }
+
+            Behavior on spacing {
+              PropertyAnimation {
+                duration: 300
+              }
+            }
 
             padding: 5
 
