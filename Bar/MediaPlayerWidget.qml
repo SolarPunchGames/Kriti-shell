@@ -49,7 +49,7 @@ Item {
         width: rect.width
 
         color: {
-          if (Config.media.widget.progressBar.value) {
+          if (Config.media.widget.progressBar.value == 0 || (Config.media.widget.progressBar.value == 1 && Players.trackLyrics != 404)) {
             Colors.itemHoveredBackground
           } else {
             "transparent"

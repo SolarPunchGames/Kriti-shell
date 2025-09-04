@@ -509,7 +509,7 @@ Scope {
 
                   text: {
                     if (isEmpty) {
-                      Config.media.lyrics.characterBetween.value
+                      Config.media.lyrics.characterBetween.choices[Config.media.lyrics.characterBetween.value]
                     } else {
                       lyricText
                     }

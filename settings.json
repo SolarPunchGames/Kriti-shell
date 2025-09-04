@@ -2,21 +2,26 @@
   "media": {
     "widget": {
       "progressBar": {
-        "name": "Progress colored on media player widget",
-        "type": "boolean",
-        "value": true
+        "name": "Progress colored on media player widget (Warning! For this to work correctly on media with no lyrics found, you must enable the \"Fix positon bug on media with no lyrics found\")",
+        "type": "multiChoice",
+        "value": 2,
+        "choices": [
+          "Always",
+          "On media with lyrics",
+          "Never"
+        ]
       }
     },
     "lyrics": {
       "highlightRectangle": {
         "name": "Lyrics highlight rectangle",
-        "type": "boolean",
+        "type": "switch",
         "value": true
       },
       "characterBetween": {
         "name": "Character between lyrics",
         "type": "multiChoice",
-        "value": "♪",
+        "value": 0,
         "choices": [
           "♪",
           "---",
@@ -28,7 +33,12 @@
     "playback": {
       "resetPositionOnTrackChange": {
         "name": "Reset position on track change (Warning! On Youtube this may cause loss of progress in video)",
-        "type": "boolean",
+        "type": "switch",
+        "value": false
+      },
+      "saveLoadPositionOnPlayPause": {
+        "name": "Fix position bug on media with no lyrics found (Warning! This causes play/pause to feel a little clunky)",
+        "type": "switch",
         "value": false
       }
     }
@@ -37,7 +47,7 @@
     "volumeWidget": {
       "scrollIncrement": {
         "name": "Volume widget scoll increment",
-        "type": "value",
+        "type": "slider",
         "value": 1,
         "min": 0,
         "max": 20
