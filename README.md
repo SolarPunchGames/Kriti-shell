@@ -10,7 +10,7 @@ This is my first Quickshell config. It has many features I have not seen in othe
 
 <img width="673" height="475" alt="media player image" src="https://github.com/user-attachments/assets/6d8b9053-e41c-4c09-a5ba-b9e339a7aa64" />
 
-The media player loads lyrics from lrclib. Also works with local files with correct metadata. (This currently has some jank with certain settings. See Known issues)
+The media player loads lyrics from lrclib. (This currently has some jank with certain settings. See Known issues) Also works with local files with correct metadata. 
 
 ### Cool power menu
 
