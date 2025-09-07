@@ -14,9 +14,9 @@ The media player loads lyrics from lrclib. Also works with local files with corr
 
 ### Cool power menu
 
-<img width="343" height="355" alt="image" src="https://github.com/user-attachments/assets/73f38000-2008-4625-8f7f-48baa49ee47a" />
+![2025-09-07 17-34-00](https://github.com/user-attachments/assets/b66d8628-da46-41f9-95e2-39ecee7f2ed8)
 
-The buttons show an icon when hovered on!
+Unfortunately no confirmation for any of them right now.
 
 ### And many others...
 
