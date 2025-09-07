@@ -4,7 +4,7 @@ This is my first Quickshell config. It has many features I have not seen in othe
 
 [insert cool showcase vid]
 
-## Features
+## Notable features
 
 ### Media player with (synced) lyrics
 
