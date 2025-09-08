@@ -4,19 +4,19 @@ This is my first Quickshell config. It has many features I have not seen in othe
 
 [insert cool showcase vid]
 
-## Features
+## Notable features
 
 ### Media player with (synced) lyrics
 
 <img width="673" height="475" alt="media player image" src="https://github.com/user-attachments/assets/6d8b9053-e41c-4c09-a5ba-b9e339a7aa64" />
 
-The media player loads lyrics from lrclib. Also works with local files with correct metadata. (This currently has some jank with certain settings. See Known issues)
+The media player loads lyrics from lrclib. (This currently has some jank with certain settings. See [Known issues](https://github.com/SolarPunchGames/Quickshell-Rice?tab=readme-ov-file#known-issues)) Also works with local files with correct metadata. 
 
 ### Cool power menu
 
-<img width="343" height="355" alt="image" src="https://github.com/user-attachments/assets/73f38000-2008-4625-8f7f-48baa49ee47a" />
+![2025-09-07 17-34-00](https://github.com/user-attachments/assets/b66d8628-da46-41f9-95e2-39ecee7f2ed8)
 
-The buttons show an icon when hovered on!
+Unfortunately no confirmation for any of them right now.
 
 ### And many others...
 
