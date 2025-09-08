@@ -12,7 +12,7 @@ Item {
     id: button
 
     text: {
-      if (shutdown.timeToTargetTimeSeconds <= 900) {
+      if (shutdown.timeToTargetTimeSeconds <= 900 && Config.parsedConfig.miscellaneous.shutdownWidget.enableShutdown.value) {
         if (shutdown.timeToTargetTimeSeconds <= shutdown.responseTime) {
           shutdown.timeToTargetTime + "!"
         } else {
@@ -35,7 +35,7 @@ Item {
       running: true
 
       onTriggered: {
-        if (button.shutdown.timeToTargetTimeSeconds < 0) {
+        if (button.shutdown.timeToTargetTimeSeconds < 0 && Config.parsedConfig.miscellaneous.shutdownWidget.enableShutdown.value) {
           Quickshell.execDetached(["systemctl", "poweroff"])
         }
       }

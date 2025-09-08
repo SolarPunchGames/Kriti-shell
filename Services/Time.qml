@@ -3,6 +3,7 @@ pragma Singleton
 
 import Quickshell
 import QtQuick
+import qs.Services
 
 Singleton {
   id: root
@@ -61,9 +62,9 @@ Singleton {
   QtObject {
     id: shutdownObject
 
-    property int responseTime: 60
+    property int responseTime: Config.parsedConfig.miscellaneous.shutdownWidget.responseTime.value
 
-    property string targetTime: "21:30:00"
+    property string targetTime: Config.parsedConfig.miscellaneous.shutdownWidget.shutdownTime.value
 
     readonly property int targetTimeSeconds: TextServices.hoursMinutesSecondsToSeconds(targetTime)
     readonly property int timeSeconds: TextServices.hoursMinutesSecondsToSeconds(Time.hoursMinutesSeconds)
