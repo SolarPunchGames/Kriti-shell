@@ -52,7 +52,7 @@ Singleton {
       } else if (shutdownObject.timeToTargetTimeSeconds == 120) {
         Quickshell.execDetached(["notify-send", " 2 minutes", " Your PC will shut down in 2 minutes"])
       } else if (shutdownObject.timeToTargetTimeSeconds == 60) {
-        Quickshell.execDetached(["notify-send", " 1 minutes", " Your PC will shut down in 1 minutes"])
+        Quickshell.execDetached(["notify-send", " 1 minutes", " Your PC will shut down in 1 minute"])
       } else if (shutdownObject.timeToTargetTimeSeconds == 15) {
         Quickshell.execDetached(["notify-send", " 15 seconds", " Your PC will shut down in 15 seconds"])
       }
