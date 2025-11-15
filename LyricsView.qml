@@ -24,6 +24,40 @@ ListView {
 
   property var lyricsSizeMult: 1
 
+  Text {
+    id: lyricsLoadingText
+
+    anchors.fill: parent
+
+    state: "loading"
+
+    states: [ 
+      State {
+        name: "loading"
+
+        PropertyChanges {target: lyricsLoadingText; text: "Loading lyrics..."}
+      },
+      State {
+        name: "failed"
+
+        PropertyChanges {target: lyricsLoadingText; text: "Lyrics not found"}
+      }
+    ]
+
+    font.weight: 800
+
+    font.pointSize:15
+    font.family: "JetBrainsMono Nerd Font"
+
+    width: lyricsRect.width - lyricsView.rightMargin - lyricsView.leftMargin
+    height: 30 * lineCount
+
+    horizontalAlignment: Text.AlignHCenter
+    verticalAlignment: Text.AlignVCenter
+
+    color: Colors.text
+  }
+
   Component {
     id: highlight
     Rectangle {
