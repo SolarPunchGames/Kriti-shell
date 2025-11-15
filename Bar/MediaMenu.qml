@@ -348,6 +348,50 @@ Scope {
 
               Row {
                 anchors.top: parent.top
+                anchors.left: parent.left
+                anchors.topMargin: 5
+                anchors.leftMargin: 5
+
+                BaseButton {
+                  id: minusButton
+
+                  backgroundAlias.radius: 7
+                  backgroundColor: "transparent"
+
+                  width: 30
+                  height: width
+
+                  text: "󰍴"
+
+                  onClicked: {
+                    if (lyricsView.lyricsSizeMult > 0.5) {
+                      lyricsView.lyricsSizeMult -= 0.1
+                    }
+                  }
+                }
+
+                BaseButton {
+                  id: plusButton
+
+                  backgroundAlias.radius: 7
+                  backgroundColor: "transparent"
+
+                  width: 30
+                  height: width
+
+                  text: "󰐕"
+
+                  onClicked: {
+                    if (lyricsView.lyricsSizeMult < 2) {
+                      lyricsView.lyricsSizeMult += 0.1
+                    }
+                  }
+                }
+
+              }
+
+              Row {
+                anchors.top: parent.top
                 anchors.right: parent.right
                 anchors.topMargin: 5
                 anchors.rightMargin: 5
