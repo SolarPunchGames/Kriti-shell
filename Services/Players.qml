@@ -86,11 +86,11 @@ Singleton {
   FrameAnimation {
     running: true
     onTriggered: {
-      if (wasPlaying == false && player.isPlaying && previousPosition >= 0.5 && trackLyrics.plainLyrics) {
+      /*if (wasPlaying == false && player.isPlaying && previousPosition >= 0.5 && trackLyrics.plainLyrics) {
         player.position = previousPosition
       } else if (!player.isPlaying && player.position >= 0.5 && trackLyrics.plainLyrics) {
         previousPosition = player.position
-      }
+      }*/ // YT (or Firefox idk) made an update that makes this unnecessary
       wasPlaying = player.isPlaying
     }
   }
