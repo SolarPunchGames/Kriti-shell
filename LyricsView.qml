@@ -324,7 +324,6 @@ ListView {
         }
         if (mouse.button == Qt.MiddleButton) {
           Quickshell.clipboardText = parent.text
-          console.log("middle click")
         }
       }
     }

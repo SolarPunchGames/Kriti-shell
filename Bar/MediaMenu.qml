@@ -363,6 +363,23 @@ Scope {
                 anchors.rightMargin: 5
 
                 BaseButton {
+                  id: lyricsCopyButton
+
+                  backgroundAlias.radius: 7
+                  backgroundColor: "transparent"
+
+                  width: 30
+                  height: width
+
+                  textAlias.rightPadding: 3
+                  text: "󰆏"
+
+                  onClicked: {
+                    Quickshell.clipboardText = Players.trackLyrics.plainLyrics
+                  }
+                }
+
+                BaseButton {
                   id: lyricsWindowButton
 
                   backgroundAlias.radius: 7
