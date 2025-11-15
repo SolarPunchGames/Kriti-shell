@@ -5,7 +5,7 @@ import Quickshell.Widgets
 import Quickshell.Services.Mpris
 import Quickshell.Io
 import qs.Services
-import ".."
+import qs
 
 Item {
   MarginWrapperManager { margin: 5 }

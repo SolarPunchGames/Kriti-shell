@@ -3,7 +3,7 @@ import QtQuick
 import QtQuick.Controls
 import Quickshell
 import Quickshell.Widgets
-import ".."
+import qs
 
 Item {
   MarginWrapperManager { margin: 5 }

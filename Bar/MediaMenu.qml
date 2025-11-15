@@ -7,7 +7,7 @@ import Quickshell.Widgets
 import Quickshell.Io
 import Qt5Compat.GraphicalEffects
 import qs.Services
-import ".."
+import qs
 
 Scope {
   property alias powerMenuVariants: variants

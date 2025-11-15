@@ -5,7 +5,7 @@ import Quickshell
 import Quickshell.Widgets
 import Quickshell.Services.SystemTray
 import qs.Services
-import ".."
+import qs
 
 Item {
   id: root

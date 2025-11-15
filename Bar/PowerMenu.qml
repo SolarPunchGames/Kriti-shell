@@ -4,7 +4,7 @@ import QtQuick.Layouts
 import Quickshell
 import Quickshell.Widgets
 import qs.Services
-import ".."
+import qs
 
 Scope {
   property alias powerMenuVariants: variants

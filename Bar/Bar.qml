@@ -2,7 +2,7 @@
 import QtQuick
 import Quickshell
 import qs.Services
-import ".."
+import qs
 
 Scope {
   Variants {
