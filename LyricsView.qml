@@ -2,6 +2,7 @@
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
+import Quickshell
 import qs.Services
 
 ListView {
@@ -270,7 +271,7 @@ ListView {
     MouseArea {
       anchors.fill: parent
 
-      acceptedButtons: Qt.LeftButton | Qt.RightButton
+      acceptedButtons: Qt.LeftButton | Qt.RightButton | Qt.MiddleButton
 
       cursorShape: {
         if (time) {
@@ -279,13 +280,17 @@ ListView {
       }
 
       onClicked: (mouse)=> {
-        if (time) {
+        if (time && mouse.button != Qt.MiddleButton) {
           Players.previousPosition = time
           Players.player.position = time
           lyricsView.currentIndex = index
           if (mouse.button == Qt.RightButton) {
             Players.player.isPlaying = true
           }
+        }
+        if (mouse.button == Qt.MiddleButton) {
+          Quickshell.clipboardText = parent.text
+          console.log("middle click")
         }
       }
     }
