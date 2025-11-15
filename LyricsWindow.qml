@@ -140,7 +140,7 @@ FloatingWindow {
         }
 
         Text {
-          text: TextServices.truncate(Players.player.trackArtist, 20)
+          text: TextServices.truncate(Players.player.trackArtist, (window.width - 255) / 8)
 
           font.pointSize: 8
           font.family: "JetBrainsMono Nerd Font"
