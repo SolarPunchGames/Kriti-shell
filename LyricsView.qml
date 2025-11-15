@@ -21,12 +21,14 @@ ListView {
 
   cacheBuffer: 1000
 
+  property var lyricsSizeMult: 1
+
   Component {
     id: highlight
     Rectangle {
       id: highlightRect
 
-      width: lyricsView.currentItem.contentWidth + 40
+      width: lyricsView.currentItem.contentWidth + 40 * lyricsView.lyricsSizeMult
       height: lyricsView.currentItem.height
 
       anchors.horizontalCenter: parent.horizontalCenter
@@ -249,14 +251,14 @@ ListView {
 
     font.weight: 300
 
-    font.pointSize: 10
+    font.pointSize: 10 * lyricsView.lyricsSizeMult
     //font.family: "JetBrainsMono Nerd Font"
 
     width: lyricsView.width
-    height: contentHeight + 20
+    height: contentHeight + 20 * lyricsView.lyricsSizeMult
 
-    leftPadding: 30
-    rightPadding: 30
+    leftPadding: 30 / lyricsView.lyricsSizeMult * 2
+    rightPadding: 30 / lyricsView.lyricsSizeMult * 2
 
     wrapMode: Text.WordWrap
 

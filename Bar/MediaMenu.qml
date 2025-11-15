@@ -10,6 +10,7 @@ import qs.Services
 import qs
 
 Scope {
+  id: root
   property alias powerMenuVariants: variants
   
   Variants {
@@ -148,7 +149,7 @@ Scope {
 
                     backgroundAlias.radius: 5
 
-                    width: textAlias.contentWidth + 15
+                    width: 30
                     height: width
 
                     textAlias.rightPadding: 5
@@ -340,25 +341,49 @@ Scope {
                 id: lyricsView
               }
 
-              BaseButton {
-                id: lyricsReloadButton
+              Component {
+                id: lyricsWindowComponent
+                LyricsWindow {}
+              }
 
+              Row {
                 anchors.top: parent.top
                 anchors.right: parent.right
                 anchors.topMargin: 5
                 anchors.rightMargin: 5
 
-                backgroundAlias.radius: 7
-                backgroundColor: "transparent"
+                BaseButton {
+                  id: lyricsWindowButton
 
-                width: textAlias.contentWidth + 15
-                height: width
+                  backgroundAlias.radius: 7
+                  backgroundColor: "transparent"
 
-                textAlias.rightPadding: 3
-                text: "󰑓"
+                  width: 30
+                  height: width
 
-                onClicked: {
-                  Players.reloadLyrics()
+                  textAlias.rightPadding: 3
+                  text: "󱂬"
+
+                  onClicked: {
+                    lyricsWindowComponent.createObject(root)
+                  }
+                }
+
+                BaseButton {
+                  id: lyricsReloadButton
+
+                  backgroundAlias.radius: 7
+                  backgroundColor: "transparent"
+
+                  width: 30
+                  height: width
+
+                  textAlias.rightPadding: 3
+                  text: "󰑓"
+
+                  onClicked: {
+                    Players.reloadLyrics()
+                  }
                 }
               }
             }
