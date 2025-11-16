@@ -389,7 +389,7 @@ Scope {
                   height: width
 
                   textAlias.rightPadding: 3
-                  text: "󱂬"
+                  text: ""
 
                   onClicked: {
                     lyricsWindowComponent.createObject(root)
