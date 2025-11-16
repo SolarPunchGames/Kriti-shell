@@ -9,4 +9,5 @@ Scope {
   //SettingsWindow {}
   PowerMenu {}
   MediaMenu {}
+  AppMenu {}
 }

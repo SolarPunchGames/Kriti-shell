@@ -26,7 +26,7 @@ PanelWindow {
 
   mask: Region {  
     x: mainPanelAlias.x
-    y: mainPanelAlias.y - mainPanelAlias.height
+    y: mainPanelAlias.y
     width: {
       if (scaleItemAlias.state == "open") {
         mainPanelAlias.width
@@ -36,7 +36,7 @@ PanelWindow {
     }
     height: {
       if (scaleItemAlias.state == "open") {
-        mainPanelAlias.height * 2
+        mainPanelAlias.height
       } else {
         0
       }

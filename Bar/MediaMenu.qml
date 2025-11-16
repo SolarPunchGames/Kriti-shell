@@ -11,7 +11,7 @@ import qs
 
 Scope {
   id: root
-  property alias powerMenuVariants: variants
+  property alias mediaMenuVariants: variants
   
   Variants {
     id: variants

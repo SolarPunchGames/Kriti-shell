@@ -102,7 +102,7 @@ Item {
       acceptedButtons: Qt.AllButtons
 
       LazyLoader {  
-        id: powerMenuLoader  
+        id: mediaMenuLoader  
         source: "MediaMenu.qml"
         loading: true 
       }
@@ -115,15 +115,15 @@ Item {
             Players.player.togglePlaying()
           }
         } else if (mouse.button == Qt.RightButton) {
-          if (powerMenuLoader.item) {          
+          if (mediaMenuLoader.item) {          
             // Find the variant instance that matches this screen 
-            for (var i = 0; i < powerMenuLoader.item.powerMenuVariants.instances.length; i++) {  
-              var instance = powerMenuLoader.item.powerMenuVariants.instances[i]  
+            for (var i = 0; i < mediaMenuLoader.item.mediaMenuVariants.instances.length; i++) {  
+              var instance = mediaMenuLoader.item.mediaMenuVariants.instances[i]  
               if (instance.modelData.name === currentScreen) {  
                 instance.toggleOpen()  
                 break  
               }  
-            }  
+            }
           }  
         } else if (mouse.button == Qt.MiddleButton) {
           if (rect.state == "closed") {
