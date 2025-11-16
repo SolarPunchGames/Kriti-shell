@@ -37,6 +37,7 @@ Singleton {
     lyricsTimer.running = true
     lyricsProc.running = false
     trackLyrics = 1
+    currentTry = 1
 
     lyricsChanged()
 
@@ -45,9 +46,12 @@ Singleton {
 
   property var trackLyrics: 1
 
+  readonly property int maxTries: 5
+  property int currentTry: 1
+
   Timer {
     id: lyricsTimer
-    interval: 500
+    interval: 700
     running: {
       //console.log("https://lrclib.net/api/get?artist_name=" + encodeURI(player.trackArtist) + "&track_name=" + encodeURI(player.trackTitle) + "&album_name=" + encodeURI(player.trackAlbum) + "&duration=" + player.length)
       true
@@ -66,7 +70,11 @@ Singleton {
       onStreamFinished: {
         //console.log(text)
         if (JSON.parse(text).statusCode) {
-          trackLyrics = 404
+          if (currentTry < maxTries) {
+            lyricsTimer.running = true
+          } else {
+            trackLyrics = 404
+          }
           //console.log("lyrics failed")
         } else {
           trackLyrics = JSON.parse(text)

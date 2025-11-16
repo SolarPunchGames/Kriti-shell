@@ -10,7 +10,7 @@ FloatingWindow {
   id: window
   title: "Lyrics"
 
-  minimumSize: Qt.size(340, 340)
+  minimumSize: Qt.size(340, 440)
 
   color: Colors.mainPanelBackground
 
@@ -80,45 +80,45 @@ FloatingWindow {
 
     }
     Row {
-                anchors.top: parent.top
-                anchors.right: parent.right
-                anchors.topMargin: 5
-                anchors.rightMargin: 5
+      anchors.top: parent.top
+      anchors.right: parent.right
+      anchors.topMargin: 5
+      anchors.rightMargin: 5
 
-                BaseButton {
-                  id: lyricsCopyButton
+      BaseButton {
+        id: lyricsCopyButton
 
-                  backgroundAlias.radius: 7
-                  backgroundColor: "transparent"
+        backgroundAlias.radius: 7
+        backgroundColor: "transparent"
 
-                  width: 30
-                  height: width
+        width: 30
+        height: width
 
-                  textAlias.rightPadding: 3
-                  text: "󰆏"
+        textAlias.rightPadding: 3
+        text: "󰆏"
 
-                  onClicked: {
-                    Quickshell.clipboardText = Players.trackLyrics.plainLyrics
-                  }
-                }
+        onClicked: {
+          Quickshell.clipboardText = Players.trackLyrics.plainLyrics
+        }
+      }
 
-                BaseButton {
-                  id: lyricsReloadButton
+      BaseButton {
+        id: lyricsReloadButton
 
-                  backgroundAlias.radius: 7
-                  backgroundColor: "transparent"
+        backgroundAlias.radius: 7
+        backgroundColor: "transparent"
 
-                  width: 30
-                  height: width
+        width: 30
+        height: width
 
-                  textAlias.rightPadding: 3
-                  text: "󰑓"
+        textAlias.rightPadding: 3
+        text: "󰑓"
 
-                  onClicked: {
-                    Players.reloadLyrics()
-                  }
-                }
-              }
+        onClicked: {
+          Players.reloadLyrics()
+        }
+      }
+    }
   }
 
   RowLayout {

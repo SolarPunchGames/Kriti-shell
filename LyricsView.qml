@@ -117,8 +117,8 @@ ListView {
   highlight: highlight
   highlightFollowsCurrentItem: false
 
-  preferredHighlightBegin: height / 2
-  preferredHighlightEnd: height / 2
+  preferredHighlightBegin: height / 5 * 2
+  preferredHighlightEnd: height / 5 * 2
 
   model: ListModel {
     id: lyricsList
