@@ -46,12 +46,12 @@ Singleton {
 
   property var trackLyrics: 1
 
-  readonly property int maxTries: 3
+  readonly property int maxTries: 5
   property int currentTry: 1
 
   Timer {
     id: lyricsTimer
-    interval: 700
+    interval: 100
     running: {
       //console.log("https://lrclib.net/api/get?artist_name=" + encodeURI(player.trackArtist) + "&track_name=" + encodeURI(player.trackTitle) + "&album_name=" + encodeURI(player.trackAlbum) + "&duration=" + player.length)
       true
