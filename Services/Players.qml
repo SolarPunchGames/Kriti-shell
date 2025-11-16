@@ -46,7 +46,7 @@ Singleton {
 
   property var trackLyrics: 1
 
-  readonly property int maxTries: 5
+  readonly property int maxTries: 3
   property int currentTry: 1
 
   Timer {
@@ -58,6 +58,7 @@ Singleton {
     }
     onTriggered: {
       lyricsProc.running = true
+      trackLyrics = 1
     }
   }
 
@@ -72,6 +73,7 @@ Singleton {
         if (JSON.parse(text).statusCode) {
           if (currentTry < maxTries) {
             lyricsTimer.running = true
+            currentTry += 1
           } else {
             trackLyrics = 404
           }
