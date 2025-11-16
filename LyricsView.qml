@@ -9,7 +9,7 @@ ListView {
   id: lyricsView
   anchors.fill: parent
 
-  topMargin: 20
+  topMargin: 40
   bottomMargin: 20
 
   maximumFlickVelocity: 2000
