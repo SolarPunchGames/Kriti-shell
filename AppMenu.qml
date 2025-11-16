@@ -41,7 +41,19 @@ Scope {
       property var modelData
       screen: modelData
 
-      //WlrLayershell.keyboardFocus: scaleItem.state == "open" ? WlrKeyboardFocus.Exclusive : WlrKeyboardFocus.none
+      WlrLayershell.keyboardFocus: scaleItemAlias.state == "open" ? WlrKeyboardFocus.Exclusive : WlrKeyboardFocus.None
+
+      onWindowOpened: {
+        searchField.clear()
+        appsView.updateApps("")
+      }
+
+      Timer {
+        running: true
+        interval: 1000
+        repeat: true
+        onTriggered: searchField.forceActiveFocus()
+      }
 
       scaleItemAlias: scaleItem
       mainPanelAlias: mainPanel
@@ -77,7 +89,13 @@ Scope {
           id: mainPanel
 
           width: 600
-          height: 600
+          height: {
+            if (searchField.height + 5510 + appsView.count * 50 < 500) {
+              searchField.height + 55 + appsView.count * appsView.currentItem.height
+            } else {
+              500
+            }
+          }
 
           color: Colors.mainPanelBackground
 
@@ -115,11 +133,34 @@ Scope {
 
                 maximumFlickVelocity: 2000
 
-                currentIndex: -1
+                property string searchQuery: ""
+
+                function updateApps(query) {
+                  model = AppSearch.searchApplications(query)
+                  appsView.currentIndex = 0
+                }
+
+                verticalLayoutDirection: ListView.BottomToTop
+
+                header: null
+                footer: null
 
                 cacheBuffer: 1000
 
-                model: DesktopEntries.applications
+                add: Transition {
+                  id: appAddTrans
+                  SequentialAnimation {
+                    PropertyAnimation { properties: "x"; to: 1000; duration: 0 }
+                    PauseAnimation { duration: appAddTrans.ViewTransition.index * 50}
+                    PropertyAnimation { 
+                      properties: "x"
+                      from: 100
+                      to: 0
+                      duration: 250
+                      easing.type: Easing.OutCubic
+                    }
+                  }
+                }
 
                 delegate: BaseButton {
                   id: app
@@ -128,17 +169,24 @@ Scope {
 
                   anchors.horizontalCenter: parent.horizontalCenter
 
+                  backgroundColor: {
+                    if (ListView.isCurrentItem) {
+                      Colors.itemHoveredBackground
+                    } else {
+                      Colors.itemBackground
+                    }
+                  }
+
                   topPadding: 10
                   bottomPadding: 10
 
                   text: modelData.name
 
+                  fontSize: 11
+
                   onClicked: {
                     modelData.execute()
-                    for (var i = 0; i < appMenuVariants.instances.length; i++) {
-                      var instance = appMenuVariants.instances[i]
-                      instance.close()
-                    }
+                    window.close()
                   }
                 }
               }
@@ -150,7 +198,33 @@ Scope {
               Layout.fillWidth: true
               Layout.preferredHeight: 50
 
+              font.pointSize: 12
+
+              leftPadding: 10
+              rightPadding: 10
+
               color: Colors.text
+
+              onTextEdited: {
+                appsView.searchQuery = searchField.text
+                appsView.updateApps(appsView.searchQuery)
+              }
+
+              Keys.onReturnPressed: {
+                appsView.currentItem.click()
+              }
+
+              Keys.onUpPressed: {
+                appsView.incrementCurrentIndex()
+              }
+
+              Keys.onDownPressed: {
+                appsView.decrementCurrentIndex()
+              }
+
+              Keys.onEscapePressed: {
+                window.close()
+              }
 
               background: Rectangle {
                 radius: 10

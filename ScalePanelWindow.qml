@@ -43,17 +43,24 @@ PanelWindow {
     }
   }
 
+  signal windowOpened()
+  signal windowClosed()
+
   function toggleOpen() {
     if (scaleItemAlias.state == "open") {
       scaleItemAlias.state = ""
+      windowClosed()
     } else {
       scaleItemAlias.state = "open"
+      windowOpened()
     }
   }
   function open() {
     scaleItemAlias.state = "open"
+    windowOpened()
   }
   function close() {
-  scaleItemAlias.state = ""
+    scaleItemAlias.state = ""
+    windowClosed()
   }
 }
