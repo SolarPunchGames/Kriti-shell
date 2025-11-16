@@ -219,6 +219,13 @@ FloatingWindow {
           }
         }
 
+        Timer {
+          interval: 1000
+          running: true
+          repeat: true
+          onTriggered: parent.forceActiveFocus()
+        }
+
         onClicked: Players.player.togglePlaying()
       }
 
