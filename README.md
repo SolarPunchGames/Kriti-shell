@@ -25,12 +25,22 @@ This issue is also currently addressed with a setting in `settings.json` called 
 
 ## Installation
 
-1. Install quickshell (on arch: `pacman -S quickshell`)
+1. Install quickshell. For Arch:
+
+   ```sh
+   pacman -S quickshell
+   ```
+
 2. Make sure you have installed: `curl` (and optionally: `pw-volume`)
 3. Clone this repo into `.config/quickshell/Kriti-shell`
-4. Add `exec-once qs -c Kriti-shell` to your hyprland.conf (You can also run once from the terminal with `qs -c Kriti-shell`)
-5. Add `bind = $mainMod, SPACE , exec, qs -c Kriti-shell ipc call appMenu toggle `
-6. Profit.
+   
+   ```sh
+   git clone https://github.com/SolarPunchGames/Kriti-shell/ ~/.config/quickshell/
+   ```
+
+5. Add `exec-once qs -c Kriti-shell` to your hyprland.conf (You can also run once from the terminal with `qs -c Kriti-shell`)
+6. Add `bind = $mainMod, SPACE , exec, qs -c Kriti-shell ipc call appMenu toggle` to your hyprland.conf
+7. Profit.
 
 ## Editing settings
 
