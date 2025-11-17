@@ -90,7 +90,7 @@ Scope {
 
           width: 600
           height: {
-            if (searchField.height + 5510 + appsView.count * 50 < 500) {
+            if (searchField.height + 55 + appsView.count * appsView.currentItem.height < 500) {
               searchField.height + 55 + appsView.count * appsView.currentItem.height
             } else {
               500
