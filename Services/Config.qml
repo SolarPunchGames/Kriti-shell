@@ -15,6 +15,23 @@ Singleton {
 
     watchChanges: true
     onFileChanged: this.reload()
+
+    onLoadFailed: (error) => {
+      if (error == FileViewError.FileNotFound) {
+        copyDefaultsProc.running = true
+      }
+    }
+  }
+
+  Process {
+    id: copyDefaultsProc
+    running: true
+    command: [ "sh", "-c", "cp " + Quickshell.shellDir + "/defaultSettings.json " + Quickshell.shellDir + "/settings.json" ]
+    stdout: StdioCollector {
+      onStreamFinished: {
+        configFile.reload
+      }
+    }
   }
 
   property var parsedConfig: JSON.parse(configFile.text())
