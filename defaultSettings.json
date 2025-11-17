@@ -1,0 +1,59 @@
+{
+  "media": {
+    "widget": {
+      "progressBar": {
+        "name": "Progress colored on media player widget",
+        "type": "multiChoice",
+        "value": 0,
+        "choices": [
+          "Always",
+          "On media with lyrics",
+          "Never"
+        ]
+      }
+    },
+    "lyrics": {
+      "highlightRectangle": {
+        "name": "Lyrics highlight rectangle",
+        "type": "switch",
+        "value": true
+      },
+      "characterBetween": {
+        "name": "Character between lyrics",
+        "type": "multiChoice",
+        "value": 0,
+        "choices": [
+          "♪",
+          "---",
+          "...",
+          ""
+        ]
+      }
+    },
+    "playback": {
+      "resetPositionOnTrackChange": {
+        "name": "Reset position on track change (Warning! On Youtube this may cause loss of progress in video)",
+        "type": "switch",
+        "value": false
+      },
+      "saveLoadPositionOnPlayPause": {
+        "name": "Fix position bug on media with no lyrics found (Warning! This causes play/pause to feel a little clunky)",
+        "type": "switch",
+        "value": false
+      }
+    }
+  },
+  "miscellaneous": {
+  },
+  "audio": {
+    "volumeWidget": {
+      "scrollIncrement": {
+        "name": "Volume widget scoll increment",
+        "type": "slider",
+        "value": 1,
+        "min": 0,
+        "max": 20
+      }
+    }
+  }
+}

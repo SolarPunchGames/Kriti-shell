@@ -35,8 +35,10 @@ Item {
       running: true
 
       onTriggered: {
-        if (button.shutdown.timeToTargetTimeSeconds < 0 && Config.parsedConfig.miscellaneous.shutdownWidget.enableShutdown.value) {
-          Quickshell.execDetached(["systemctl", "poweroff"])
+        if (Config.parsedConfig.miscellaneous.shutdownWidget) {
+          if (button.shutdown.timeToTargetTimeSeconds < 0 && Config.parsedConfig.miscellaneous.shutdownWidget.enableShutdown.value) {
+            Quickshell.execDetached(["systemctl", "poweroff"])
+          }
         }
       }
     }
