@@ -1,6 +1,7 @@
 # Kriti-shell
 This is Kriti-shell. It has many features I have not seen in other configs of any widget system, like built in _**LYRICS**_!
-[insert cool showcase vid]
+
+[Video here](https://www.youtube.com/watch?v=I7NS3uAZfyI) since it is too long to upload directly in github.
 
 ## Notable features
 ### Media player with synced lyrics
