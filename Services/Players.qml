@@ -58,7 +58,6 @@ Singleton {
     }
     onTriggered: {
       lyricsProc.running = true
-      trackLyrics = 1
     }
   }
 
