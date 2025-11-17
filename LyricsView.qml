@@ -20,9 +20,11 @@ ListView {
 
   currentIndex: -1
 
-  cacheBuffer: 1000
+  cacheBuffer: 1000000
 
   property var lyricsSizeMult: 1
+
+  Component.onCompleted: forceLayout()
 
   Text {
     id: lyricsLoadingText
@@ -202,11 +204,13 @@ ListView {
             })
           }
         }
+
       } else if (Players.trackLyrics == 1) {
         showLyricsTimer.running = true
       } else if (Players.trackLyrics == 404) {
         lyricsLoadingText.state = "failed"
       }
+      lyricsView.forceLayout()
     }
   }
 
