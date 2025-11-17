@@ -393,6 +393,7 @@ Scope {
 
                   onClicked: {
                     lyricsWindowComponent.createObject(root)
+                    window.close()
                   }
                 }
 
