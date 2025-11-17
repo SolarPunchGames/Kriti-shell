@@ -1,3 +1,4 @@
+# Kriti-shell
 This is Kriti-shell. It has many features I have not seen in other configs of any widget system, like built in _**LYRICS**_!
 [insert cool showcase vid]
 
