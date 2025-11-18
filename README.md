@@ -18,11 +18,27 @@ The media player loads lyrics from lrclib. Also works with local files with corr
 <img width="709" height="485" alt="image" src="https://github.com/user-attachments/assets/5036304b-429d-4fb4-b3f2-588d8abe20c4" />
 
 ## Known issues
-### ~~Media length not updated correctly when using browser based players~~ Seems entirely fixed now when using Firefox.
+### ~~Media length not updated correctly when using browser based players~~ 
+> [!Note]
+> Seems entirely fixed now when using Firefox.
+
 This issue is currently addressed with a setting in `settings.json` called `"resetPositionOnTrackChange"`, but that has the issue that you may lose saved progress on media when switching to another tab with media.
 
-### ~~Media position not updated correctly when using browser based players~~ Seems mostly fixed now when using Firefox.
+### ~~Media position not updated correctly when using browser based players~~ 
+> [!Note]
+> Seems mostly fixed now when using Firefox.
+
 This issue is also currently addressed with a setting in `settings.json` called `"saveLoadPositionOnPlayPause"`, but that has the issue that play/pause feels a little janky because it snaps back to the start of the current second.
+
+## Updating
+
+> [!Note]
+> It is recommended to update Kriti-shell when you update Quickshell. If there are any breaking bugs from Quickshell updates, please make an issue!
+
+Run this in the installation folder (usually `.config/quickshell/Kriti-shell`):
+```sh
+git pull
+```
 
 ## Installation
 
