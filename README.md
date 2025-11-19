@@ -66,4 +66,6 @@ git pull
 
 The settings can be found in the installation folder as `settings.json` after first launch. A graphical interface is planned.
 
+If you want to reset to default settings, remove settings.json. Kriti-shell will ask you to copy defaults back.
+
 *Multi choice settings have the value as a number. Remember that the values start from 0, so the first choice is 0 and the second is 1 and so on.
