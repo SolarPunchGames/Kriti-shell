@@ -44,17 +44,6 @@
     }
   },
   "miscellaneous": {
-    "shutdownWidget": {
-      "enableShutdown": {
-        "value": true
-      },
-      "responseTime": {
-        "value": 120
-      },
-      "shutdownTime": {
-        "value": "22:00:00"
-      }
-    }
   },
   "audio": {
     "volumeWidget": {
