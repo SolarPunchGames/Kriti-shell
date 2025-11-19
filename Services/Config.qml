@@ -79,7 +79,7 @@ Singleton {
 
   Process {
     id: copyDefaultsProc
-    running: true
+    running: false
     command: [ "sh", "-c", "cp " + Quickshell.shellDir + "/defaultSettings.json " + Quickshell.shellDir + "/settings.json" ]
     stdout: StdioCollector {
       onStreamFinished: {
