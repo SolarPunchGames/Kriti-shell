@@ -34,13 +34,13 @@ This issue is also currently addressed with a setting in `settings.json` called 
 
 > [!Note]
 > It is recommended to update Kriti-shell when you update Quickshell. If there are any breaking bugs from Quickshell updates, please make an issue!
+>
+> It is also recommended to compare the defaultSettings.json file to your settings.json file, because new settings may have been introduced.
 
 Run this in the installation folder (usually `.config/quickshell/Kriti-shell`):
 ```sh
 git pull
 ```
-
-It is also recommended to compare the defaultSettings.json file to your settings.json file, because new settings may have been introduced.
 
 ## Installation
 
