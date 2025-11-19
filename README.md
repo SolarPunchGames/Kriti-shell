@@ -58,7 +58,7 @@ It is also recommended to compare the defaultSettings.json file to your settings
    ```
 
 5. Add `exec-once qs -c Kriti-shell` to your hyprland.conf (You can also run once from the terminal with `qs -c Kriti-shell`)
-6. Add `bind = $mainMod, SPACE , exec, qs -c Kriti-shell ipc call appMenu toggle` to your hyprland.conf
+6. Add `bind = SUPER, SPACE , exec, qs -c Kriti-shell ipc call appMenu toggle` to your hyprland.conf (edit keybind, if needed)
 7. Add `windowrulev2 = float, class:org.quickshell` to your hyprland.conf
 8. Profit.
 
