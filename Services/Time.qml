@@ -41,21 +41,23 @@ Singleton {
     repeat: true
 
     onTriggered: {
-      if (Config.parsedConfig.miscellaneous.shutdownWidget.enableShutdown.value) {
-        if (shutdownObject.timeToTargetTimeSeconds == 900) {
-          Quickshell.execDetached(["notify-send", " 15 minutes", " Your PC will shut down in 15 minutes"])
-        } else if (shutdownObject.timeToTargetTimeSeconds == 600) {
-          Quickshell.execDetached(["notify-send", " 10 minutes", " Your PC will shut down in 10 minutes"])
-        } else if (shutdownObject.timeToTargetTimeSeconds == 300) {
-          Quickshell.execDetached(["notify-send", " 5 minutes", " Your PC will shut down in 5 minutes"])
-        } else if (shutdownObject.timeToTargetTimeSeconds == 180) {
-          Quickshell.execDetached(["notify-send", " 3 minutes", " Your PC will shut down in 3 minutes"])
-        } else if (shutdownObject.timeToTargetTimeSeconds == 120) {
-          Quickshell.execDetached(["notify-send", " 2 minutes", " Your PC will shut down in 2 minutes"])
-        } else if (shutdownObject.timeToTargetTimeSeconds == 60) {
-          Quickshell.execDetached(["notify-send", " 1 minutes", " Your PC will shut down in 1 minute"])
-        } else if (shutdownObject.timeToTargetTimeSeconds == 15) {
-          Quickshell.execDetached(["notify-send", " 15 seconds", " Your PC will shut down in 15 seconds"])
+      if (Config.parsedConfig.miscellaneous.shutdownWidget) {
+        if (Config.parsedConfig.miscellaneous.shutdownWidget.enableShutdown.value) {
+          if (shutdownObject.timeToTargetTimeSeconds == 900) {
+            Quickshell.execDetached(["notify-send", " 15 minutes", " Your PC will shut down in 15 minutes"])
+          } else if (shutdownObject.timeToTargetTimeSeconds == 600) {
+            Quickshell.execDetached(["notify-send", " 10 minutes", " Your PC will shut down in 10 minutes"])
+          } else if (shutdownObject.timeToTargetTimeSeconds == 300) {
+            Quickshell.execDetached(["notify-send", " 5 minutes", " Your PC will shut down in 5 minutes"])
+          } else if (shutdownObject.timeToTargetTimeSeconds == 180) {
+            Quickshell.execDetached(["notify-send", " 3 minutes", " Your PC will shut down in 3 minutes"])
+          } else if (shutdownObject.timeToTargetTimeSeconds == 120) {
+            Quickshell.execDetached(["notify-send", " 2 minutes", " Your PC will shut down in 2 minutes"])
+          } else if (shutdownObject.timeToTargetTimeSeconds == 60) {
+            Quickshell.execDetached(["notify-send", " 1 minutes", " Your PC will shut down in 1 minute"])
+          } else if (shutdownObject.timeToTargetTimeSeconds == 15) {
+            Quickshell.execDetached(["notify-send", " 15 seconds", " Your PC will shut down in 15 seconds"])
+          }
         }
       }
     }
