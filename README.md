@@ -40,6 +40,8 @@ Run this in the installation folder (usually `.config/quickshell/Kriti-shell`):
 git pull
 ```
 
+It is also recommended to compare the defaultSettings.json file to your settings.json file, because new settings may have been introduced.
+
 ## Installation
 
 1. Install quickshell. For Arch:
