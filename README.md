@@ -54,7 +54,7 @@ git pull
 3. Clone this repo into `.config/quickshell/Kriti-shell`
    
    ```sh
-   git clone https://github.com/SolarPunchGames/Kriti-shell/ ~/.config/quickshell/
+   git clone https://github.com/SolarPunchGames/Kriti-shell/ ~/.config/quickshell/Kriti-shell
    ```
 
 5. Add `exec-once qs -c Kriti-shell` to your hyprland.conf (You can also run once from the terminal with `qs -c Kriti-shell`)
