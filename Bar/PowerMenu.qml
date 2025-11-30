@@ -7,7 +7,62 @@ import qs.Services
 import qs
 
 Scope {
+  id: root
   property alias powerMenuVariants: variants
+
+  property var command
+  property string commandName
+
+  Component {
+    id: confirmationWindowComponent
+    FloatingWindow {
+      id: confirmationWindow
+      color: Colors.mainPanelBackground
+
+      minimumSize: Qt.size(350, 120)
+      maximumSize: Qt.size(350, 120)
+      ColumnLayout {
+        anchors.fill: parent
+        anchors.topMargin: 10
+        anchors.bottomMargin: 10
+        anchors.leftMargin: 10
+        anchors.rightMargin: 10
+        Text {
+          Layout.fillWidth: true
+          Layout.fillHeight: true
+          verticalAlignment: Text.AlignVCenter
+          horizontalAlignment: Text.AlignHCenter
+          text: "Are you sure you want to " + root.commandName + "?"
+          color: Colors.text
+          font.pointSize: 11
+          font.family: "JetBrainsMono Nerd Font"
+        }
+        RowLayout {
+          Layout.fillWidth: true
+          Layout.fillHeight: true
+          uniformCellSizes: true
+          spacing: 10
+          BaseButton {
+            text: "Yes"
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+
+            onClicked: {
+              Quickshell.execDetached(root.command)
+              confirmationWindow.destroy()
+            }
+          }
+          BaseButton {
+            text: "No"
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+
+            onClicked: confirmationWindow.destroy()
+          }
+        }
+      }
+    }
+  }
   
   Variants {
     id: variants
@@ -62,7 +117,6 @@ Scope {
 
           layer.enabled: true
 
-
           Item {
             MarginWrapperManager { margin: 5 }
 
@@ -86,7 +140,14 @@ Scope {
                 Layout.verticalStretchFactor: 1
 
                 onClicked: {
-                  Quickshell.execDetached(["systemctl", "reboot"])
+                  /*for (const item of root.children) {
+                    if (item instanceof FloatingWindow) {
+                    }
+                    item.destroy()
+                  }*/ // I tried to make it close all other confirmation windows
+                  confirmationWindowComponent.createObject(root)
+                  root.command = ["systemctl", "reboot"]
+                  root.commandName = "reboot"
                   toggleOpen()
                 }
 
@@ -111,7 +172,9 @@ Scope {
                 Layout.verticalStretchFactor: 1
 
                 onClicked: {
-                  Quickshell.execDetached(["systemctl", "suspend"])
+                  confirmationWindowComponent.createObject(root)
+                  root.command = ["systemctl", "suspend"]
+                  root.commandName = "sleep"
                   toggleOpen()
                 }
 
@@ -135,7 +198,9 @@ Scope {
                 Layout.verticalStretchFactor: 1
 
                 onClicked: {
-                  Quickshell.execDetached(["hyprctl", "dispatch", "exit"])
+                  confirmationWindowComponent.createObject(root)
+                  root.command = ["hyprctl", "dispatch", "exit"]
+                  root.commandName = "logout"
                   toggleOpen()
                 }
 
@@ -159,7 +224,9 @@ Scope {
                 Layout.verticalStretchFactor: 1
 
                 onClicked: {
-                  Quickshell.execDetached(["hyprlock"])
+                  confirmationWindowComponent.createObject(root)
+                  root.command = ["hyprlock"]
+                  root.commandName = "lock"
                   toggleOpen()
                 }
 
@@ -193,7 +260,9 @@ Scope {
               anchors.fill: parent
               cursorShape: Qt.PointingHandCursor
               onClicked: {
-                Quickshell.execDetached(["systemctl", "poweroff"])
+                confirmationWindowComponent.createObject(root)
+                root.command = ["systemctl", "poweroff"]
+                root.commandName = "shutdown"
                 toggleOpen()
               }
             }
