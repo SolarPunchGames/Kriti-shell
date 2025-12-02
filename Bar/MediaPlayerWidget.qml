@@ -35,10 +35,7 @@ Item {
       color: "transparent"
 
       width: {
-        //console.log(Players.player.position - Players.pausedTime)
-        //console.log(Players.prevPosition)
-        //console.log(Players.pausedTime)
-        parent.width * ((Players.player.position - Players.pausedTime) / Players.player.length) // Problem with position not being updated correctly
+        parent.width * ((Players.player.position - Players.pausedTime) / Players.player.length)
       }
 
       Rectangle {

@@ -2,6 +2,7 @@
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
+import Qt5Compat.GraphicalEffects
 import Quickshell
 import qs.Services
 import qs
@@ -15,6 +16,8 @@ FloatingWindow {
   color: Colors.mainPanelBackground
 
   Rectangle {
+    id: mainRect
+
     anchors.top: parent.top
     anchors.left: parent.left
     anchors.right: parent.right
@@ -33,7 +36,46 @@ FloatingWindow {
 
     LyricsView {
       id: lyricsView
-      lyricsSizeMult: 1.2
+      lyricsSizeMult: 1
+    }
+
+    Rectangle {
+      anchors.bottom: parent.bottom
+      anchors.left: parent.left
+
+      clip: true
+
+      height: 3
+
+      color: "transparent"
+
+      width: {
+        parent.width * ((Players.player.position - Players.pausedTime) / Players.player.length)
+      }
+
+      Rectangle {
+        anchors.bottom: parent.bottom
+        anchors.left: parent.left
+
+        width: mainRect.width
+        height: mainRect.height
+
+        color: {
+          if (Config.media.widget.progressBar.value == 0 || (Config.media.widget.progressBar.value == 1 && Players.trackLyrics != 404 && Players.trackLyrics != 1)) {
+            Colors.itemPressedBackground
+          } else {
+            "transparent"
+          }
+        }
+
+        Behavior on color {
+          PropertyAnimation {
+            duration: 200
+          }
+        }
+
+        radius: mainRect.radius
+      }
     }
 
     Row {

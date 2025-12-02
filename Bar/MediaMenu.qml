@@ -137,6 +137,24 @@ Scope {
                     anchors.fill: parent
 
                     radius: 7
+
+                    Rectangle {
+                      id: progressBar
+
+                      anchors.bottom: parent.bottom
+                      anchors.left: parent.left
+
+                      color: {
+                        if (Config.media.widget.progressBar.value == 0 || (Config.media.widget.progressBar.value == 1 && Players.trackLyrics != 404 && Players.trackLyrics != 1)) {
+                          Colors.itemPressedBackground
+                        } else {
+                          "transparent"
+                        }
+                      }
+
+                      height: 3
+                      width: parent.width * ((Players.player.position - Players.pausedTime) / Players.player.length)
+                    }
                   }
 
                   BaseButton {
@@ -159,27 +177,6 @@ Scope {
                       lyricsRect.toggleOpen()
                     }
                   }
-
-                  //ComboBox {
-                  //  anchors.left: parent.left
-                  //  anchors.top: parent.top
-//
-                  //  anchors.leftMargin: 5
-                  //  anchors.topMargin: 5
-//
-                  //  width: 200
-                  //  height: 30
-//
-                  //  model: Players.players
-//
-                  //  background: Rectangle {
-                  //    radius: 5
-//
-                  //    color: Colors.itemBackground
-//
-                  //    opacity: 0.5
-                  //  }
-                  //}
                 }
 
                 Text {
