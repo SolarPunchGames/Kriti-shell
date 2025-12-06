@@ -14,7 +14,13 @@ Item {
   Rectangle {
     implicitHeight: 30
 
-    implicitWidth: row.width + 20
+    implicitWidth: {
+      if (row.width == 0) {
+        0
+      } else {
+        row.width + 20
+      }
+    }
 
     radius: 10
 
