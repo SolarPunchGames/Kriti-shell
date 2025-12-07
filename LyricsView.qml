@@ -122,6 +122,8 @@ ListView {
   preferredHighlightBegin: height / 5 * 2
   preferredHighlightEnd: height / 5 * 2
 
+  property alias lyricsListAlias: lyricsList
+
   model: ListModel {
     id: lyricsList
   }
@@ -154,12 +156,16 @@ ListView {
   Connections {  
     target: Players
     function onLyricsChanged() {  
-      lyricsList.clear()
-      lyricsView.currentIndex = -1
-      showLyricsTimer.running = true
-      lyricsLoadingText.visible = true
-      lyricsLoadingText.state = "loading"
-    }  
+      lyricsView.reload()
+    }
+  }
+
+  function reload() {
+    lyricsList.clear()
+    lyricsView.currentIndex = -1
+    showLyricsTimer.running = true
+    lyricsLoadingText.visible = true
+    lyricsLoadingText.state = "loading"
   }
 
   Timer {

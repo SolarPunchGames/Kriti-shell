@@ -272,7 +272,13 @@ Scope {
 
             Rectangle {
               id: lyricsRect
-              implicitWidth: closed ? 0 : mediaRect.width
+              implicitWidth: {
+                if (closed) {
+                  0
+                } else {
+                  mediaRect.width
+                }
+              }
               implicitHeight: parent.height - 10
 
               Behavior on implicitWidth {
@@ -286,12 +292,20 @@ Scope {
 
               function toggleOpen() {
                 if (closed) {
-                  closed = false
-                  Players.lyricsChanged()
+                  open()
                 } else {
-                  closed = true
-                  lyricsList.clear()
+                  close()
                 }
+              }
+
+              function open() {
+                closed = false
+                lyricsView.reload()
+              }
+
+              function close() {
+                closed = true
+                lyricsView.lyricsListAlias.clear()
               }
 
               property bool closed: false
