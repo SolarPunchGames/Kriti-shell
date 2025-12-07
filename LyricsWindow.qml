@@ -36,7 +36,7 @@ FloatingWindow {
 
     LyricsView {
       id: lyricsView
-      lyricsSizeMult: 1
+      lyricsSizeMult: 1.2
     }
 
     Rectangle {
