@@ -38,7 +38,7 @@ Item {
           id: button
 
           backgroundAlias.radius: 5
-          implicitHeight: 30 - 11
+          implicitHeight: 17
           implicitWidth: implicitHeight
 
           backgroundAlias.color: "transparent"
@@ -73,6 +73,9 @@ Item {
 
             anchors.fill: button
             source: modelData.icon
+
+            mipmap: true
+            smooth: true
           }
 
           ColorOverlay {
