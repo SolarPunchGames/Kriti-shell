@@ -24,12 +24,14 @@ Item {
 
     radius: 10
 
+    clip: true
+
     color: Colors.itemBackground
 
     Behavior on implicitWidth {
       SpringAnimation { 
-        spring: 3
-        damping: 0.5
+        spring: 5
+        damping: 0.4
       }
     }
 
