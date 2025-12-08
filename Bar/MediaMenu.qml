@@ -227,7 +227,7 @@ Scope {
                     signal windowOpened()
                     signal windowClosed()
 
-                    implicitWidth: 200
+                    implicitWidth: 11 * 15
                     implicitHeight: {
                       if (playersList.contentHeight > 100) {
                         100
@@ -240,10 +240,20 @@ Scope {
 
                     color: Colors.itemBackground
 
+                    clip: true
+
                     radius: 5
 
                     scale: 0.6
                     opacity: 0
+
+                    visible: {
+                      if (opacity == 0) {
+                        false
+                      } else {
+                        true
+                      }
+                    }
 
                     states: State {
                       name: "open"
@@ -274,9 +284,9 @@ Scope {
                       delegate: BaseButton {
                         text: {
                           if (modelData == Players.player) {
-                            "󰸞 " + modelData.identity
+                            TextServices.truncate("󰸞 " + modelData.identity, 15)
                           } else {
-                            "  " + modelData.identity
+                            TextServices.truncate("  " + modelData.identity, 15)
                           }
                         }
 
