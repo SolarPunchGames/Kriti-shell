@@ -199,7 +199,13 @@ FloatingWindow {
 
           backgroundAlias.opacity: 0.5
 
-          hoveredBackgroundColor: "black"
+          hoveredBackgroundColor: {
+            if (Colors.isDark) {
+              "black"
+            } else {
+              "white"
+            }
+          }
           pressedBackgroundColor: "grey"
 
           onClicked: playersPopup.toggleOpen()
