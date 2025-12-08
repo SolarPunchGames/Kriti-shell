@@ -41,6 +41,8 @@ Scope {
       property var modelData
       screen: modelData
 
+      WlrLayershell.layer: WlrLayer.Overlay
+
       //WlrLayershell.keyboardFocus: scaleItemAlias.state == "open" ? WlrKeyboardFocus.Exclusive : WlrKeyboardFocus.None
       HyprlandFocusGrab {
         id: focusGrab
