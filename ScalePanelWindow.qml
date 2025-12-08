@@ -48,11 +48,9 @@ PanelWindow {
 
   function toggleOpen() {
     if (scaleItemAlias.state == "open") {
-      scaleItemAlias.state = ""
-      windowClosed()
+      close()
     } else {
-      scaleItemAlias.state = "open"
-      windowOpened()
+      open()
     }
   }
   function open() {

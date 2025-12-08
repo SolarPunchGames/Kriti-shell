@@ -1,4 +1,4 @@
-// Audio.qml
+// Players.qml
 pragma Singleton
 
 import QtQuick
@@ -18,6 +18,8 @@ Singleton {
   property real previousPosition
   property bool wasPlaying
 
+  onPlayerIdChanged: reloadLyrics()
+
   signal lyricsChanged()
 
   Connections {  
@@ -29,7 +31,7 @@ Singleton {
         player.position = 0
       }
 
-      console.log("track changed")
+      //console.log("track changed")
     }  
   }
   
@@ -41,7 +43,18 @@ Singleton {
 
     lyricsChanged()
 
-    console.log("reload lyrics")
+    //console.log("reload lyrics")
+  }
+
+  Timer {
+    interval: 100
+    running: true
+    repeat: true
+    onTriggered: {
+      if (playerId > (players.length - 1)) {
+        playerId = 0
+      }
+    }
   }
 
   property var trackLyrics: 1

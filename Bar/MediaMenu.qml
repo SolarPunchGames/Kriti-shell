@@ -177,6 +177,125 @@ Scope {
                       lyricsRect.toggleOpen()
                     }
                   }
+
+                  BaseButton {
+                    id: playersButton
+
+                    anchors.top: parent.top
+                    anchors.left: parent.left
+                    anchors.topMargin: 5
+                    anchors.leftMargin: 5
+
+                    backgroundAlias.radius: 5
+
+                    width: 30
+                    height: width
+
+                    textAlias.rightPadding: 5
+                    text: "󰦚"
+
+                    onClicked: {
+                      playersPopup.toggleOpen()
+                    }
+
+                  }
+
+                  Rectangle {
+                    id: playersPopup
+
+                    anchors.top: playersButton.bottom
+                    anchors.left: playersButton.left
+
+                    function open() {
+                      state = "open"
+                      windowOpened()
+                    }
+
+                    function close() {
+                      state = ""
+                      windowClosed()
+                    }
+
+                    function toggleOpen() {
+                      if (state == "open") {
+                        close()
+                      } else {
+                        open()
+                      }
+                    }
+
+                    signal windowOpened()
+                    signal windowClosed()
+
+                    implicitWidth: 200
+                    implicitHeight: {
+                      if (playersList.contentHeight > 100) {
+                        100
+                      } else {
+                        playersList.contentHeight
+                      }
+                    }
+
+                    transformOrigin: Item.TopLeft
+
+                    color: Colors.itemBackground
+
+                    radius: 5
+
+                    scale: 0.6
+                    opacity: 0
+
+                    states: State {
+                      name: "open"
+                      PropertyChanges {target: playersPopup; scale: 1}
+                      PropertyChanges {target: playersPopup; opacity: 1}
+                    }
+
+                    transitions: Transition {
+                      PropertyAnimation {
+                        property: "scale"
+                        duration: 250
+                        easing.type: Easing.OutCubic
+                      }
+                      PropertyAnimation {
+                        property: "opacity"
+                        duration: 250
+                        easing.type: Easing.OutCubic
+                      }
+                    }
+
+                    ListView {
+                      id: playersList
+
+                      model: Players.players
+
+                      anchors.fill: parent
+
+                      delegate: BaseButton {
+                        text: {
+                          if (modelData == Players.player) {
+                            "󰸞 " + modelData.identity
+                          } else {
+                            "  " + modelData.identity
+                          }
+                        }
+
+                        textAlias.horizontalAlignment: Text.AlignLeft
+                        textAlias.leftPadding: 5
+
+                        anchors.left: parent.left
+                        anchors.right: parent.right
+
+                        backgroundAlias.radius: playersPopup.radius
+                        padding: 5
+
+                        onClicked: {
+                          playersPopup.close()
+                          Players.playerId = index
+                        }
+                      }
+                    }
+                  }
                 }
 
                 Text {
