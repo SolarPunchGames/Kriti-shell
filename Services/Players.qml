@@ -1,4 +1,4 @@
-// Audio.qml
+// Players.qml
 pragma Singleton
 
 import QtQuick
@@ -42,6 +42,17 @@ Singleton {
     lyricsChanged()
 
     console.log("reload lyrics")
+  }
+
+  Timer {
+    interval: 100
+    running: true
+    repeat: true
+    onTriggered: {
+      if (playerId > (players.length - 1)) {
+        playerId = 0
+      }
+    }
   }
 
   property var trackLyrics: 1
