@@ -23,7 +23,7 @@ Item {
   transitions: Transition {
     PropertyAnimation {
       property: "maxLetters"
-      duration: 500
+      duration: 0
       easing.type: Easing.InCubic
     }
   }
@@ -32,9 +32,24 @@ Item {
     id: rectangle
     radius: 10
 
+    clip: true
+
     implicitHeight: 30
 
     implicitWidth: appTitle.length > 0 ? textItem.contentWidth + 30 : 0
+
+    Behavior on implicitWidth {
+      SpringAnimation { 
+        spring: 5
+        damping: 0.4
+      }
+    }
+
+    Behavior on color {
+      PropertyAnimation {
+        duration: Colors.colorTransitionTime;
+      }
+    }
 
     color: {
       if (root.state == "expanded") {
@@ -52,7 +67,9 @@ Item {
 
     Text {
       id: textItem
-      anchors.centerIn: parent
+      anchors.verticalCenter: parent.verticalCenter
+      anchors.left: parent.left
+      anchors.leftMargin: 15
       text: Hyprland.activeToplevel ? TextServices.truncate(appTitle, maxLetters) : ""
       font.pointSize: 11
       color: Colors.text

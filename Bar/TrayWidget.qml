@@ -24,18 +24,47 @@ Item {
 
     radius: 10
 
+    clip: true
+
     color: Colors.itemBackground
+
+    Behavior on implicitWidth {
+      SpringAnimation { 
+        spring: 5
+        damping: 0.4
+      }
+    }
 
     Row {
       id: row
       anchors.centerIn: parent
       spacing: 10
+
+      add: Transition {
+        NumberAnimation {
+          property: "scale"
+          from: 0.5
+          to: 1
+          duration: 250
+          easing.type: Easing.OutCubic
+        }
+      }
+
+      move: Transition {
+        NumberAnimation {
+          property: "scale"
+          to: 1
+        }
+      }
+
       Repeater {
         model: {
           SystemTray.items
         }
         delegate: BaseButton {
           id: button
+
+          scale: 1
 
           backgroundAlias.radius: 5
           implicitHeight: 17

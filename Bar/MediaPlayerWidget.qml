@@ -17,14 +17,6 @@ Item {
 
     color: Colors.itemBackground
 
-    visible: {
-      if (Players.player) {
-        true
-      } else {
-        false
-      }
-    }
-
     Rectangle {
       anchors.top: parent.top
       anchors.bottom: parent.bottom
@@ -66,7 +58,16 @@ Item {
     radius: 10
 
     implicitHeight: 30
-    implicitWidth: row.width + 30
+    implicitWidth: {
+      if (Players.player) {
+        row.width + 30
+      } else {
+        0
+      }
+    }
+
+    clip: true
+    
 
     Behavior on implicitWidth {
       SpringAnimation {

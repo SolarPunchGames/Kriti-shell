@@ -41,6 +41,8 @@ Scope {
       property var modelData
       screen: modelData
 
+      WlrLayershell.layer: WlrLayer.Overlay
+
       //WlrLayershell.keyboardFocus: scaleItemAlias.state == "open" ? WlrKeyboardFocus.Exclusive : WlrKeyboardFocus.None
       HyprlandFocusGrab {
         id: focusGrab
@@ -54,7 +56,7 @@ Scope {
 
       onWindowOpened: {
         searchField.clear()
-        appsView.updateApps("")
+        appsView.updateApps()
       }
 
       Timer {
@@ -147,6 +149,8 @@ Scope {
                 maximumFlickVelocity: 2000
 
                 property string searchQuery: ""
+
+                model: AppSearch.searchApplications()
 
                 function updateApps(query) {
                   model = AppSearch.searchApplications(query)

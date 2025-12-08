@@ -31,4 +31,6 @@ Singleton {
   readonly property color bigText: "#ffffff"
   readonly property color smallText: "#ffffff"
   readonly property color separator: "#255a4d"
+
+  readonly property int colorTransitionTime: 50
 }
