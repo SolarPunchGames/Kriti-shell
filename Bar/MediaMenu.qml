@@ -290,6 +290,7 @@ Scope {
                         padding: 5
 
                         onClicked: {
+                          playersPopup.close()
                           Players.playerId = index
                         }
                       }

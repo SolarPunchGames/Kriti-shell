@@ -18,6 +18,8 @@ Singleton {
   property real previousPosition
   property bool wasPlaying
 
+  onPlayerIdChanged: reloadLyrics()
+
   signal lyricsChanged()
 
   Connections {  
