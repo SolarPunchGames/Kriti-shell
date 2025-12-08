@@ -17,14 +17,40 @@ Item {
 
     implicitWidth: row.width + 10
 
+    Behavior on implicitWidth {
+      SpringAnimation { 
+        spring: 8
+        damping: 0.5
+      }
+    }
+
     color: "transparent"
 
     Row {
       id: row
-      anchors.centerIn: parent
+      anchors.verticalCenter: parent.verticalCenter
+      anchors.left: parent.left
+      anchors.leftMargin: 5
       spacing: 10
-      Repeater {
 
+      add: Transition {
+        NumberAnimation {
+          property: "scale"
+          from: 0.5
+          to: 1
+          duration: 100
+          easing.type: Easing.OutCubic
+        }
+      }
+
+      move: Transition {
+        NumberAnimation {
+          property: "scale"
+          to: 1
+        }
+      }
+
+      Repeater {
         model: { 
           Hyprland.workspaces
         }
