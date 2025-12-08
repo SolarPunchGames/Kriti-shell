@@ -65,6 +65,12 @@ AbstractButton {
       }
     }
 
+    Behavior on color {
+      PropertyAnimation {
+        duration: Colors.colorTransitionTime;
+      }
+    }
+
     radius: 10
   }
 }

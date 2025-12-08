@@ -45,6 +45,12 @@ Item {
       }
     }
 
+    Behavior on color {
+      PropertyAnimation {
+        duration: Colors.colorTransitionTime;
+      }
+    }
+
     color: {
       if (root.state == "expanded") {
         Colors.itemHoveredBackground
