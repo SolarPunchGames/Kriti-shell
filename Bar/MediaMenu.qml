@@ -240,6 +240,8 @@ Scope {
 
                     color: Colors.itemBackground
 
+                    clip: true
+
                     radius: 5
 
                     scale: 0.6
