@@ -29,7 +29,7 @@ Singleton {
         player.position = 0
       }
 
-      console.log("track changed")
+      //console.log("track changed")
     }  
   }
   
@@ -41,7 +41,7 @@ Singleton {
 
     lyricsChanged()
 
-    console.log("reload lyrics")
+    //console.log("reload lyrics")
   }
 
   Timer {

@@ -199,42 +199,25 @@ Scope {
                     }
 
                   }
-                  PopupWindow {
+
+                  Rectangle {
                     id: playersPopup
-                    anchor.item: playersButton
-                    anchor.edges: Edges.Bottom | Edges.Left
-                    implicitWidth: 200
-                    implicitHeight: {
-                      if (playersList.contentHeight > 100) {
-                        100
-                      } else {
-                        playersList.contentHeight
-                      }
-                    }
 
-                    visible: false
-
-                    Connections {  
-                      target: window
-                      function onWindowClosed() {  
-                        playersPopup.close()
-                      }
-                    }
+                    anchors.top: playersButton.bottom
+                    anchors.left: playersButton.left
 
                     function open() {
-                      playersPopupBackground.state = "open"
-                      visible = true
+                      state = "open"
                       windowOpened()
                     }
 
                     function close() {
-                      playersPopupBackground.state = ""
-                      //visible = false
+                      state = ""
                       windowClosed()
                     }
 
                     function toggleOpen() {
-                      if (playersPopupBackground.state == "open") {
+                      if (state == "open") {
                         close()
                       } else {
                         open()
@@ -244,69 +227,70 @@ Scope {
                     signal windowOpened()
                     signal windowClosed()
 
-                    color: "transparent"
+                    implicitWidth: 200
+                    implicitHeight: {
+                      if (playersList.contentHeight > 100) {
+                        100
+                      } else {
+                        playersList.contentHeight
+                      }
+                    }
 
-                    Rectangle {
-                      id: playersPopupBackground
+                    transformOrigin: Item.TopLeft
+
+                    color: Colors.itemBackground
+
+                    radius: 5
+
+                    scale: 0.6
+                    opacity: 0
+
+                    states: State {
+                      name: "open"
+                      PropertyChanges {target: playersPopup; scale: 1}
+                      PropertyChanges {target: playersPopup; opacity: 1}
+                    }
+
+                    transitions: Transition {
+                      PropertyAnimation {
+                        property: "scale"
+                        duration: 250
+                        easing.type: Easing.OutCubic
+                      }
+                      PropertyAnimation {
+                        property: "opacity"
+                        duration: 250
+                        easing.type: Easing.OutCubic
+                      }
+                    }
+
+                    ListView {
+                      id: playersList
+
+                      model: Players.players
 
                       anchors.fill: parent
 
-                      transformOrigin: Item.TopLeft
-
-                      color: Colors.itemBackground
-
-                      radius: 5
-
-                      scale: 0.6
-                      opacity: 0
-
-                      states: State {
-                        name: "open"
-                        PropertyChanges {target: playersPopupBackground; scale: 1}
-                        PropertyChanges {target: playersPopupBackground; opacity: 1}
-                      }
-
-                      transitions: Transition {
-                        PropertyAnimation {
-                          property: "scale"
-                          duration: 250
-                          easing.type: Easing.OutCubic
-                        }
-                        PropertyAnimation {
-                          property: "opacity"
-                          duration: 250
-                          easing.type: Easing.OutCubic
-                        }
-                      }
-
-                      ListView {
-                        id: playersList
-
-                        model: Players.players
-
-                        anchors.fill: parent
-
-                        delegate: BaseButton {
-                          text: {
-                            if (modelData == Players.player) {
-                              "󰸞 " + modelData.identity
-                            } else {
-                              "  " + modelData.identity
-                            }
+                      delegate: BaseButton {
+                        text: {
+                          if (modelData == Players.player) {
+                            "󰸞 " + modelData.identity
+                          } else {
+                            "  " + modelData.identity
                           }
+                        }
 
-                          textAlias.horizontalAlignment: Text.AlignLeft
-                          textAlias.leftPadding: 5
+                        textAlias.horizontalAlignment: Text.AlignLeft
+                        textAlias.leftPadding: 5
 
-                          anchors.left: parent.left
-                          anchors.right: parent.right
+                        anchors.left: parent.left
+                        anchors.right: parent.right
 
-                          backgroundAlias.radius: playersPopupBackground.radius
-                          padding: 5
+                        backgroundAlias.radius: playersPopup.radius
+                        padding: 5
 
-                          onClicked: {
-                            Players.playerId = index
-                          }
+                        onClicked: {
+                          Players.playerId = index
                         }
                       }
                     }
