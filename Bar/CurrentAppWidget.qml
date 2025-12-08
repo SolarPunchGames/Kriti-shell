@@ -32,9 +32,18 @@ Item {
     id: rectangle
     radius: 10
 
+    clip: true
+
     implicitHeight: 30
 
     implicitWidth: appTitle.length > 0 ? textItem.contentWidth + 30 : 0
+
+    Behavior on implicitWidth {
+      SpringAnimation { 
+        spring: 8
+        damping: 0.5
+      }
+    }
 
     color: {
       if (root.state == "expanded") {
