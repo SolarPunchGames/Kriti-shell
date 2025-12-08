@@ -210,7 +210,7 @@ FloatingWindow {
         id: playersPopup
         anchor.item: imgItem
         anchor.edges: Edges.Bottom | Edges.Left
-        implicitWidth: 200
+        implicitWidth: 11 * 15
         implicitHeight: {
           if (playersList.contentHeight > 100) {
             100
@@ -296,9 +296,9 @@ FloatingWindow {
             delegate: BaseButton {
               text: {
                 if (modelData == Players.player) {
-                  "󰸞 " + modelData.identity
+                  TextServices.truncate("󰸞 " + modelData.identity, 15)
                 } else {
-                  "  " + modelData.identity
+                  TextServices.truncate("  " + modelData.identity, 15)
                 }
               }
 
@@ -312,8 +312,8 @@ FloatingWindow {
               padding: 5
 
               onClicked: {
-                Players.playerId = index
                 playersPopup.close()
+                Players.playerId = index
               }
             }
           }
