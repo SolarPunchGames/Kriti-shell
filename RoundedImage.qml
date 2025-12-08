@@ -10,6 +10,8 @@ Image {
 
   anchors.fill: parent
 
+  mipmap: true
+
   property bool rounded: true
   property int radius: 10
   property bool adapt: true
