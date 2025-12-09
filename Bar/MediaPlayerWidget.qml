@@ -11,6 +11,89 @@ Item {
   MarginWrapperManager { margin: 5 }
 
   property var currentScreen
+
+  Popup {
+    id: rightClickMenu
+    anchor.item: rect
+
+    onWindowOpened: {
+      anchor.rect.x = mouseArea.mouseX
+      anchor.rect.y = mouseArea.mouseY
+    }
+
+    listAlias.model: [ 
+      {
+        customText: true,
+        getText() {
+          if (rect.state == "closed") {
+            return "Show"
+          } else {
+            return "Hide"
+          }
+        },
+        activate() {
+          if (rect.state == "closed") {
+            rect.state = ""
+          } else {
+            rect.state = "closed"
+          }
+        },
+      }, 
+      {
+        description: "(Middle mouse button)",
+        customText: true,
+        getText() {
+          if (mediaMenuLoader.item) {
+            for (var i = 0; i < mediaMenuLoader.item.mediaMenuVariants.instances.length; i++) {
+              var instance = mediaMenuLoader.item.mediaMenuVariants.instances[i]
+              if (instance.modelData.name === currentScreen) {
+                if (instance.scaleItemAlias.state == "") {
+                  return "Show media player"
+                } else {
+                  return "Hide media player"
+                }
+                break
+              }
+            }
+          }
+        },
+        activate() {
+          if (mediaMenuLoader.item) {
+            for (var i = 0; i < mediaMenuLoader.item.mediaMenuVariants.instances.length; i++) {
+              var instance = mediaMenuLoader.item.mediaMenuVariants.instances[i]
+              if (instance.modelData.name === currentScreen) {
+                instance.toggleOpen()
+                break
+              }
+            }
+          }
+        },
+      },
+      {
+        text: "Open lyrics window",
+        activate() {
+          if (mediaMenuLoader.item) {
+            for (var i = 0; i < mediaMenuLoader.item.mediaMenuVariants.instances.length; i++) {
+              var instance = mediaMenuLoader.item.mediaMenuVariants.instances[i]
+              if (instance.modelData.name === currentScreen) {
+                instance.openLyricsWindow()
+                break
+              }
+            }
+          }
+        },
+      }
+    ]
+
+    MouseArea {
+      anchors.fill: parent
+      acceptedButtons: Qt.RightButton
+
+      cursorShape: Qt.PointingHandCursor
+
+      onClicked: rightClickMenu.close()
+    }
+  }
   
   Rectangle {
     id: rect
@@ -67,7 +150,6 @@ Item {
     }
 
     clip: true
-    
 
     Behavior on implicitWidth {
       SpringAnimation {
@@ -107,28 +189,19 @@ Item {
 
       onClicked: (mouse)=> {
         if (mouse.button == Qt.LeftButton) {
-          if (rect.state == "closed") {
-            rect.state = ""
-          } else {
-            Players.player.togglePlaying()
-          }
-        } else if (mouse.button == Qt.RightButton) {
-          if (mediaMenuLoader.item) {          
-            // Find the variant instance that matches this screen 
-            for (var i = 0; i < mediaMenuLoader.item.mediaMenuVariants.instances.length; i++) {  
-              var instance = mediaMenuLoader.item.mediaMenuVariants.instances[i]  
-              if (instance.modelData.name === currentScreen) {  
-                instance.toggleOpen()  
-                break  
-              }  
+          Players.player.togglePlaying()
+        } else if (mouse.button == Qt.MiddleButton) {
+          if (mediaMenuLoader.item) {
+            for (var i = 0; i < mediaMenuLoader.item.mediaMenuVariants.instances.length; i++) {
+              var instance = mediaMenuLoader.item.mediaMenuVariants.instances[i]
+              if (instance.modelData.name === currentScreen) {
+                instance.toggleOpen()
+                break
+              }
             }
           }  
-        } else if (mouse.button == Qt.MiddleButton) {
-          if (rect.state == "closed") {
-            rect.state = ""
-          } else {
-            rect.state = "closed"
-          }
+        } else if (mouse.button == Qt.RightButton) {
+          rightClickMenu.open()
         }
       }
 

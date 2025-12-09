@@ -216,6 +216,7 @@ FloatingWindow {
         id: playersPopup
         anchor.item: imgItem
         anchor.edges: Edges.Bottom | Edges.Left
+
         implicitWidth: 11 * 15
         implicitHeight: {
           if (playersList.contentHeight > 100) {

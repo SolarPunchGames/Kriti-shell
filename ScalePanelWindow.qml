@@ -2,6 +2,7 @@
 
 import QtQuick
 import Quickshell
+import Quickshell.Hyprland
 
 PanelWindow {
   id: window
@@ -11,6 +12,8 @@ PanelWindow {
 
   property var scaleItemAlias
   property var mainPanelAlias
+
+  property bool focusGrab: false
 
   anchors {
     top: true
@@ -60,5 +63,15 @@ PanelWindow {
   function close() {
     scaleItemAlias.state = ""
     windowClosed()
+  }
+
+  HyprlandFocusGrab {
+    id: focusGrab
+
+    active: scaleItemAlias.state == "open" && window.focusGrab ? true : false
+
+    onCleared: window.close()
+
+    windows: [ window ]
   }
 }

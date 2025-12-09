@@ -26,6 +26,15 @@ Scope {
       scaleItemAlias: scaleItem
       mainPanelAlias: mainPanel
 
+      function openLyricsWindow() {
+        lyricsWindowComponent.createObject(root)
+      }
+
+      Component {
+        id: lyricsWindowComponent
+        LyricsWindow {}
+      }
+
       Timer {
         running: true
         interval: 100
@@ -200,32 +209,10 @@ Scope {
 
                   }
 
-                  Rectangle {
+                  Popup {
                     id: playersPopup
-
-                    anchors.top: playersButton.bottom
-                    anchors.left: playersButton.left
-
-                    function open() {
-                      state = "open"
-                      windowOpened()
-                    }
-
-                    function close() {
-                      state = ""
-                      windowClosed()
-                    }
-
-                    function toggleOpen() {
-                      if (state == "open") {
-                        close()
-                      } else {
-                        open()
-                      }
-                    }
-
-                    signal windowOpened()
-                    signal windowClosed()
+                    anchor.item: playersButton
+                    anchor.edges: Edges.Bottom | Edges.Left
 
                     implicitWidth: 11 * 15
                     implicitHeight: {
@@ -235,45 +222,6 @@ Scope {
                         playersList.contentHeight
                       }
                     }
-
-                    transformOrigin: Item.TopLeft
-
-                    color: Colors.itemBackground
-
-                    clip: true
-
-                    radius: 5
-
-                    scale: 0.6
-                    opacity: 0
-
-                    visible: {
-                      if (opacity == 0) {
-                        false
-                      } else {
-                        true
-                      }
-                    }
-
-                    states: State {
-                      name: "open"
-                      PropertyChanges {target: playersPopup; scale: 1}
-                      PropertyChanges {target: playersPopup; opacity: 1}
-                    }
-
-                    transitions: Transition {
-                      PropertyAnimation {
-                        property: "scale"
-                        duration: 250
-                        easing.type: Easing.OutCubic
-                      }
-                      PropertyAnimation {
-                        property: "opacity"
-                        duration: 250
-                        easing.type: Easing.OutCubic
-                      }
-                    }
-
                     ListView {
                       id: playersList
 
@@ -296,7 +244,7 @@ Scope {
                         anchors.left: parent.left
                         anchors.right: parent.right
 
-                        backgroundAlias.radius: playersPopup.radius
+                        backgroundAlias.radius: playersPopup.backgroundAlias.radius
                         padding: 5
 
                         onClicked: {
@@ -447,11 +395,6 @@ Scope {
                 id: lyricsView
               }
 
-              Component {
-                id: lyricsWindowComponent
-                LyricsWindow {}
-              }
-
               Row {
                 anchors.top: parent.top
                 anchors.left: parent.left
@@ -532,7 +475,7 @@ Scope {
                   text: ""
 
                   onClicked: {
-                    lyricsWindowComponent.createObject(root)
+                    window.openLyricsWindow()
                     window.close()
                   }
                 }
