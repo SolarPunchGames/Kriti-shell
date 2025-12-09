@@ -146,30 +146,28 @@ Item {
     }
 
     function open() {
-      state = "open"
+      state = ""
       windowOpened()
     }
 
     function close() {
-      state = ""
+      state = "closed"
       windowClosed()
     }
 
     function toggleOpen() {
-      if (rect.state == "open") {
-        close()
-      } else {
+      if (rect.state == "closed") {
         open()
+      } else {
+        close()
       } 
     }
 
     signal windowOpened()
     signal windowClosed()
 
-    state: "open"
-
     states: State {
-      name: "open"
+      name: "closed"
       PropertyChanges {target: rect; y: -25}
     }
 
