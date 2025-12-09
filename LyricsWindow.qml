@@ -260,7 +260,7 @@ FloatingWindow {
 
       Column {
         Text {
-          text: TextServices.truncate(Players.player.trackTitle, (window.width - 255) / 11)
+          text: TextServices.truncate(Players.player.trackTitle, (window.width - 270) / 11)
 
           font.pointSize: 11
           font.family: "JetBrainsMono Nerd Font"
