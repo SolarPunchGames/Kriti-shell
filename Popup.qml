@@ -176,4 +176,13 @@ PopupWindow {
       }
     }
   }
+
+  MouseArea {
+    anchors.fill: parent
+    acceptedButtons: Qt.RightButton
+
+    cursorShape: Qt.PointingHandCursor
+
+    onClicked: rightClickMenu.close()
+  }
 }
