@@ -102,6 +102,21 @@ PopupWindow {
 
       boundsBehavior: Flickable.StopAtBounds
 
+      populate: Transition {
+        id: populateTransition
+        SequentialAnimation {
+          PropertyAnimation { properties: "x"; to: 1000; duration: 0 }
+          PauseAnimation { duration: populateTransition.ViewTransition.index * 50}
+          PropertyAnimation { 
+            properties: "x"
+            from: 100
+            to: 0
+            duration: 250
+            easing.type: Easing.OutCubic
+          }
+        }
+      }
+
       delegate: BaseButton {
         id: listButton
 
@@ -152,7 +167,7 @@ PopupWindow {
 
             wrapMode: Text.WordWrap
 
-            text: listButton.data.description
+            text: listButton.data.description ? listButton.data.description : ""
 
             visible: listButton.data.description ? true : false
           }
