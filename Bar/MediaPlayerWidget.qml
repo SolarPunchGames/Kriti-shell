@@ -32,11 +32,7 @@ Item {
           }
         },
         activate() {
-          if (rect.state == "closed") {
-            rect.state = ""
-          } else {
-            rect.state = "closed"
-          }
+          rect.toggleOpen()
         },
       }, 
       {
@@ -149,8 +145,31 @@ Item {
       }
     }
 
+    function open() {
+      state = "open"
+      windowOpened()
+    }
+
+    function close() {
+      state = ""
+      windowClosed()
+    }
+
+    function toggleOpen() {
+      if (rect.state == "open") {
+        close()
+      } else {
+        open()
+      } 
+    }
+
+    signal windowOpened()
+    signal windowClosed()
+
+    state: "open"
+
     states: State {
-      name: "closed"
+      name: "open"
       PropertyChanges {target: rect; y: -25}
     }
 

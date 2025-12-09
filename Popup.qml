@@ -45,6 +45,9 @@ PopupWindow {
     }
   }
 
+  signal windowOpened()
+  signal windowClosed()
+
   HyprlandFocusGrab {
     id: focusGrab
 
@@ -54,9 +57,6 @@ PopupWindow {
 
     windows: [ window ]
   }
-
-  signal windowOpened()
-  signal windowClosed()
 
   color: "transparent"
 
