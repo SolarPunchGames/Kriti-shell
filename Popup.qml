@@ -73,6 +73,7 @@ PopupWindow {
     color: Colors.itemBackground
 
     radius: 5
+    clip: true
 
     scale: 0.6
     opacity: 0
@@ -135,6 +136,8 @@ PopupWindow {
             font.pointSize: listButton.fontSize
             font.family: "JetBrainsMono Nerd Font"
 
+            width: parent.width
+
             color: Colors.text
 
             topPadding: listButton.textTopPadding
@@ -153,6 +156,8 @@ PopupWindow {
             id: descriptionItem
             font.pointSize: 6
             font.family: "JetBrainsMono Nerd Font"
+
+            width: parent.width
 
             color: Colors.text
             opacity: 0.7
