@@ -28,6 +28,7 @@ Scope {
 
       function openLyricsWindow() {
         lyricsWindowComponent.createObject(root)
+        window.close()
       }
 
       Component {
@@ -476,7 +477,6 @@ Scope {
 
                   onClicked: {
                     window.openLyricsWindow()
-                    window.close()
                   }
                 }
 
