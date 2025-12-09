@@ -212,7 +212,7 @@ FloatingWindow {
         }
       }
 
-      PopupWindow {
+      Popup {
         id: playersPopup
         anchor.item: imgItem
         anchor.edges: Edges.Bottom | Edges.Left
@@ -224,103 +224,34 @@ FloatingWindow {
             playersList.contentHeight
           }
         }
+        ListView {
+          id: playersList
 
-        visible: false
-
-        Connections {  
-          target: window
-          function onWindowClosed() {  
-            playersPopup.close()
-          }
-        }
-
-        function open() {
-          playersPopupBackground.state = "open"
-          visible = true
-          windowOpened()
-        }
-
-        function close() {
-          playersPopupBackground.state = ""
-          //visible = false
-          windowClosed()
-        }
-
-        function toggleOpen() {
-          if (playersPopupBackground.state == "open") {
-            close()
-          } else {
-            open()
-          }
-        }
-
-        signal windowOpened()
-        signal windowClosed()
-
-        color: "transparent"
-
-        Rectangle {
-          id: playersPopupBackground
+          model: Players.players
 
           anchors.fill: parent
 
-          transformOrigin: Item.TopLeft
-
-          color: Colors.itemBackground
-
-          radius: 5
-
-          scale: 0.6
-          opacity: 0
-
-          states: State {
-            name: "open"
-            PropertyChanges {target: playersPopupBackground; scale: 1}
-            PropertyChanges {target: playersPopupBackground; opacity: 1}
-          }
-
-          transitions: Transition {
-            PropertyAnimation {
-              property: "scale"
-              duration: 250
-              easing.type: Easing.OutCubic
-            }
-            PropertyAnimation {
-              property: "opacity"
-              duration: 250
-              easing.type: Easing.OutCubic
-            }
-          }
-
-          ListView {
-            id: playersList
-
-            model: Players.players
-
-            anchors.fill: parent
-
-            delegate: BaseButton {
-              text: {
-                if (modelData == Players.player) {
-                  TextServices.truncate("󰸞 " + modelData.identity, 15)
-                } else {
-                  TextServices.truncate("  " + modelData.identity, 15)
-                }
+          delegate: BaseButton {
+            text: {
+              if (modelData == Players.player) {
+                TextServices.truncate("󰸞 " + modelData.identity, 15)
+              } else {
+                TextServices.truncate("  " + modelData.identity, 15)
               }
+            }
 
-              textAlias.horizontalAlignment: Text.AlignLeft
-              textAlias.leftPadding: 5
+            textAlias.horizontalAlignment: Text.AlignLeft
+            textAlias.leftPadding: 5
 
-              anchors.left: parent.left
-              anchors.right: parent.right
+            anchors.left: parent.left
+            anchors.right: parent.right
 
-              backgroundAlias.radius: playersPopupBackground.radius
-              padding: 5
+            backgroundAlias.radius: playersPopup.backgroundAlias.radius
+            padding: 5
 
-              onClicked: {
-                playersPopup.close()
-                Players.playerId = index
-              }
+            onClicked: {
+              playersPopup.close()
+              Players.playerId = index
             }
           }
         }
