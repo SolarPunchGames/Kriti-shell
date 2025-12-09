@@ -130,7 +130,7 @@ Item {
     implicitHeight: 30
     implicitWidth: {
       if (Players.player) {
-        row.width + 30
+        row.width + 20
       } else {
         0
       }
@@ -236,6 +236,8 @@ Item {
 
         font.pointSize: 11
         font.family: "JetBrainsMono Nerd Font"
+
+        leftPadding: 5
 
         text: TextServices.truncate(Players.player.trackTitle, 25) + " "
       }
