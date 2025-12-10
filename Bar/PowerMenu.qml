@@ -254,6 +254,10 @@ Scope {
             backgroundAlias.border.width: 5
 
             buttonHovered: shutdownRoundMouseArea.containsMouse
+            buttonPressed: {
+              console.log(shutdownRoundMouseArea.pressed)
+              shutdownRoundMouseArea.pressed
+            }
 
             RoundMouseArea {
               id: shutdownRoundMouseArea
