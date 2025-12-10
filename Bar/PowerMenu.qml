@@ -255,7 +255,6 @@ Scope {
 
             buttonHovered: shutdownRoundMouseArea.containsMouse
             buttonPressed: {
-              console.log(shutdownRoundMouseArea.pressed)
               shutdownRoundMouseArea.pressed
             }
 
