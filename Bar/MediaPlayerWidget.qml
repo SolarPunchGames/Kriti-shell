@@ -23,20 +23,21 @@ Item {
 
     listAlias.model: [ 
       {
+        description: "(Middle mouse button)",
         customText: true,
         getText() {
-          if (rect.state == "closed") {
-            return "Show"
+          if (Players.player.isPlaying) {
+            return "Pause"
           } else {
-            return "Hide"
+            return "Play"
           }
         },
         activate() {
-          rect.toggleOpen()
+          Players.player.togglePlaying()
         },
-      }, 
+      },
       {
-        description: "(Middle mouse button)",
+        description: "(Left mouse button)",
         customText: true,
         getText() {
           if (mediaMenuLoader.item) {
@@ -63,6 +64,19 @@ Item {
               }
             }
           }
+        },
+      },
+      {
+        customText: true,
+        getText() {
+          if (rect.state == "closed") {
+            return "Show widget"
+          } else {
+            return "Hide widget"
+          }
+        },
+        activate() {
+          rect.toggleOpen()
         },
       },
       {
@@ -196,9 +210,9 @@ Item {
       }
 
       onClicked: (mouse)=> {
-        if (mouse.button == Qt.LeftButton) {
+        if (mouse.button == Qt.MiddleButton) {
           Players.player.togglePlaying()
-        } else if (mouse.button == Qt.MiddleButton) {
+        } else if (mouse.button == Qt.LeftButton) {
           if (mediaMenuLoader.item) {
             for (var i = 0; i < mediaMenuLoader.item.mediaMenuVariants.instances.length; i++) {
               var instance = mediaMenuLoader.item.mediaMenuVariants.instances[i]
