@@ -123,15 +123,6 @@ PopupWindow {
       }
     }
 
-    MouseArea {
-      anchors.fill: parent
-      acceptedButtons: Qt.RightButton
-
-      cursorShape: Qt.PointingHandCursor
-
-      onClicked: rightClickMenu.close()
-    }
-
     ListView {
       id: list
       anchors.fill: parent
@@ -229,6 +220,15 @@ PopupWindow {
 
         textLeftPadding: 10
       }
+    }
+    
+    MouseArea {
+      anchors.fill: parent
+      acceptedButtons: Qt.RightButton
+
+      cursorShape: Qt.PointingHandCursor
+
+      onClicked: rightClickMenu.close()
     }
   }
 }
