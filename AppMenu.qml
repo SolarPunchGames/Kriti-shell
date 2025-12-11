@@ -44,15 +44,7 @@ Scope {
       WlrLayershell.layer: WlrLayer.Overlay
 
       //WlrLayershell.keyboardFocus: scaleItemAlias.state == "open" ? WlrKeyboardFocus.Exclusive : WlrKeyboardFocus.None
-      HyprlandFocusGrab {
-        id: focusGrab
-
-        active: scaleItemAlias.state == "open" ? true : false
-
-        onCleared: window.close()
-
-        windows: [ window ]
-      }
+      focusGrab: true
 
       onWindowOpened: {
         searchField.clear()

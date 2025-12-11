@@ -254,6 +254,9 @@ Scope {
             backgroundAlias.border.width: 5
 
             buttonHovered: shutdownRoundMouseArea.containsMouse
+            buttonPressed: {
+              shutdownRoundMouseArea.pressed
+            }
 
             RoundMouseArea {
               id: shutdownRoundMouseArea

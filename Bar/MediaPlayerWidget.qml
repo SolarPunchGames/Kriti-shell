@@ -11,6 +11,90 @@ Item {
   MarginWrapperManager { margin: 5 }
 
   property var currentScreen
+
+  Popup {
+    id: rightClickMenu
+    anchor.item: rect
+
+    onWindowOpened: {
+      anchor.rect.x = mouseArea.mouseX
+      anchor.rect.y = mouseArea.mouseY
+    }
+
+    listAlias.model: [ 
+      {
+        description: "(Middle mouse button)",
+        customText: true,
+        getText() {
+          if (Players.player.isPlaying) {
+            return "Pause"
+          } else {
+            return "Play"
+          }
+        },
+        activate() {
+          Players.player.togglePlaying()
+        },
+      },
+      {
+        description: "(Left mouse button)",
+        customText: true,
+        getText() {
+          if (mediaMenuLoader.item) {
+            for (var i = 0; i < mediaMenuLoader.item.mediaMenuVariants.instances.length; i++) {
+              var instance = mediaMenuLoader.item.mediaMenuVariants.instances[i]
+              if (instance.modelData.name === currentScreen) {
+                if (instance.scaleItemAlias.state == "") {
+                  return "Show media player"
+                } else {
+                  return "Hide media player"
+                }
+                break
+              }
+            }
+          }
+        },
+        activate() {
+          if (mediaMenuLoader.item) {
+            for (var i = 0; i < mediaMenuLoader.item.mediaMenuVariants.instances.length; i++) {
+              var instance = mediaMenuLoader.item.mediaMenuVariants.instances[i]
+              if (instance.modelData.name === currentScreen) {
+                instance.toggleOpen()
+                break
+              }
+            }
+          }
+        },
+      },
+      {
+        customText: true,
+        getText() {
+          if (rect.state == "closed") {
+            return "Show widget"
+          } else {
+            return "Hide widget"
+          }
+        },
+        activate() {
+          rect.toggleOpen()
+        },
+      },
+      {
+        text: "Open lyrics window",
+        activate() {
+          if (mediaMenuLoader.item) {
+            for (var i = 0; i < mediaMenuLoader.item.mediaMenuVariants.instances.length; i++) {
+              var instance = mediaMenuLoader.item.mediaMenuVariants.instances[i]
+              if (instance.modelData.name === currentScreen) {
+                instance.openLyricsWindow()
+                break
+              }
+            }
+          }
+        },
+      }
+    ]
+  }
   
   Rectangle {
     id: rect
@@ -60,14 +144,13 @@ Item {
     implicitHeight: 30
     implicitWidth: {
       if (Players.player) {
-        row.width + 30
+        row.width + 20
       } else {
         0
       }
     }
 
     clip: true
-    
 
     Behavior on implicitWidth {
       SpringAnimation {
@@ -75,6 +158,27 @@ Item {
         damping: 0.4
       }
     }
+
+    function open() {
+      state = ""
+      windowOpened()
+    }
+
+    function close() {
+      state = "closed"
+      windowClosed()
+    }
+
+    function toggleOpen() {
+      if (rect.state == "closed") {
+        open()
+      } else {
+        close()
+      } 
+    }
+
+    signal windowOpened()
+    signal windowClosed()
 
     states: State {
       name: "closed"
@@ -106,29 +210,20 @@ Item {
       }
 
       onClicked: (mouse)=> {
-        if (mouse.button == Qt.LeftButton) {
-          if (rect.state == "closed") {
-            rect.state = ""
-          } else {
-            Players.player.togglePlaying()
-          }
-        } else if (mouse.button == Qt.RightButton) {
-          if (mediaMenuLoader.item) {          
-            // Find the variant instance that matches this screen 
-            for (var i = 0; i < mediaMenuLoader.item.mediaMenuVariants.instances.length; i++) {  
-              var instance = mediaMenuLoader.item.mediaMenuVariants.instances[i]  
-              if (instance.modelData.name === currentScreen) {  
-                instance.toggleOpen()  
-                break  
-              }  
+        if (mouse.button == Qt.MiddleButton) {
+          Players.player.togglePlaying()
+        } else if (mouse.button == Qt.LeftButton) {
+          if (mediaMenuLoader.item) {
+            for (var i = 0; i < mediaMenuLoader.item.mediaMenuVariants.instances.length; i++) {
+              var instance = mediaMenuLoader.item.mediaMenuVariants.instances[i]
+              if (instance.modelData.name === currentScreen) {
+                instance.toggleOpen()
+                break
+              }
             }
           }  
-        } else if (mouse.button == Qt.MiddleButton) {
-          if (rect.state == "closed") {
-            rect.state = ""
-          } else {
-            rect.state = "closed"
-          }
+        } else if (mouse.button == Qt.RightButton) {
+          rightClickMenu.open()
         }
       }
 
@@ -155,6 +250,8 @@ Item {
 
         font.pointSize: 11
         font.family: "JetBrainsMono Nerd Font"
+
+        leftPadding: 5
 
         text: TextServices.truncate(Players.player.trackTitle, 25) + " "
       }

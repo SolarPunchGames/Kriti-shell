@@ -135,19 +135,18 @@ ListView {
       PauseAnimation { duration: lyricAddTrans.ViewTransition.index * 50}
       PropertyAnimation { 
         properties: "x"
-        from: 100
+        from: 20
         to: 0
         duration: 250
         easing.type: Easing.OutCubic
       }
     }
     //SequentialAnimation {
-    //  id: lyricOpacityAnim
     //  PropertyAnimation { properties: "opacity"; to: 0; duration: 0 }
     //  PauseAnimation { duration: lyricAddTrans.ViewTransition.index * 50}
     //  PropertyAnimation { 
     //    properties: "opacity"; 
-    //    to: lyricOpacityAnim.prevOpacity
+    //    to: 0.5
     //    duration: 250;
     //  }
     //}

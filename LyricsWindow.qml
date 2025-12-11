@@ -199,122 +199,137 @@ FloatingWindow {
 
           backgroundAlias.opacity: 0.5
 
-          hoveredBackgroundColor: "black"
+          hoveredBackgroundColor: {
+            if (Colors.isDark) {
+              "black"
+            } else {
+              "white"
+            }
+          }
           pressedBackgroundColor: "grey"
 
           onClicked: playersPopup.toggleOpen()
         }
       }
 
-      PopupWindow {
+      Popup {
         id: playersPopup
         anchor.item: imgItem
         anchor.edges: Edges.Bottom | Edges.Left
-        implicitWidth: 11 * 15
-        implicitHeight: {
-          if (playersList.contentHeight > 100) {
-            100
+
+        backgroundAlias.width: 11 * 15
+        backgroundAlias.height: {
+          if (playersList.contentHeight > 200) {
+            200
           } else {
             playersList.contentHeight
           }
         }
 
-        visible: false
+        ListView {
+          id: playersList
 
-        Connections {  
-          target: window
-          function onWindowClosed() {  
-            playersPopup.close()
-          }
-        }
-
-        function open() {
-          playersPopupBackground.state = "open"
-          visible = true
-          windowOpened()
-        }
-
-        function close() {
-          playersPopupBackground.state = ""
-          //visible = false
-          windowClosed()
-        }
-
-        function toggleOpen() {
-          if (playersPopupBackground.state == "open") {
-            close()
-          } else {
-            open()
-          }
-        }
-
-        signal windowOpened()
-        signal windowClosed()
-
-        color: "transparent"
-
-        Rectangle {
-          id: playersPopupBackground
+          model: Players.players
 
           anchors.fill: parent
 
-          transformOrigin: Item.TopLeft
+          delegate: BaseButton {
+            id: playersListButton
 
-          color: Colors.itemBackground
+            property var data: modelData
 
-          radius: 5
+            text: TextServices.truncate(modelData.identity, 13)
 
-          scale: 0.6
-          opacity: 0
+            contentItem: RowLayout {
+              Text {
+                id: checkItem
+                font.pointSize: playersListButton.fontSize
+                font.family: "JetBrainsMono Nerd Font"
 
-          states: State {
-            name: "open"
-            PropertyChanges {target: playersPopupBackground; scale: 1}
-            PropertyChanges {target: playersPopupBackground; opacity: 1}
-          }
+                Layout.fillWidth: true
 
-          transitions: Transition {
-            PropertyAnimation {
-              property: "scale"
-              duration: 250
-              easing.type: Easing.OutCubic
-            }
-            PropertyAnimation {
-              property: "opacity"
-              duration: 250
-              easing.type: Easing.OutCubic
-            }
-          }
+                color: Colors.text
 
-          ListView {
-            id: playersList
+                topPadding: playersListButton.textTopPadding
+                bottomPadding: playersListButton.textBottomPadding
+                leftPadding: playersListButton.textLeftPadding
+                rightPadding: playersListButton.textRightPadding
 
-            model: Players.players
+                horizontalAlignment: Text.AlignLeft
+                verticalAlignment: Text.AlignVCenter
 
-            anchors.fill: parent
+                wrapMode: Text.WordWrap
 
-            delegate: BaseButton {
-              text: {
-                if (modelData == Players.player) {
-                  TextServices.truncate("󰸞 " + modelData.identity, 15)
-                } else {
-                  TextServices.truncate("  " + modelData.identity, 15)
+                text: "󰸞"
+
+                opacity: {
+                  if (playersListButton.data == Players.player) {
+                    1
+                  } else {
+                    0
+                  }
                 }
               }
+              Column {
+                Layout.fillWidth: true
+                Text {
+                  id: textItem
+                  font.pointSize: playersListButton.fontSize
+                  font.family: "JetBrainsMono Nerd Font"
 
-              textAlias.horizontalAlignment: Text.AlignLeft
-              textAlias.leftPadding: 5
 
-              anchors.left: parent.left
-              anchors.right: parent.right
+                  color: Colors.text
 
-              backgroundAlias.radius: playersPopupBackground.radius
-              padding: 5
+                  topPadding: playersListButton.textTopPadding
+                  bottomPadding: playersListButton.textBottomPadding
+                  leftPadding: playersListButton.textLeftPadding
+                  rightPadding: playersListButton.textRightPadding
 
-              onClicked: {
-                playersPopup.close()
-                Players.playerId = index
+                  horizontalAlignment: Text.AlignLeft
+                  verticalAlignment: Text.AlignVCenter
+
+                  wrapMode: Text.WordWrap
+
+                  text: playersListButton.text
+                }
+                Text {
+                  id: descriptionItem
+                  font.pointSize: 6
+                  font.family: "JetBrainsMono Nerd Font"
+
+                  width: playersListButton.width
+
+                  color: Colors.text
+                  opacity: 0.7
+
+                  topPadding: playersListButton.textTopPadding
+                  bottomPadding: playersListButton.textBottomPadding
+                  leftPadding: playersListButton.textLeftPadding
+                  rightPadding: playersListButton.textRightPadding
+
+                  horizontalAlignment: Text.AlignLeft
+                  verticalAlignment: Text.AlignVCenter
+
+                  wrapMode: Text.WordWrap
+
+                  text: TextServices.truncate(playersListButton.player.trackTitle, 25)
+                }
               }
+            }
+
+            textLeftPadding: 5
+
+            anchors.left: parent.left
+            anchors.right: parent.right
+
+            backgroundAlias.radius: playersPopup.backgroundAlias.radius
+            padding: 5
+
+            property var player: Players.players[index]
+
+            onClicked: {
+              playersPopup.close()
+              Players.playerId = index
             }
           }
         }
@@ -322,7 +337,7 @@ FloatingWindow {
 
       Column {
         Text {
-          text: TextServices.truncate(Players.player.trackTitle, (window.width - 255) / 11)
+          text: TextServices.truncate(Players.player.trackTitle, (window.width - 270) / 11)
 
           font.pointSize: 11
           font.family: "JetBrainsMono Nerd Font"

@@ -15,6 +15,7 @@ AbstractButton {
   property alias textAlias: textItem
 
   property bool buttonHovered: mouseArea.hovered
+  property bool buttonPressed: down
 
   contentItem: Text {
     id: textItem
@@ -54,7 +55,7 @@ AbstractButton {
   background: Rectangle {
     id: rectangle
     color: {
-      if (button.down) {
+      if (button.buttonPressed) {
         pressedBackgroundColor
       }
       else if (button.buttonHovered) {

@@ -26,6 +26,16 @@ Scope {
       scaleItemAlias: scaleItem
       mainPanelAlias: mainPanel
 
+      function openLyricsWindow() {
+        lyricsWindowComponent.createObject(root)
+        window.close()
+      }
+
+      Component {
+        id: lyricsWindowComponent
+        LyricsWindow {}
+      }
+
       Timer {
         running: true
         interval: 100
@@ -200,77 +210,17 @@ Scope {
 
                   }
 
-                  Rectangle {
+                  Popup {
                     id: playersPopup
+                    anchor.item: playersButton
+                    anchor.edges: Edges.Bottom | Edges.Left
 
-                    anchors.top: playersButton.bottom
-                    anchors.left: playersButton.left
-
-                    function open() {
-                      state = "open"
-                      windowOpened()
-                    }
-
-                    function close() {
-                      state = ""
-                      windowClosed()
-                    }
-
-                    function toggleOpen() {
-                      if (state == "open") {
-                        close()
-                      } else {
-                        open()
-                      }
-                    }
-
-                    signal windowOpened()
-                    signal windowClosed()
-
-                    implicitWidth: 11 * 15
-                    implicitHeight: {
-                      if (playersList.contentHeight > 100) {
-                        100
+                    backgroundAlias.width: 11 * 15
+                    backgroundAlias.height: {
+                      if (playersList.contentHeight > 200) {
+                        200
                       } else {
                         playersList.contentHeight
-                      }
-                    }
-
-                    transformOrigin: Item.TopLeft
-
-                    color: Colors.itemBackground
-
-                    clip: true
-
-                    radius: 5
-
-                    scale: 0.6
-                    opacity: 0
-
-                    visible: {
-                      if (opacity == 0) {
-                        false
-                      } else {
-                        true
-                      }
-                    }
-
-                    states: State {
-                      name: "open"
-                      PropertyChanges {target: playersPopup; scale: 1}
-                      PropertyChanges {target: playersPopup; opacity: 1}
-                    }
-
-                    transitions: Transition {
-                      PropertyAnimation {
-                        property: "scale"
-                        duration: 250
-                        easing.type: Easing.OutCubic
-                      }
-                      PropertyAnimation {
-                        property: "opacity"
-                        duration: 250
-                        easing.type: Easing.OutCubic
                       }
                     }
 
@@ -282,22 +232,98 @@ Scope {
                       anchors.fill: parent
 
                       delegate: BaseButton {
-                        text: {
-                          if (modelData == Players.player) {
-                            TextServices.truncate("󰸞 " + modelData.identity, 15)
-                          } else {
-                            TextServices.truncate("  " + modelData.identity, 15)
+                        id: playersListButton
+
+                        property var data: modelData
+
+                        text: TextServices.truncate(modelData.identity, 13)
+
+                        contentItem: RowLayout {
+                          Text {
+                            id: checkItem
+                            font.pointSize: playersListButton.fontSize
+                            font.family: "JetBrainsMono Nerd Font"
+
+                            Layout.fillWidth: true
+
+                            color: Colors.text
+
+                            topPadding: playersListButton.textTopPadding
+                            bottomPadding: playersListButton.textBottomPadding
+                            leftPadding: playersListButton.textLeftPadding
+                            rightPadding: playersListButton.textRightPadding
+
+                            horizontalAlignment: Text.AlignLeft
+                            verticalAlignment: Text.AlignVCenter
+
+                            wrapMode: Text.WordWrap
+
+                            text: "󰸞"
+
+                            opacity: {
+                              if (playersListButton.data == Players.player) {
+                                1
+                              } else {
+                                0
+                              }
+                            }
+                          }
+                          Column {
+                            Layout.fillWidth: true
+                            Text {
+                              id: textItem
+                              font.pointSize: playersListButton.fontSize
+                              font.family: "JetBrainsMono Nerd Font"
+
+
+                              color: Colors.text
+
+                              topPadding: playersListButton.textTopPadding
+                              bottomPadding: playersListButton.textBottomPadding
+                              leftPadding: playersListButton.textLeftPadding
+                              rightPadding: playersListButton.textRightPadding
+
+                              horizontalAlignment: Text.AlignLeft
+                              verticalAlignment: Text.AlignVCenter
+
+                              wrapMode: Text.WordWrap
+
+                              text: playersListButton.text
+                            }
+                            Text {
+                              id: descriptionItem
+                              font.pointSize: 6
+                              font.family: "JetBrainsMono Nerd Font"
+
+                              width: playersListButton.width
+
+                              color: Colors.text
+                              opacity: 0.7
+
+                              topPadding: playersListButton.textTopPadding
+                              bottomPadding: playersListButton.textBottomPadding
+                              leftPadding: playersListButton.textLeftPadding
+                              rightPadding: playersListButton.textRightPadding
+
+                              horizontalAlignment: Text.AlignLeft
+                              verticalAlignment: Text.AlignVCenter
+
+                              wrapMode: Text.WordWrap
+
+                              text: TextServices.truncate(playersListButton.player.trackTitle, 25)
+                            }
                           }
                         }
 
-                        textAlias.horizontalAlignment: Text.AlignLeft
-                        textAlias.leftPadding: 5
+                        textLeftPadding: 5
 
                         anchors.left: parent.left
                         anchors.right: parent.right
 
-                        backgroundAlias.radius: playersPopup.radius
+                        backgroundAlias.radius: playersPopup.backgroundAlias.radius
                         padding: 5
+
+                        property var player: Players.players[index]
 
                         onClicked: {
                           playersPopup.close()
@@ -447,11 +473,6 @@ Scope {
                 id: lyricsView
               }
 
-              Component {
-                id: lyricsWindowComponent
-                LyricsWindow {}
-              }
-
               Row {
                 anchors.top: parent.top
                 anchors.left: parent.left
@@ -532,8 +553,7 @@ Scope {
                   text: ""
 
                   onClicked: {
-                    lyricsWindowComponent.createObject(root)
-                    window.close()
+                    window.openLyricsWindow()
                   }
                 }
 
