@@ -215,8 +215,8 @@ Scope {
                     anchor.item: playersButton
                     anchor.edges: Edges.Bottom | Edges.Left
 
-                    implicitWidth: 11 * 15
-                    implicitHeight: {
+                    backgroundAlias.width: 11 * 15
+                    backgroundAlias.height: {
                       if (playersList.contentHeight > 200) {
                         200
                       } else {
