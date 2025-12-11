@@ -16,10 +16,10 @@ Item {
   }
 
   transitions: Transition {
-    PropertyAnimation {
+    SpringAnimation {
       property: "scale"
-      duration: 250
-      easing.type: Easing.OutCubic
+      spring: 5
+      damping: 0.3
     }
     PropertyAnimation {
       property: "opacity"
