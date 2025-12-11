@@ -219,12 +219,13 @@ FloatingWindow {
 
         implicitWidth: 11 * 15
         implicitHeight: {
-          if (playersList.contentHeight > 100) {
-            100
+          if (playersList.contentHeight > 200) {
+            200
           } else {
             playersList.contentHeight
           }
         }
+
         ListView {
           id: playersList
 
@@ -233,22 +234,98 @@ FloatingWindow {
           anchors.fill: parent
 
           delegate: BaseButton {
-            text: {
-              if (modelData == Players.player) {
-                TextServices.truncate("󰸞 " + modelData.identity, 15)
-              } else {
-                TextServices.truncate("  " + modelData.identity, 15)
+            id: playersListButton
+
+            property var data: modelData
+
+            text: TextServices.truncate(modelData.identity, 13)
+
+            contentItem: RowLayout {
+              Text {
+                id: checkItem
+                font.pointSize: playersListButton.fontSize
+                font.family: "JetBrainsMono Nerd Font"
+
+                Layout.fillWidth: true
+
+                color: Colors.text
+
+                topPadding: playersListButton.textTopPadding
+                bottomPadding: playersListButton.textBottomPadding
+                leftPadding: playersListButton.textLeftPadding
+                rightPadding: playersListButton.textRightPadding
+
+                horizontalAlignment: Text.AlignLeft
+                verticalAlignment: Text.AlignVCenter
+
+                wrapMode: Text.WordWrap
+
+                text: "󰸞"
+
+                opacity: {
+                  if (playersListButton.data == Players.player) {
+                    1
+                  } else {
+                    0
+                  }
+                }
+              }
+              Column {
+                Layout.fillWidth: true
+                Text {
+                  id: textItem
+                  font.pointSize: playersListButton.fontSize
+                  font.family: "JetBrainsMono Nerd Font"
+
+
+                  color: Colors.text
+
+                  topPadding: playersListButton.textTopPadding
+                  bottomPadding: playersListButton.textBottomPadding
+                  leftPadding: playersListButton.textLeftPadding
+                  rightPadding: playersListButton.textRightPadding
+
+                  horizontalAlignment: Text.AlignLeft
+                  verticalAlignment: Text.AlignVCenter
+
+                  wrapMode: Text.WordWrap
+
+                  text: playersListButton.text
+                }
+                Text {
+                  id: descriptionItem
+                  font.pointSize: 6
+                  font.family: "JetBrainsMono Nerd Font"
+
+                  width: playersListButton.width
+
+                  color: Colors.text
+                  opacity: 0.7
+
+                  topPadding: playersListButton.textTopPadding
+                  bottomPadding: playersListButton.textBottomPadding
+                  leftPadding: playersListButton.textLeftPadding
+                  rightPadding: playersListButton.textRightPadding
+
+                  horizontalAlignment: Text.AlignLeft
+                  verticalAlignment: Text.AlignVCenter
+
+                  wrapMode: Text.WordWrap
+
+                  text: TextServices.truncate(playersListButton.player.trackTitle, 25)
+                }
               }
             }
 
-            textAlias.horizontalAlignment: Text.AlignLeft
-            textAlias.leftPadding: 5
+            textLeftPadding: 5
 
             anchors.left: parent.left
             anchors.right: parent.right
 
             backgroundAlias.radius: playersPopup.backgroundAlias.radius
             padding: 5
+
+            property var player: Players.players[index]
 
             onClicked: {
               playersPopup.close()
