@@ -10,10 +10,8 @@ PopupWindow {
 
   anchor.edges: Edges.Top | Edges.Left
 
-  implicitWidth: background.width + 20
-  implicitHeight: background.height + 20
-
-  mask: Region { item: background }
+  implicitWidth: 200
+  implicitHeight: list.contentHeight
 
   property bool focusGrab: true
 
@@ -68,31 +66,7 @@ PopupWindow {
   Rectangle {
     id: background
 
-    anchors {
-      left: {
-        if (Edges.Left in parent.anchor.edges) {
-          parent.left
-        }
-      }
-      right: {
-        if (Edges.Rigth in parent.anchor.edges) {
-          parent.right
-        }
-      }
-      bottom: {
-        if (Edges.Bottom in parent.anchor.edges) {
-          parent.bottom
-        }
-      }
-      top: {
-        if (Edges.Top in parent.anchor.edges) {
-          parent.top
-        }
-      }
-    }
-
-    width: 200
-    height: list.contentHeight
+    anchors.fill: parent
 
     transformOrigin: Item.TopLeft
 
@@ -111,25 +85,16 @@ PopupWindow {
     }
 
     transitions: Transition {
-      SpringAnimation {
+      PropertyAnimation {
         property: "scale"
-        spring: 5
-        damping: 0.3
+        duration: 250
+        easing.type: Easing.OutCubic
       }
       PropertyAnimation {
         property: "opacity"
         duration: 250
         easing.type: Easing.OutCubic
       }
-    }
-
-    MouseArea {
-      anchors.fill: parent
-      acceptedButtons: Qt.RightButton
-
-      cursorShape: Qt.PointingHandCursor
-
-      onClicked: rightClickMenu.close()
     }
 
     ListView {
@@ -230,5 +195,14 @@ PopupWindow {
         textLeftPadding: 10
       }
     }
+  }
+
+  MouseArea {
+    anchors.fill: parent
+    acceptedButtons: Qt.RightButton
+
+    cursorShape: Qt.PointingHandCursor
+
+    onClicked: rightClickMenu.close()
   }
 }
