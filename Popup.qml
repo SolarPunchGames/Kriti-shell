@@ -68,29 +68,6 @@ PopupWindow {
   Rectangle {
     id: background
 
-    anchors {
-      left: {
-        if (Edges.Left in parent.anchor.edges) {
-          parent.left
-        }
-      }
-      right: {
-        if (Edges.Rigth in parent.anchor.edges) {
-          parent.right
-        }
-      }
-      bottom: {
-        if (Edges.Bottom in parent.anchor.edges) {
-          parent.bottom
-        }
-      }
-      top: {
-        if (Edges.Top in parent.anchor.edges) {
-          parent.top
-        }
-      }
-    }
-
     width: 200
     height: list.contentHeight
 
