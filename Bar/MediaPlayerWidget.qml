@@ -21,21 +21,7 @@ Item {
       anchor.rect.y = mouseArea.mouseY
     }
 
-    listAlias.model: [ 
-      {
-        description: "(Middle mouse button)",
-        customText: true,
-        getText() {
-          if (Players.player.isPlaying) {
-            return "Pause"
-          } else {
-            return "Play"
-          }
-        },
-        activate() {
-          Players.player.togglePlaying()
-        },
-      },
+    listAlias.model: [
       {
         description: "(Left mouse button)",
         customText: true,
@@ -92,7 +78,35 @@ Item {
             }
           }
         },
-      }
+      },
+      {
+        description: "(Middle mouse button)",
+        customText: true,
+        getText() {
+          if (Players.player.isPlaying) {
+            return "Pause"
+          } else {
+            return "Play"
+          }
+        },
+        activate() {
+          Players.player.togglePlaying()
+        },
+      },
+      {
+        description: "(Scroll up)",
+        text: "Previous",
+        activate() {
+          Players.player.previous()
+        },
+      },
+      {
+        description: "(Scroll down)",
+        text: "Next",
+        activate() {
+          Players.player.next()
+        },
+      },
     ]
   }
   
