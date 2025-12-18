@@ -148,7 +148,7 @@ Scope {
                   confirmationWindowComponent.createObject(root)
                   root.command = ["systemctl", "reboot"]
                   root.commandName = "reboot"
-                  toggleOpen()
+                  close()
                 }
 
 
@@ -175,7 +175,7 @@ Scope {
                   confirmationWindowComponent.createObject(root)
                   root.command = ["systemctl", "suspend"]
                   root.commandName = "sleep"
-                  toggleOpen()
+                  close()
                 }
 
                 bigTextItem.font.pointSize: 60
@@ -201,7 +201,7 @@ Scope {
                   confirmationWindowComponent.createObject(root)
                   root.command = ["hyprctl", "dispatch", "exit"]
                   root.commandName = "logout"
-                  toggleOpen()
+                  close()
                 }
 
                 bigTextItem.font.pointSize: 60
@@ -227,7 +227,7 @@ Scope {
                   confirmationWindowComponent.createObject(root)
                   root.command = ["hyprlock"]
                   root.commandName = "lock"
-                  toggleOpen()
+                  close()
                 }
 
                 bigTextItem.font.pointSize: 60
@@ -266,7 +266,7 @@ Scope {
                 confirmationWindowComponent.createObject(root)
                 root.command = ["systemctl", "poweroff"]
                 root.commandName = "shutdown"
-                toggleOpen()
+                close()
               }
             }
 
