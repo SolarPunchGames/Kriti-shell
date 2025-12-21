@@ -40,11 +40,15 @@
         "name": "Fix position bug on media with no lyrics found (Warning! This causes play/pause to feel a little clunky)",
         "type": "switch",
         "value": false
+      },
+      "changePlayerToPlayingPlayer": {
+        "name": "Change player if some other player changes to playing",
+        "type": "switch",
+        "value": true
       }
     }
   },
-  "miscellaneous": {
-  },
+  "miscellaneous": {},
   "audio": {
     "volumeWidget": {
       "scrollIncrement": {
