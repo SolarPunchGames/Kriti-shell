@@ -85,6 +85,8 @@ Scope {
 
       implicitHeight: 36
 
+      property var state: mainRect.state
+
       function open() {
         mainRect.state = ""
       }
@@ -119,6 +121,13 @@ Scope {
         for (var i = 0; i < barVariants.instances.length; i++) {
           var instance = barVariants.instances[i]
           instance.toggleOpen()
+        }
+      }
+
+      function isAnyClosed() {
+        for (var i = 0; i < barVariants.instances.length; i++) {
+          var instance = barVariants.instances[i]
+          if (instance.state == "closed") return true;
         }
       }
 
@@ -204,14 +213,14 @@ Scope {
           {
             customText: true,
             getText() {
-              if (mainRect.state == "closed") {
+              if (mainWindow.isAnyClosed()) {
                 return "Show all bars"
               } else {
                 return "Hide all bars"
               }
             },
             activate() {
-              if (mainRect.state == "closed") {
+              if (mainWindow.isAnyClosed()) {
                 mainWindow.openAll()
               } else {
                 mainWindow.closeAll()
