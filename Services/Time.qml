@@ -78,9 +78,9 @@ Singleton {
   QtObject {
     id: shutdownObject
 
-    property int responseTime: Config.parsedConfig.miscellaneous?.shutdownWidget?.responseTime?.value
+    property int responseTime: Config.parsedConfig.miscellaneous?.shutdownWidget?.responseTime?.value ?? 120
 
-    property string targetTime: Config.parsedConfig.miscellaneous?.shutdownWidget?.shutdownTime?.value
+    property string targetTime: Config.parsedConfig.miscellaneous?.shutdownWidget?.shutdownTime?.value ?? "25:00:00"
 
     readonly property int targetTimeSeconds: TextServices.hoursMinutesSecondsToSeconds(targetTime)
     readonly property int timeSeconds: TextServices.hoursMinutesSecondsToSeconds(Time.hoursMinutesSeconds)
