@@ -10,7 +10,14 @@ import Quickshell.Services.Mpris
 Singleton {
   id: root
 
-  property int playerId: 0
+  property int playerId: {
+    if (customPlayerId > (players.length - 1)) {
+      0 //players.length - 1
+    } else {
+      customPlayerId
+    }
+  }
+  property int customPlayerId: 0
   property real pausedTime: 0.0
   readonly property var players: Mpris.players.values
   readonly property MprisPlayer player: players[playerId]

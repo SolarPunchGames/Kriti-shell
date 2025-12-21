@@ -329,7 +329,7 @@ FloatingWindow {
 
             onClicked: {
               playersPopup.close()
-              Players.playerId = index
+              Players.customPlayerId = index
             }
           }
         }
