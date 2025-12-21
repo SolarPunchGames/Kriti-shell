@@ -53,23 +53,6 @@ Singleton {
     //console.log("reload lyrics")
   }
 
-  Timer {
-    interval: 100
-    running: true
-    repeat: true
-    onTriggered: {
-      var playingPlayers = []
-      for (var i = 0; i < players.length; i++) {
-        if (players[i].isPlaying == true) {
-          playingPlayers.push(i)
-        }
-      }
-      if (playingPlayers.length == 1) {
-        customPlayerId = playingPlayers[0]
-      }
-    }
-  }
-
   property var trackLyrics: 1
 
   readonly property int maxTries: 5
