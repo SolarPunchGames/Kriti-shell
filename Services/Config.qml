@@ -17,7 +17,10 @@ Singleton {
     blockLoading: true
 
     watchChanges: true
-    onFileChanged: this.reload()
+    onFileChanged: {
+      this.reload()
+      root.onConfigChanged()
+    }
 
     onLoadFailed: (error) => {
       if (error == FileViewError.FileNotFound) {
@@ -25,6 +28,8 @@ Singleton {
       }
     }
   }
+
+  signal configChanged()
 
   FileView {
     id: defaultsConfigFile
