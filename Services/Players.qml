@@ -58,8 +58,14 @@ Singleton {
     running: true
     repeat: true
     onTriggered: {
-      if (playerId > (players.length - 1)) {
-        playerId = 0
+      var playingPlayers = []
+      for (var i = 0; i < players.length; i++) {
+        if (players[i].isPlaying == true) {
+          playingPlayers.push(i)
+        }
+      }
+      if (playingPlayers.length == 1) {
+        customPlayerId = playingPlayers[0]
       }
     }
   }
