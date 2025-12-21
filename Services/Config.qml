@@ -141,7 +141,6 @@ Singleton {
     repeat: true
     onTriggered: {
       if (needsMerge(parsedConfig, parsedDefaultConfig)) {
-        console.log("needs merge")
         configFile.setText(JSON.stringify(nonDestructiveMerge(parsedConfig, parsedDefaultConfig), null, 2))
       }
     }
