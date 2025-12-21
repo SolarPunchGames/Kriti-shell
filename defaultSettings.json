@@ -56,7 +56,7 @@
         "value": "20:00:00"
       },
       "lateEndTime": {
-        "name": "Start of late time",
+        "name": "End of late time",
         "type": "string",
         "value": "06:00:00"
       }
