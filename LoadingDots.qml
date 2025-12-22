@@ -33,6 +33,8 @@ Item {
       height: width
       radius: width / 2
 
+      color: Colors.text
+
       scale: root.currentDotIndex == 0 ? 1 : 0.5
 
       Behavior on scale {
@@ -47,6 +49,8 @@ Item {
       height: width
       radius: width / 2
 
+      color: Colors.text
+
       scale: root.currentDotIndex == 1 ? 1 : 0.5
 
       Behavior on scale {
@@ -60,6 +64,8 @@ Item {
       width: 20 * scaleMult
       height: width
       radius: width / 2
+
+      color: Colors.text
 
       scale: root.currentDotIndex == 2 ? 1 : 0.5
 

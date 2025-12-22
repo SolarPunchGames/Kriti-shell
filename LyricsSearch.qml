@@ -74,7 +74,7 @@ Item {
 
           clip: true
 
-          backgroundAlias.border.color: Colors.separator
+          backgroundAlias.border.color: Colors.itemHoveredBackground
           backgroundAlias.border.width: 1
 
           onClicked: {
