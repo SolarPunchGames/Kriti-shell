@@ -28,13 +28,129 @@ Item {
   ColumnLayout {
     anchors.fill: parent
     anchors.margins: 10
+    anchors.topMargin: Players.trackLyrics.plainLyrics ? 10 : 74
     spacing: 10
+    RowLayout {
+      Layout.fillWidth: true
+
+      visible: Players.trackLyrics.plainLyrics ? true : false
+
+      Text {
+        Layout.fillWidth: true
+
+        text: "Current \nlyrics:"
+
+        horizontalAlignment: Text.AlignLeft
+        verticalAlignment: Text.AlignTop
+
+        leftPadding: 30
+
+        font.pointSize: 8
+        font.family: "JetBrainsMono Nerd Font"
+
+        color: Colors.text
+      }
+      BaseButton {
+        id: result
+
+        Layout.fillWidth: true
+
+        text: TextServices.truncate(Players.trackLyrics.name, (width - 20) / 12)
+
+        padding: 10
+
+        fontSize: 12
+
+        clip: true
+
+        backgroundAlias.border.color: Colors.separator
+        backgroundAlias.border.width: 1
+
+        onClicked: {
+          Players.loadCustomLyrics(Players.trackLyrics.id)
+          root.lyricsFound()
+        }
+
+        contentItem: Column {
+          Text {
+            id: textItem
+            font.pointSize: result.fontSize
+            font.family: "JetBrainsMono Nerd Font"
+
+            width: parent.width
+
+            color: Colors.text
+
+            topPadding: result.textTopPadding
+            bottomPadding: result.textBottomPadding
+            leftPadding: result.textLeftPadding
+            rightPadding: result.textRightPadding
+
+            horizontalAlignment: Text.AlignLeft
+            verticalAlignment: Text.AlignVCenter
+
+            wrapMode: Text.WordWrap
+
+            text: result.text
+          }
+          RowLayout {
+            width: parent.width
+            Text {
+              id: artistItem
+
+              Layout.fillWidth: true
+
+              font.pointSize: 7
+              font.family: "JetBrainsMono Nerd Font"
+
+              color: Colors.text
+              opacity: 0.7
+
+              topPadding: result.textTopPadding
+              bottomPadding: result.textBottomPadding
+              leftPadding: result.textLeftPadding
+              rightPadding: result.textRightPadding
+
+              horizontalAlignment: Text.AlignLeft
+              verticalAlignment: Text.AlignVCenter
+
+              wrapMode: Text.WordWrap
+
+              text: Players.trackLyrics.artistName ? TextServices.truncate(Players.trackLyrics.name, (width) / 7) : ""
+
+              visible: Players.trackLyrics.artistName ? true : false
+            }
+            Text {
+              id: duration
+
+              Layout.fillWidth: true
+
+              font.pointSize: 7
+              font.family: "JetBrainsMono Nerd Font"
+
+              color: Colors.text
+              opacity: 0.7
+
+              topPadding: result.textTopPadding
+              bottomPadding: result.textBottomPadding
+              leftPadding: result.textLeftPadding
+              rightPadding: result.textRightPadding
+
+              horizontalAlignment: Text.AlignRight
+              verticalAlignment: Text.AlignVCenter
+
+              wrapMode: Text.WordWrap
+
+              text: Players.trackLyrics.duration ? TextServices.secondsToMinutesSeconds(Players.trackLyrics.duration) : ""
+
+              visible: Players.trackLyrics.duration ? true : false
+            }
+          }
+        }
+      }
+    }
     Text {
       Layout.fillWidth: true
-      
-      topPadding: 40
-
-      Layout.preferredHeight: 70
 
       text: "Search for lyrics"
 
