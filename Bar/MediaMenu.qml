@@ -553,7 +553,7 @@ Scope {
                         }
                       }
 
-                      visible: Players.trackLyrics.plainLyrics ? true : false
+                      visible: Players.trackLyrics.syncedLyrics ? true : false
 
                       onClicked: {
                         lyricsView.synced = !lyricsView.synced
