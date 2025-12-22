@@ -111,11 +111,12 @@ Item {
   }
 
   Row {
+    id: mainRow
     spacing: -20
     Item {
       MarginWrapperManager { margin: 3 }
       BaseButton {
-        implicitWidth: Players.playerToSwitchTo && !Players.tempDisableSwitchSuggestion && Config.media.widget.suggestPlayerChange.value ? textAlias.contentWidth + rightPadding + leftPadding : 0
+        implicitWidth: Players.playerToSwitchTo && !Players.tempDisableSwitchSuggestion && Config.media.widget.suggestPlayerChange.value && rect.state != "closed" ? textAlias.contentWidth + rightPadding + leftPadding : 0
         implicitHeight: 24
 
         Behavior on implicitWidth {
@@ -283,14 +284,14 @@ Item {
 
       states: State {
         name: "closed"
-        PropertyChanges {target: rect; y: -25}
+        PropertyChanges {target: mainRow; y: -25}
       }
 
       transitions: Transition {
-        PropertyAnimation {
+        SpringAnimation {
           property: "y"
-          duration: 200
-          easing.type: Easing.OutCubic
+          spring: 6
+          damping: 0.4
         }
       }
 
