@@ -48,7 +48,7 @@ Singleton {
   function reloadLyrics() {
     lyricsTimer.running = true
     lyricsProc.running = false
-    trackLyrics = 1
+    defaultLyrics = 1
     currentTry = 1
     areLyricsCustom = false
 
@@ -60,13 +60,15 @@ Singleton {
   function loadCustomLyrics(id) {
     customLyricsId = id
     customLyricsProc.running = true
-    trackLyrics = 1
+    customLyrics = 1
     areLyricsCustom = true
 
     lyricsChanged()
   }
 
-  property var trackLyrics: 1
+  property var trackLyrics: areLyricsCustom ? customLyrics : defaultLyrics
+  property var defaultLyrics: 1
+  property var customLyrics: 1
 
   readonly property int maxTries: 5
   property int currentTry: 1
@@ -96,11 +98,11 @@ Singleton {
             lyricsTimer.running = true
             currentTry += 1
           } else {
-            trackLyrics = 404
+            defaultLyrics = 404
           }
           //console.log("lyrics failed")
         } else {
-          trackLyrics = JSON.parse(text)
+          defaultLyrics = JSON.parse(text)
         }
       }
     }
@@ -113,7 +115,7 @@ Singleton {
     stdout: StdioCollector {
       waitForEnd: true
       onStreamFinished: {
-        trackLyrics = JSON.parse(text)
+        customLyrics = JSON.parse(text)
       }
     }
   }

@@ -27,23 +27,22 @@ Item {
 
   ColumnLayout {
     anchors.fill: parent
-    anchors.margins: 10
-    anchors.topMargin: Players.trackLyrics.plainLyrics ? 10 : 74
+    anchors.margins: 5
+    anchors.topMargin: Players.trackLyrics.plainLyrics ? 5 : 65
     spacing: 10
     RowLayout {
       Layout.fillWidth: true
 
-      visible: Players.trackLyrics.plainLyrics ? true : false
+      visible: Players.defaultLyrics.plainLyrics ? true : false
 
       Text {
         Layout.fillWidth: true
+        Layout.leftMargin: 35
 
-        text: "Current \nlyrics:"
+        text: "Default \nlyrics:"
 
         horizontalAlignment: Text.AlignLeft
         verticalAlignment: Text.AlignTop
-
-        leftPadding: 30
 
         font.pointSize: 8
         font.family: "JetBrainsMono Nerd Font"
@@ -54,12 +53,13 @@ Item {
         id: result
 
         Layout.fillWidth: true
+        Layout.rightMargin: 35
 
-        text: TextServices.truncate(Players.trackLyrics.name, (width - 20) / 12)
+        text: TextServices.truncate(Players.defaultLyrics.name, (width - 20) / fontSize)
 
         padding: 10
 
-        fontSize: 12
+        fontSize: 10
 
         clip: true
 
@@ -67,7 +67,7 @@ Item {
         backgroundAlias.border.width: 1
 
         onClicked: {
-          Players.loadCustomLyrics(Players.trackLyrics.id)
+          Players.loadCustomLyrics(Players.defaultLyrics.id)
           root.lyricsFound()
         }
 
@@ -100,7 +100,7 @@ Item {
 
               Layout.fillWidth: true
 
-              font.pointSize: 7
+              font.pointSize: 6
               font.family: "JetBrainsMono Nerd Font"
 
               color: Colors.text
@@ -116,7 +116,7 @@ Item {
 
               wrapMode: Text.WordWrap
 
-              text: Players.trackLyrics.artistName ? TextServices.truncate(Players.trackLyrics.name, (width) / 7) : ""
+              text: Players.trackLyrics.artistName ? TextServices.truncate(Players.trackLyrics.name, (width) / font.pointSize) : ""
 
               visible: Players.trackLyrics.artistName ? true : false
             }
