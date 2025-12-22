@@ -29,6 +29,7 @@ ListView {
   cacheBuffer: 1000000
 
   property var lyricsSizeMult: 1
+  property var synced: true
 
   Component.onCompleted: forceLayout()
 
@@ -218,7 +219,8 @@ ListView {
     }
   }
 
-  function reload() {
+  function reload(delay = 100) {
+    showLyricsTimer.interval = delay
     lyricsList.clear()
     lyricsView.currentIndex = -1
     showLyricsTimer.running = true
@@ -232,13 +234,11 @@ ListView {
     running: true
 
     onTriggered: {
-
       if (Players.trackLyrics.plainLyrics) {
 
         lyricsLoadingText.visible = false
 
-
-        if (Players.trackLyrics.syncedLyrics) {
+        if (Players.trackLyrics.syncedLyrics && synced == true) {
           var syncedLyrics = Players.trackLyrics.syncedLyrics;
           var lines = syncedLyrics.split("\n");
           for (var i = 0; i < lines.length; i++) {

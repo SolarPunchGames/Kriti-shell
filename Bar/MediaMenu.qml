@@ -532,6 +532,32 @@ Scope {
                       }
                     }
 
+                    BaseButton {
+                      id: lyricsSyncButton
+
+                      backgroundAlias.radius: 7
+                      backgroundColor: "transparent"
+
+                      width: 30
+                      height: width
+
+                      textRightPadding: 3
+
+                      text: {
+                        if (Players.trackLyrics.syncedLyrics && lyricsView.synced) {
+                          "󱫧"
+                        } else {
+                          "󰔛"
+                        }
+                      }
+
+                      visible: Players.trackLyrics.plainLyrics ? true : false
+
+                      onClicked: {
+                        lyricsView.synced = !lyricsView.synced
+                        lyricsView.reload(0)
+                      }
+                    }
                   }
 
                   Row {
@@ -565,7 +591,7 @@ Scope {
                       width: 30
                       height: width
 
-                      textAlias.rightPadding: 3
+                      textRightPadding: 3
                       text: "󰆏"
 
                       onClicked: {
@@ -582,7 +608,7 @@ Scope {
                       width: 30
                       height: width
 
-                      textAlias.rightPadding: 3
+                      textRightPadding: 3
                       text: ""
 
                       onClicked: {
@@ -599,7 +625,7 @@ Scope {
                       width: 30
                       height: width
 
-                      textAlias.rightPadding: 3
+                      textRightPadding: 3
                       text: "󰑓"
 
                       onClicked: {
