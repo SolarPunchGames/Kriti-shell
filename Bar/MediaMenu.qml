@@ -377,7 +377,6 @@ Scope {
                     backgroundAlias.radius: 10
 
                     backgroundColor: "transparent"
-                    hoveredBackgroundColor: Colors.itemDisabledBackground
 
                     anchors.verticalCenter: parent.verticalCenter
 
@@ -394,7 +393,6 @@ Scope {
                     backgroundAlias.radius: 10
 
                     backgroundColor: "transparent"
-                    hoveredBackgroundColor: Colors.itemDisabledBackground
 
                     anchors.verticalCenter: parent.verticalCenter
 
@@ -417,7 +415,6 @@ Scope {
                     backgroundAlias.radius: 10
 
                     backgroundColor: "transparent"
-                    hoveredBackgroundColor: Colors.itemDisabledBackground
 
                     anchors.verticalCenter: parent.verticalCenter
 

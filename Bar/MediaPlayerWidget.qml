@@ -503,7 +503,6 @@ Item {
           backgroundAlias.radius: row.buttonRadius
 
           backgroundColor: "transparent"
-          hoveredBackgroundColor: Colors.itemDisabledBackground
 
           anchors.verticalCenter: parent.verticalCenter
 
@@ -520,7 +519,6 @@ Item {
           backgroundAlias.radius: row.buttonRadius
 
           backgroundColor: "transparent"
-          hoveredBackgroundColor: Colors.itemDisabledBackground
 
           anchors.verticalCenter: parent.verticalCenter
 
@@ -543,7 +541,6 @@ Item {
           backgroundAlias.radius: row.buttonRadius
 
           backgroundColor: "transparent"
-          hoveredBackgroundColor: Colors.itemDisabledBackground
 
           anchors.verticalCenter: parent.verticalCenter
 
