@@ -170,7 +170,6 @@ PopupWindow {
           visible: {
             if (listItem.dataStuff.separator) {
               true
-              console.log("separator")
             } else {
               false
             }
