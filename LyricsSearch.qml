@@ -110,6 +110,32 @@ Item {
 
       spacing: 5
 
+      populate: Transition {
+        id: lyricAddTrans
+        SequentialAnimation {
+          PropertyAnimation { properties: "x"; to: 1000; duration: 0 }
+          PauseAnimation { duration: lyricAddTrans.ViewTransition.index * 50}
+          PropertyAnimation { 
+            properties: "x"
+            from: 20
+            to: 0
+            duration: 250
+            easing.type: Easing.OutCubic
+          }
+        }
+        SequentialAnimation {
+          PropertyAnimation { properties: "opacity"; to: 0; duration: 0 }
+          PauseAnimation { duration: lyricAddTrans.ViewTransition.index * 50}
+          PropertyAnimation { 
+            properties: "opacity"
+            from: 0
+            to: 1
+            duration: 250
+            easing.type: Easing.OutCubic
+          }
+        }
+      }
+
       delegate: BaseButton {
         id: result
 
