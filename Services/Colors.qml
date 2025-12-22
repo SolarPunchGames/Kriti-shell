@@ -35,7 +35,7 @@ Singleton {
   readonly property color text: "#ffffff"
   readonly property color bigText: "#ffffff"
   readonly property color smallText: "#ffffff"
-  readonly property color separator: "#255a4d"
+  readonly property color separator: "#277262"
 
 
   // Catppuccin Mocha

@@ -61,7 +61,7 @@ Item {
           color: Colors.text
         }
         BaseButton {
-          id: result
+          id: defaultLyricsButton
 
           Layout.fillWidth: true
           Layout.rightMargin: 35
@@ -86,77 +86,63 @@ Item {
           contentItem: Column {
             Text {
               id: textItem
-              font.pointSize: result.fontSize
+              font.pointSize: defaultLyricsButton.fontSize
               font.family: "JetBrainsMono Nerd Font"
 
               width: parent.width
 
               color: Colors.text
 
-              topPadding: result.textTopPadding
-              bottomPadding: result.textBottomPadding
-              leftPadding: result.textLeftPadding
-              rightPadding: result.textRightPadding
+              topPadding: defaultLyricsButton.textTopPadding
+              bottomPadding: defaultLyricsButton.textBottomPadding
+              leftPadding: defaultLyricsButton.textLeftPadding
+              rightPadding: defaultLyricsButton.textRightPadding
 
               horizontalAlignment: Text.AlignLeft
               verticalAlignment: Text.AlignVCenter
 
               wrapMode: Text.WordWrap
 
-              text: result.text
+              text: defaultLyricsButton.text
             }
-            RowLayout {
-              width: parent.width
-              Text {
-                id: artistItem
+            Text {
+              id: artistItem
 
-                Layout.fillWidth: true
+              Layout.fillWidth: true
 
-                font.pointSize: 6
-                font.family: "JetBrainsMono Nerd Font"
+              font.pointSize: 6
+              font.family: "JetBrainsMono Nerd Font"
 
-                color: Colors.text
-                opacity: 0.7
+              color: Colors.text
+              opacity: 0.7
 
-                topPadding: result.textTopPadding
-                bottomPadding: result.textBottomPadding
-                leftPadding: result.textLeftPadding
-                rightPadding: result.textRightPadding
+              topPadding: defaultLyricsButton.textTopPadding
+              bottomPadding: defaultLyricsButton.textBottomPadding
+              leftPadding: defaultLyricsButton.textLeftPadding
+              rightPadding: defaultLyricsButton.textRightPadding
 
-                horizontalAlignment: Text.AlignLeft
-                verticalAlignment: Text.AlignVCenter
+              horizontalAlignment: Text.AlignLeft
+              verticalAlignment: Text.AlignVCenter
 
-                wrapMode: Text.WordWrap
+              wrapMode: Text.WordWrap
 
-                text: Players.defaultLyrics.artistName ? TextServices.truncate(Players.defaultLyrics.artistName, (column.width) / font.pointSize) : ""
-
-                visible: Players.defaultLyrics.artistName ? true : false
+              text: {
+                var artist = ""
+                var duration = ""
+                var synced = " • 󱎬 plain"
+                if (Players.defaultLyrics.duration) {
+                  duration = " • " + TextServices.secondsToMinutesSeconds(Players.defaultLyrics.duration)
+                }
+                if (Players.defaultLyrics.syncedLyrics) {
+                  synced = " • 󱎫 synced"
+                }
+                if (Players.defaultLyrics.artistName) {
+                  artist = TextServices.truncate(Players.defaultLyrics.artistName, (column.width - (duration.length * font.pointSize) - (synced.length * font.pointSize) - 120) / font.pointSize)
+                }
+                artist + duration + synced
               }
-              Text {
-                id: duration
 
-                Layout.fillWidth: true
-
-                font.pointSize: 7
-                font.family: "JetBrainsMono Nerd Font"
-
-                color: Colors.text
-                opacity: 0.7
-
-                topPadding: result.textTopPadding
-                bottomPadding: result.textBottomPadding
-                leftPadding: result.textLeftPadding
-                rightPadding: result.textRightPadding
-
-                horizontalAlignment: Text.AlignRight
-                verticalAlignment: Text.AlignVCenter
-
-                wrapMode: Text.WordWrap
-
-                text: Players.defaultLyrics.duration ? TextServices.secondsToMinutesSeconds(Players.defaultLyrics.duration) : ""
-
-                visible: Players.defaultLyrics.duration ? true : false
-              }
+              visible: Players.defaultLyrics.artistName || Players.defaultLyrics.duration || Players.defaultLyrics.syncedLyrics ? true : false
             }
           }
         }
@@ -318,58 +304,44 @@ Item {
 
             text: result.text
           }
-          RowLayout {
-            width: parent.width
-            Text {
-              id: artistItem
+          Text {
+            id: artistItem
 
-              Layout.fillWidth: true
+            Layout.fillWidth: true
 
-              font.pointSize: 7
-              font.family: "JetBrainsMono Nerd Font"
+            font.pointSize: 7
+            font.family: "JetBrainsMono Nerd Font"
 
-              color: Colors.text
-              opacity: 0.7
+            color: Colors.text
+            opacity: 0.7
 
-              topPadding: result.textTopPadding
-              bottomPadding: result.textBottomPadding
-              leftPadding: result.textLeftPadding
-              rightPadding: result.textRightPadding
+            topPadding: result.textTopPadding
+            bottomPadding: result.textBottomPadding
+            leftPadding: result.textLeftPadding
+            rightPadding: result.textRightPadding
 
-              horizontalAlignment: Text.AlignLeft
-              verticalAlignment: Text.AlignVCenter
+            horizontalAlignment: Text.AlignLeft
+            verticalAlignment: Text.AlignVCenter
 
-              wrapMode: Text.WordWrap
+            wrapMode: Text.WordWrap
 
-              text: result.data.artistName ? result.data.artistName : ""
-
-              visible: result.data.artistName ? true : false
+            text: {
+              var artist = ""
+              var duration = ""
+              var synced = " • 󱎬 plain"
+              if (result.data.duration) {
+                duration = " • " + TextServices.secondsToMinutesSeconds(result.data.duration)
+              }
+              if (result.data.syncedLyrics) {
+                synced = " • 󱎫 synced"
+              }
+              if (result.data.artistName) {
+                artist = TextServices.truncate(result.data.artistName, (result.width - (duration.length * font.pointSize) - (synced.length * font.pointSize)) / font.pointSize)
+              }
+              artist + duration + synced
             }
-            Text {
-              id: duration
 
-              Layout.fillWidth: true
-
-              font.pointSize: 7
-              font.family: "JetBrainsMono Nerd Font"
-
-              color: Colors.text
-              opacity: 0.7
-
-              topPadding: result.textTopPadding
-              bottomPadding: result.textBottomPadding
-              leftPadding: result.textLeftPadding
-              rightPadding: result.textRightPadding
-
-              horizontalAlignment: Text.AlignRight
-              verticalAlignment: Text.AlignVCenter
-
-              wrapMode: Text.WordWrap
-
-              text: result.data.duration ? TextServices.secondsToMinutesSeconds(result.data.duration) : ""
-
-              visible: result.data.duration ? true : false
-            }
+            visible: result.data.artistName || result.data.duration || result.data.syncedLyrics ? true : false
           }
         }
       }
