@@ -87,6 +87,7 @@ Usage:
 qs -c Kriti-shell ipc call <<target>> <<function>>
 ```
 
+Targets and functions:
 * appMenu
 	* toggle
 * bar
