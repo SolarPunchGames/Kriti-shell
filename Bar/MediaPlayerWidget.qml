@@ -276,7 +276,7 @@ Item {
         backgroundAlias.bottomLeftRadius: 10
         backgroundAlias.topLeftRadius: 10
 
-        backgroundAlias.border.color: Colors.separator
+        backgroundAlias.border.color: Colors.itemHoveredBackground
         backgroundAlias.border.width: 1
 
         MouseArea {

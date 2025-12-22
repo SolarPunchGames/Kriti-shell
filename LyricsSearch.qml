@@ -199,7 +199,7 @@ Item {
       background: Rectangle {
         radius: 10
         color: "transparent"
-        border.color: Colors.separator
+        border.color: Colors.itemHoveredBackground
         border.width: 1
       }
 
@@ -215,7 +215,7 @@ Item {
 
         backgroundAlias.radius: 5
 
-        backgroundAlias.border.color: Colors.separator
+        backgroundAlias.border.color: Colors.itemHoveredBackground
         backgroundAlias.border.width: 1
 
         width: height
@@ -288,7 +288,7 @@ Item {
 
         fontSize: 12
 
-        backgroundAlias.border.color: Colors.separator
+        backgroundAlias.border.color: Colors.itemHoveredBackground
         backgroundAlias.border.width: 1
 
         onClicked: {
