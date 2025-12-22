@@ -30,83 +30,68 @@ Item {
     id: column
     anchors.fill: parent
     anchors.margins: 5
-    anchors.topMargin: Players.defaultLyrics.plainLyrics ? 5 : 65
+    anchors.topMargin: 0
     spacing: 10
-    RowLayout {
+    Item {
       Layout.fillWidth: true
+      Layout.preferredHeight: 60
 
-      visible: Players.defaultLyrics.plainLyrics ? true : false
-
-      Text {
-        Layout.fillWidth: true
-        Layout.leftMargin: 35
-
-        text: "Default \nlyrics:"
-
-        horizontalAlignment: Text.AlignLeft
-        verticalAlignment: Text.AlignTop
-
-        font.pointSize: 8
-        font.family: "JetBrainsMono Nerd Font"
-
-        color: Colors.text
+      LoadingDots {
+        anchors.fill: parent
+        running: Players.defaultLyrics == 1 ? true : false
+        scaleMult: 0.5
       }
-      BaseButton {
-        id: result
 
-        Layout.fillWidth: true
-        Layout.rightMargin: 35
+      RowLayout {
+        anchors.fill: parent
+        visible: Players.defaultLyrics.plainLyrics ? true : false
 
-        text: TextServices.truncate(Players.defaultLyrics.name, (width - 20) / fontSize)
+        Text {
+          Layout.fillWidth: true
+          Layout.leftMargin: 35
 
-        padding: 10
+          text: "Default \nlyrics:"
 
-        fontSize: 10
+          horizontalAlignment: Text.AlignLeft
+          verticalAlignment: Text.AlignTop
 
-        clip: true
+          font.pointSize: 8
+          font.family: "JetBrainsMono Nerd Font"
 
-        backgroundAlias.border.color: Colors.separator
-        backgroundAlias.border.width: 1
-
-        onClicked: {
-          Players.loadCustomLyrics(Players.defaultLyrics.id)
-          root.lyricsFound()
+          color: Colors.text
         }
+        BaseButton {
+          id: result
 
-        contentItem: Column {
-          Text {
-            id: textItem
-            font.pointSize: result.fontSize
-            font.family: "JetBrainsMono Nerd Font"
+          Layout.fillWidth: true
+          Layout.rightMargin: 35
 
-            width: parent.width
+          text: TextServices.truncate(Players.defaultLyrics.name, (width - 20) / fontSize)
 
-            color: Colors.text
+          padding: 10
 
-            topPadding: result.textTopPadding
-            bottomPadding: result.textBottomPadding
-            leftPadding: result.textLeftPadding
-            rightPadding: result.textRightPadding
+          fontSize: 10
 
-            horizontalAlignment: Text.AlignLeft
-            verticalAlignment: Text.AlignVCenter
+          clip: true
 
-            wrapMode: Text.WordWrap
+          backgroundAlias.border.color: Colors.separator
+          backgroundAlias.border.width: 1
 
-            text: result.text
+          onClicked: {
+            Players.areLyricsCustom = false
+            Players.lyricsChanged()
+            root.lyricsFound()
           }
-          RowLayout {
-            width: parent.width
+
+          contentItem: Column {
             Text {
-              id: artistItem
-
-              Layout.fillWidth: true
-
-              font.pointSize: 6
+              id: textItem
+              font.pointSize: result.fontSize
               font.family: "JetBrainsMono Nerd Font"
 
+              width: parent.width
+
               color: Colors.text
-              opacity: 0.7
 
               topPadding: result.textTopPadding
               bottomPadding: result.textBottomPadding
@@ -118,34 +103,60 @@ Item {
 
               wrapMode: Text.WordWrap
 
-              text: Players.trackLyrics.artistName ? TextServices.truncate(Players.trackLyrics.name, (column.width) / font.pointSize) : ""
-
-              visible: Players.trackLyrics.artistName ? true : false
+              text: result.text
             }
-            Text {
-              id: duration
+            RowLayout {
+              width: parent.width
+              Text {
+                id: artistItem
 
-              Layout.fillWidth: true
+                Layout.fillWidth: true
 
-              font.pointSize: 7
-              font.family: "JetBrainsMono Nerd Font"
+                font.pointSize: 6
+                font.family: "JetBrainsMono Nerd Font"
 
-              color: Colors.text
-              opacity: 0.7
+                color: Colors.text
+                opacity: 0.7
 
-              topPadding: result.textTopPadding
-              bottomPadding: result.textBottomPadding
-              leftPadding: result.textLeftPadding
-              rightPadding: result.textRightPadding
+                topPadding: result.textTopPadding
+                bottomPadding: result.textBottomPadding
+                leftPadding: result.textLeftPadding
+                rightPadding: result.textRightPadding
 
-              horizontalAlignment: Text.AlignRight
-              verticalAlignment: Text.AlignVCenter
+                horizontalAlignment: Text.AlignLeft
+                verticalAlignment: Text.AlignVCenter
 
-              wrapMode: Text.WordWrap
+                wrapMode: Text.WordWrap
 
-              text: Players.trackLyrics.duration ? TextServices.secondsToMinutesSeconds(Players.trackLyrics.duration) : ""
+                text: Players.trackLyrics.artistName ? TextServices.truncate(Players.trackLyrics.name, (column.width) / font.pointSize) : ""
 
-              visible: Players.trackLyrics.duration ? true : false
+                visible: Players.trackLyrics.artistName ? true : false
+              }
+              Text {
+                id: duration
+
+                Layout.fillWidth: true
+
+                font.pointSize: 7
+                font.family: "JetBrainsMono Nerd Font"
+
+                color: Colors.text
+                opacity: 0.7
+
+                topPadding: result.textTopPadding
+                bottomPadding: result.textBottomPadding
+                leftPadding: result.textLeftPadding
+                rightPadding: result.textRightPadding
+
+                horizontalAlignment: Text.AlignRight
+                verticalAlignment: Text.AlignVCenter
+
+                wrapMode: Text.WordWrap
+
+                text: Players.trackLyrics.duration ? TextServices.secondsToMinutesSeconds(Players.trackLyrics.duration) : ""
+
+                visible: Players.trackLyrics.duration ? true : false
+              }
             }
           }
         }

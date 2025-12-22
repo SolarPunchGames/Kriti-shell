@@ -13,7 +13,7 @@ Item {
   visible: running
 
   Timer {
-    running: true
+    running: root.running
     repeat: true
     interval: 400
     onTriggered: {

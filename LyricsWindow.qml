@@ -205,6 +205,27 @@ FloatingWindow {
             }
           }
         }
+        Row {
+          anchors.top: parent.top
+          anchors.right: parent.right
+          anchors.topMargin: 5
+          anchors.rightMargin: 5
+
+          BaseButton {
+            backgroundAlias.radius: 7
+            backgroundColor: "transparent"
+
+            width: 30
+            height: width
+
+            textRightPadding: 3
+            text: "󰑓"
+
+            onClicked: {
+              Players.reloadLyrics()
+            }
+          }
+        }
       }
     }
 
