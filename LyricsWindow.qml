@@ -95,6 +95,32 @@ FloatingWindow {
             }
           }
 
+          BaseButton {
+            id: lyricsSyncButton
+
+            backgroundAlias.radius: 7
+            backgroundColor: "transparent"
+
+            width: 30
+            height: width
+
+            textRightPadding: 3
+
+            text: {
+              if (Players.trackLyrics.syncedLyrics && lyricsView.synced) {
+                "󱫧"
+              } else {
+                "󰔛"
+              }
+            }
+
+            visible: Players.trackLyrics.plainLyrics ? true : false
+
+            onClicked: {
+              lyricsView.synced = !lyricsView.synced
+              lyricsView.reload(0)
+            }
+          }
         }
 
         Row {
@@ -128,7 +154,7 @@ FloatingWindow {
             width: 30
             height: width
 
-            textAlias.rightPadding: 3
+            textRightPadding: 3
             text: "󰆏"
 
             onClicked: {
@@ -145,7 +171,7 @@ FloatingWindow {
             width: 30
             height: width
 
-            textAlias.rightPadding: 3
+            textRightPadding: 3
             text: "󰑓"
 
             onClicked: {
@@ -176,6 +202,27 @@ FloatingWindow {
 
             onClicked: {
               tabs.currentIndex = 0
+            }
+          }
+        }
+        Row {
+          anchors.top: parent.top
+          anchors.right: parent.right
+          anchors.topMargin: 5
+          anchors.rightMargin: 5
+
+          BaseButton {
+            backgroundAlias.radius: 7
+            backgroundColor: "transparent"
+
+            width: 30
+            height: width
+
+            textRightPadding: 3
+            text: "󰑓"
+
+            onClicked: {
+              Players.reloadLyrics()
             }
           }
         }

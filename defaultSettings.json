@@ -10,6 +10,11 @@
           "On media with lyrics",
           "Never"
         ]
+      },
+      "suggestPlayerChange": {
+        "name": "Suggest to change player when another player is playing and the current one is paused.",
+        "type": "switch",
+        "value": true
       }
     },
     "lyrics": {

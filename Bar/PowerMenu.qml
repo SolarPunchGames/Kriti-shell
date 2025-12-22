@@ -10,6 +10,8 @@ Scope {
   id: root
   property alias powerMenuVariants: variants
 
+  Component.onCompleted: WindowManager.powerMenuVariants = powerMenuVariants
+
   property var command
   property string commandName
 

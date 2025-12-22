@@ -109,225 +109,285 @@ Item {
       },
     ]
   }
-  
-  Rectangle {
-    id: rect
 
-    color: Colors.itemBackground
+  Row {
+    spacing: -20
+    Item {
+      MarginWrapperManager { margin: 3 }
+      BaseButton {
+        implicitWidth: Players.playerToSwitchTo && !Players.tempDisableSwitchSuggestion && Config.media.widget.suggestPlayerChange.value ? textAlias.contentWidth + rightPadding + leftPadding : 0
+        implicitHeight: 24
+
+        Behavior on implicitWidth {
+          SpringAnimation {
+            spring: 5
+            damping: 0.3
+          }
+        }
+
+        clip: true
+
+        text: Players.playerToSwitchTo ? TextServices.truncate(Players.playerToSwitchTo.trackTitle, 10) + " ♪" : ""
+
+        rightPadding: 25
+        leftPadding: 10
+
+        fontSize: 8
+
+        backgroundAlias.radius: 0
+
+        backgroundAlias.bottomLeftRadius: 10
+        backgroundAlias.topLeftRadius: 10
+
+        backgroundAlias.border.color: Colors.separator
+        backgroundAlias.border.width: 1
+
+        onClicked: {
+          Players.customPlayerId = Players.players.indexOf(Players.playerToSwitchTo)
+        }
+
+        BaseButton {
+          anchors.right: parent.right
+          anchors.top: parent.top
+          anchors.bottom: parent.bottom
+          anchors.margins: 2
+          anchors.rightMargin: 17
+
+          width: height
+
+          visible: parent.buttonHovered
+
+          backgroundAlias.radius: 7
+          
+          hoveredBackgroundColor: Colors.separator
+
+          text: ""
+
+          onClicked: Players.tempDisableSwitchSuggestion = true
+        }
+      }
+    }
 
     Rectangle {
-      anchors.top: parent.top
-      anchors.bottom: parent.bottom
-      anchors.left: parent.left
+      id: rect
 
-      clip: true
-
-      color: "transparent"
-
-      width: {
-        parent.width * ((Players.player.position - Players.pausedTime) / Players.player.length)
-      }
+      color: Colors.itemBackground
 
       Rectangle {
         anchors.top: parent.top
         anchors.bottom: parent.bottom
         anchors.left: parent.left
 
-        width: rect.width
+        clip: true
 
-        color: {
-          if (Config.media.widget.progressBar.value == 0 || (Config.media.widget.progressBar.value == 1 && Players.trackLyrics != 404 && Players.trackLyrics != 1)) {
-            Colors.itemHoveredBackground
-          } else {
-            "transparent"
-          }
+        color: "transparent"
+
+        width: {
+          parent.width * ((Players.player.position - Players.pausedTime) / Players.player.length)
         }
 
-        Behavior on color {
-          PropertyAnimation {
-            duration: 200
-          }
-        }
+        Rectangle {
+          anchors.top: parent.top
+          anchors.bottom: parent.bottom
+          anchors.left: parent.left
 
-        radius: rect.radius
-      }
-    }
+          width: rect.width
 
-    radius: 10
-
-    implicitHeight: 30
-    implicitWidth: {
-      if (Players.player) {
-        row.width + 20
-      } else {
-        0
-      }
-    }
-
-    clip: true
-
-    Behavior on implicitWidth {
-      SpringAnimation {
-        spring: 5
-        damping: 0.4
-      }
-    }
-
-    function open() {
-      state = ""
-      windowOpened()
-    }
-
-    function close() {
-      state = "closed"
-      windowClosed()
-    }
-
-    function toggleOpen() {
-      if (rect.state == "closed") {
-        open()
-      } else {
-        close()
-      } 
-    }
-
-    signal windowOpened()
-    signal windowClosed()
-
-    states: State {
-      name: "closed"
-      PropertyChanges {target: rect; y: -25}
-    }
-
-    transitions: Transition {
-      PropertyAnimation {
-        property: "y"
-        duration: 200
-        easing.type: Easing.OutCubic
-      }
-    }
-
-    MouseArea {
-      id: mouseArea
-
-      anchors.fill: parent
-
-      cursorShape: Qt.PointingHandCursor
-      hoverEnabled: true
-
-      acceptedButtons: Qt.AllButtons
-
-      LazyLoader {  
-        id: mediaMenuLoader  
-        source: "MediaMenu.qml"
-        loading: true 
-      }
-
-      onClicked: (mouse)=> {
-        if (mouse.button == Qt.MiddleButton) {
-          Players.player.togglePlaying()
-        } else if (mouse.button == Qt.LeftButton) {
-          if (mediaMenuLoader.item) {
-            for (var i = 0; i < mediaMenuLoader.item.mediaMenuVariants.instances.length; i++) {
-              var instance = mediaMenuLoader.item.mediaMenuVariants.instances[i]
-              if (instance.modelData.name === currentScreen) {
-                instance.toggleOpen()
-                break
-              }
+          color: {
+            if (Config.media.widget.progressBar.value == 0 || (Config.media.widget.progressBar.value == 1 && Players.trackLyrics != 404 && Players.trackLyrics != 1)) {
+              Colors.itemHoveredBackground
+            } else {
+              "transparent"
             }
-          }  
-        } else if (mouse.button == Qt.RightButton) {
-          rightClickMenu.open()
+          }
+
+          Behavior on color {
+            PropertyAnimation {
+              duration: 200
+            }
+          }
+
+          radius: rect.radius
         }
       }
 
-      onWheel: (wheel)=> {
-        if (wheel.angleDelta.y < 0) {
-          Players.player.next()
+      radius: 10
+
+      height: 30
+      width: {
+        if (Players.player) {
+          row.width + 20
         } else {
-          Players.player.previous()
+          0
         }
       }
-    }
 
-    Row {
-      id: row
-      anchors.centerIn: parent
-      spacing: 5
+      clip: true
 
-      Text {
-        id: mainText
-
-        anchors.verticalCenter: parent.verticalCenter
-
-        color: Colors.text
-
-        font.pointSize: 11
-        font.family: "JetBrainsMono Nerd Font"
-
-        leftPadding: 5
-
-        text: TextServices.truncate(Players.player.trackTitle, 25) + " "
+      Behavior on width {
+        SpringAnimation {
+          spring: 5
+          damping: 0.4
+        }
       }
 
-      property int buttonRadius: 5
-
-      BaseButton {
-        height: 24
-        width: height
-
-        backgroundAlias.radius: row.buttonRadius
-
-        backgroundColor: "transparent"
-        hoveredBackgroundColor: Colors.itemDisabledBackground
-
-        anchors.verticalCenter: parent.verticalCenter
-
-        fontSize: 10
-        text: ""
-
-        onClicked: Players.player.previous()
+      function open() {
+        state = ""
+        windowOpened()
       }
 
-      BaseButton {
-        height: 24
-        width: height
+      function close() {
+        state = "closed"
+        windowClosed()
+      }
 
-        backgroundAlias.radius: row.buttonRadius
+      function toggleOpen() {
+        if (rect.state == "closed") {
+          open()
+        } else {
+          close()
+        } 
+      }
 
-        backgroundColor: "transparent"
-        hoveredBackgroundColor: Colors.itemDisabledBackground
+      signal windowOpened()
+      signal windowClosed()
 
-        anchors.verticalCenter: parent.verticalCenter
+      states: State {
+        name: "closed"
+        PropertyChanges {target: rect; y: -25}
+      }
 
-        fontSize: 10
-        text: {
-          if (Players.player.isPlaying){
-            ""
-          } else {
-            ""
+      transitions: Transition {
+        PropertyAnimation {
+          property: "y"
+          duration: 200
+          easing.type: Easing.OutCubic
+        }
+      }
+
+      MouseArea {
+        id: mouseArea
+
+        anchors.fill: parent
+
+        cursorShape: Qt.PointingHandCursor
+        hoverEnabled: true
+
+        acceptedButtons: Qt.AllButtons
+
+        LazyLoader {  
+          id: mediaMenuLoader  
+          source: "MediaMenu.qml"
+          loading: true 
+        }
+
+        onClicked: (mouse)=> {
+          if (mouse.button == Qt.MiddleButton) {
+            Players.player.togglePlaying()
+          } else if (mouse.button == Qt.LeftButton) {
+            if (mediaMenuLoader.item) {
+              for (var i = 0; i < mediaMenuLoader.item.mediaMenuVariants.instances.length; i++) {
+                var instance = mediaMenuLoader.item.mediaMenuVariants.instances[i]
+                if (instance.modelData.name === currentScreen) {
+                  instance.toggleOpen()
+                  break
+                }
+              }
+            }  
+          } else if (mouse.button == Qt.RightButton) {
+            rightClickMenu.open()
           }
         }
 
-        onClicked: Players.player.togglePlaying()
+        onWheel: (wheel)=> {
+          if (wheel.angleDelta.y < 0) {
+            Players.player.next()
+          } else {
+            Players.player.previous()
+          }
+        }
       }
 
-      BaseButton {
-        height: 24
-        width: height
+      Row {
+        id: row
+        anchors.centerIn: parent
+        spacing: 5
 
-        backgroundAlias.radius: row.buttonRadius
+        Text {
+          id: mainText
 
-        backgroundColor: "transparent"
-        hoveredBackgroundColor: Colors.itemDisabledBackground
+          anchors.verticalCenter: parent.verticalCenter
 
-        anchors.verticalCenter: parent.verticalCenter
+          color: Colors.text
 
-        fontSize: 10
-        text: ""
+          font.pointSize: 11
+          font.family: "JetBrainsMono Nerd Font"
 
-        onClicked: Players.player.next()
+          leftPadding: 5
+
+          text: TextServices.truncate(Players.player.trackTitle, 25) + " "
+        }
+
+        property int buttonRadius: 5
+
+        BaseButton {
+          height: 24
+          width: height
+
+          backgroundAlias.radius: row.buttonRadius
+
+          backgroundColor: "transparent"
+          hoveredBackgroundColor: Colors.itemDisabledBackground
+
+          anchors.verticalCenter: parent.verticalCenter
+
+          fontSize: 10
+          text: ""
+
+          onClicked: Players.player.previous()
+        }
+
+        BaseButton {
+          height: 24
+          width: height
+
+          backgroundAlias.radius: row.buttonRadius
+
+          backgroundColor: "transparent"
+          hoveredBackgroundColor: Colors.itemDisabledBackground
+
+          anchors.verticalCenter: parent.verticalCenter
+
+          fontSize: 10
+          text: {
+            if (Players.player.isPlaying){
+              ""
+            } else {
+              ""
+            }
+          }
+
+          onClicked: Players.player.togglePlaying()
+        }
+
+        BaseButton {
+          height: 24
+          width: height
+
+          backgroundAlias.radius: row.buttonRadius
+
+          backgroundColor: "transparent"
+          hoveredBackgroundColor: Colors.itemDisabledBackground
+
+          anchors.verticalCenter: parent.verticalCenter
+
+          fontSize: 10
+          text: ""
+
+          onClicked: Players.player.next()
+        }
       }
     }
   }
+  
 }

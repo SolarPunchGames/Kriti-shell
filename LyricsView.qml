@@ -29,6 +29,7 @@ ListView {
   cacheBuffer: 1000000
 
   property var lyricsSizeMult: 1
+  property var synced: true
 
   Component.onCompleted: forceLayout()
 
@@ -84,30 +85,15 @@ ListView {
 //    }
 //  }
 
-
   Text {
     id: lyricsLoadingText
-
     anchors.fill: parent
 
-    state: "loading"
-
-    states: [ 
-      State {
-        name: "loading"
-
-        PropertyChanges {target: lyricsLoadingText; text: "Loading lyrics..."}
-      },
-      State {
-        name: "failed"
-
-        PropertyChanges {target: lyricsLoadingText; text: "Lyrics not found"}
-      }
-    ]
-
     font.weight: 800
+    
+    text: "Lyrics not found"
 
-    font.pointSize:15
+    font.pointSize: 15
     font.family: "JetBrainsMono Nerd Font"
 
     width: lyricsRect.width - lyricsView.rightMargin - lyricsView.leftMargin
@@ -117,6 +103,14 @@ ListView {
     verticalAlignment: Text.AlignVCenter
 
     color: Colors.text
+
+    visible: Players.trackLyrics == 404 ? true : false
+  }
+
+  LoadingDots {
+    id: lyricsLoadingDots
+    anchors.fill: parent
+    running: Players.trackLyrics == 1 ? true : false
   }
 
   Component {
@@ -132,17 +126,32 @@ ListView {
         if (Players.player.isPlaying) {
           Colors.itemHoveredBackground
         } else {
+          "transparent"
+        }
+      }
+
+      border.color: {
+        if (Players.player.isPlaying) {
+          Colors.itemPressedBackground
+        } else {
           Colors.separator
         }
-      } 
+      }
+      border.width: 1
 
       radius: 10
 
       y: lyricsView.currentItem.y
 
-      opacity: lyricsView.currentItem.contentWidth == 0 || !Config.media.lyrics.highlightRectangle.value ? 0 : 1
+      opacity: lyricsView.currentItem.contentWidth != 0 && Config.media.lyrics.highlightRectangle.value ? 1 : 0
 
       Behavior on color {
+        PropertyAnimation {
+          duration: 100;
+        }
+      }
+
+      Behavior on border.color {
         PropertyAnimation {
           duration: 100;
         }
@@ -187,29 +196,29 @@ ListView {
     id: lyricsList
   }
 
-  add: Transition {
-    id: lyricAddTrans
-    SequentialAnimation {
-      PropertyAnimation { properties: "x"; to: 1000; duration: 0 }
-      PauseAnimation { duration: lyricAddTrans.ViewTransition.index * 50}
-      PropertyAnimation { 
-        properties: "x"
-        from: 20
-        to: 0
-        duration: 250
-        easing.type: Easing.OutCubic
-      }
-    }
-    //SequentialAnimation {
-    //  PropertyAnimation { properties: "opacity"; to: 0; duration: 0 }
-    //  PauseAnimation { duration: lyricAddTrans.ViewTransition.index * 50}
-    //  PropertyAnimation { 
-    //    properties: "opacity"; 
-    //    to: 0.5
-    //    duration: 250;
-    //  }
-    //}
-  }
+//  add: Transition {
+//    id: lyricAddTrans
+//    SequentialAnimation {
+//      PropertyAnimation { properties: "x"; to: 1000; duration: 0 }
+//      PauseAnimation { duration: lyricAddTrans.ViewTransition.index * 50}
+//      PropertyAnimation { 
+//        properties: "x"
+//        from: 20
+//        to: 0
+//        duration: 250
+//        easing.type: Easing.OutCubic
+//      }
+//    }
+//    //SequentialAnimation {
+//    //  PropertyAnimation { properties: "opacity"; to: 0; duration: 0 }
+//    //  PauseAnimation { duration: lyricAddTrans.ViewTransition.index * 50}
+//    //  PropertyAnimation { 
+//    //    properties: "opacity"; 
+//    //    to: 0.5
+//    //    duration: 250;
+//    //  }
+//    //}
+//  }
 
   Connections {  
     target: Players
@@ -218,12 +227,11 @@ ListView {
     }
   }
 
-  function reload() {
+  function reload(delay = 100) {
+    showLyricsTimer.interval = delay
     lyricsList.clear()
     lyricsView.currentIndex = -1
     showLyricsTimer.running = true
-    lyricsLoadingText.visible = true
-    lyricsLoadingText.state = "loading"
   }
 
   Timer {
@@ -232,13 +240,9 @@ ListView {
     running: true
 
     onTriggered: {
-
       if (Players.trackLyrics.plainLyrics) {
 
-        lyricsLoadingText.visible = false
-
-
-        if (Players.trackLyrics.syncedLyrics) {
+        if (Players.trackLyrics.syncedLyrics && synced == true) {
           var syncedLyrics = Players.trackLyrics.syncedLyrics;
           var lines = syncedLyrics.split("\n");
           for (var i = 0; i < lines.length; i++) {
@@ -271,8 +275,6 @@ ListView {
 
       } else if (Players.trackLyrics == 1) {
         showLyricsTimer.running = true
-      } else if (Players.trackLyrics == 404) {
-        lyricsLoadingText.state = "failed"
       }
       lyricsView.forceLayout()
     }

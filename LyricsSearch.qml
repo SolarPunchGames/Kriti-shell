@@ -21,20 +21,149 @@ Item {
       waitForEnd: true
       onStreamFinished: {
         results = JSON.parse(text)
+        loadingDots.running = false
       }
     }
   }
 
   ColumnLayout {
+    id: column
     anchors.fill: parent
-    anchors.margins: 10
+    anchors.margins: 5
+    anchors.topMargin: 0
     spacing: 10
+    Item {
+      Layout.fillWidth: true
+      Layout.preferredHeight: 60
+
+      LoadingDots {
+        anchors.fill: parent
+        running: Players.defaultLyrics == 1 ? true : false
+        scaleMult: 0.5
+      }
+
+      RowLayout {
+        anchors.fill: parent
+        visible: Players.defaultLyrics.plainLyrics ? true : false
+
+        Text {
+          Layout.fillWidth: true
+          Layout.leftMargin: 35
+
+          text: "Default \nlyrics:"
+
+          horizontalAlignment: Text.AlignLeft
+          verticalAlignment: Text.AlignTop
+
+          font.pointSize: 8
+          font.family: "JetBrainsMono Nerd Font"
+
+          color: Colors.text
+        }
+        BaseButton {
+          id: result
+
+          Layout.fillWidth: true
+          Layout.rightMargin: 35
+
+          text: TextServices.truncate(Players.defaultLyrics.name, (width - 20) / fontSize)
+
+          padding: 10
+
+          fontSize: 10
+
+          clip: true
+
+          backgroundAlias.border.color: Colors.separator
+          backgroundAlias.border.width: 1
+
+          onClicked: {
+            Players.areLyricsCustom = false
+            Players.lyricsChanged()
+            root.lyricsFound()
+          }
+
+          contentItem: Column {
+            Text {
+              id: textItem
+              font.pointSize: result.fontSize
+              font.family: "JetBrainsMono Nerd Font"
+
+              width: parent.width
+
+              color: Colors.text
+
+              topPadding: result.textTopPadding
+              bottomPadding: result.textBottomPadding
+              leftPadding: result.textLeftPadding
+              rightPadding: result.textRightPadding
+
+              horizontalAlignment: Text.AlignLeft
+              verticalAlignment: Text.AlignVCenter
+
+              wrapMode: Text.WordWrap
+
+              text: result.text
+            }
+            RowLayout {
+              width: parent.width
+              Text {
+                id: artistItem
+
+                Layout.fillWidth: true
+
+                font.pointSize: 6
+                font.family: "JetBrainsMono Nerd Font"
+
+                color: Colors.text
+                opacity: 0.7
+
+                topPadding: result.textTopPadding
+                bottomPadding: result.textBottomPadding
+                leftPadding: result.textLeftPadding
+                rightPadding: result.textRightPadding
+
+                horizontalAlignment: Text.AlignLeft
+                verticalAlignment: Text.AlignVCenter
+
+                wrapMode: Text.WordWrap
+
+                text: Players.defaultLyrics.artistName ? TextServices.truncate(Players.defaultLyrics.artistName, (column.width) / font.pointSize) : ""
+
+                visible: Players.defaultLyrics.artistName ? true : false
+              }
+              Text {
+                id: duration
+
+                Layout.fillWidth: true
+
+                font.pointSize: 7
+                font.family: "JetBrainsMono Nerd Font"
+
+                color: Colors.text
+                opacity: 0.7
+
+                topPadding: result.textTopPadding
+                bottomPadding: result.textBottomPadding
+                leftPadding: result.textLeftPadding
+                rightPadding: result.textRightPadding
+
+                horizontalAlignment: Text.AlignRight
+                verticalAlignment: Text.AlignVCenter
+
+                wrapMode: Text.WordWrap
+
+                text: Players.defaultLyrics.duration ? TextServices.secondsToMinutesSeconds(Players.defaultLyrics.duration) : ""
+
+                visible: Players.defaultLyrics.duration ? true : false
+              }
+            }
+          }
+        }
+      }
+    }
     Text {
       Layout.fillWidth: true
-      
-      topPadding: 40
-
-      Layout.preferredHeight: 70
 
       text: "Search for lyrics"
 
@@ -57,7 +186,7 @@ Item {
       font.pointSize: 11
 
       leftPadding: 15
-      rightPadding: 15
+      rightPadding: 45
 
       text: Players.player.trackTitle
 
@@ -94,10 +223,12 @@ Item {
         text: ""
 
         onClicked: {
+          results = []
           if (searchField.text != "") {  
+            searchProc.running = false
             searchProc.running = true
-            results = []
-          }
+            loadingDots.running = true
+          } 
         }
       }
     }
@@ -136,6 +267,12 @@ Item {
             easing.type: Easing.OutCubic
           }
         }
+      }
+
+      LoadingDots {
+        id: loadingDots
+        anchors.fill: parent
+        running: false
       }
 
       delegate: BaseButton {
