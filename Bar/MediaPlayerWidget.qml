@@ -156,6 +156,16 @@ Item {
               Players.tempDisableSwitchSuggestion = true
             }
           }
+
+          onPressed: (mouse)=> {
+            if (mouse.button != Qt.LeftButton) {
+              parent.hoveredBackgroundColor = Colors.itemHoveredWarningBackground
+            }
+          }
+
+          onExited: {
+            parent.hoveredBackgroundColor = Colors.itemHoveredBackground
+          }
         }
 
         BaseButton {
@@ -167,11 +177,18 @@ Item {
 
           width: height
 
-          visible: parent.buttonHovered
+          opacity: parent.buttonHovered ? 1 : 0
 
-          backgroundAlias.radius: 7
+          Behavior on opacity {
+            PropertyAnimation {
+              duration: Colors.colorTransitionTime
+            }
+          }
+
+          backgroundAlias.radius: height / 2
           
-          hoveredBackgroundColor: Colors.separator
+          hoveredBackgroundColor: Colors.itemHoveredWarningBackground
+          pressedBackgroundColor: Colors.itemPressedWarningBackground
 
           text: ""
 
