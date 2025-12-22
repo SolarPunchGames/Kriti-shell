@@ -85,30 +85,15 @@ ListView {
 //    }
 //  }
 
-
   Text {
     id: lyricsLoadingText
-
     anchors.fill: parent
 
-    state: "loading"
-
-    states: [ 
-      State {
-        name: "loading"
-
-        PropertyChanges {target: lyricsLoadingText; text: "Loading lyrics..."}
-      },
-      State {
-        name: "failed"
-
-        PropertyChanges {target: lyricsLoadingText; text: "Lyrics not found"}
-      }
-    ]
-
     font.weight: 800
+    
+    text: "Lyrics not found"
 
-    font.pointSize:15
+    font.pointSize: 15
     font.family: "JetBrainsMono Nerd Font"
 
     width: lyricsRect.width - lyricsView.rightMargin - lyricsView.leftMargin
@@ -118,6 +103,14 @@ ListView {
     verticalAlignment: Text.AlignVCenter
 
     color: Colors.text
+
+    visible: Players.trackLyrics == 404 ? true : false
+  }
+
+  LoadingDots {
+    id: lyricsLoadingDots
+    anchors.fill: parent
+    running: Players.trackLyrics == 1 ? true : false
   }
 
   Component {
@@ -224,8 +217,6 @@ ListView {
     lyricsList.clear()
     lyricsView.currentIndex = -1
     showLyricsTimer.running = true
-    lyricsLoadingText.visible = true
-    lyricsLoadingText.state = "loading"
   }
 
   Timer {
@@ -235,8 +226,6 @@ ListView {
 
     onTriggered: {
       if (Players.trackLyrics.plainLyrics) {
-
-        lyricsLoadingText.visible = false
 
         if (Players.trackLyrics.syncedLyrics && synced == true) {
           var syncedLyrics = Players.trackLyrics.syncedLyrics;
@@ -271,8 +260,6 @@ ListView {
 
       } else if (Players.trackLyrics == 1) {
         showLyricsTimer.running = true
-      } else if (Players.trackLyrics == 404) {
-        lyricsLoadingText.state = "failed"
       }
       lyricsView.forceLayout()
     }

@@ -46,6 +46,7 @@ Singleton {
   }
   
   function reloadLyrics() {
+    lyricsTimer.running = false
     lyricsTimer.running = true
     lyricsProc.running = false
     defaultLyrics = 1

@@ -21,6 +21,7 @@ Item {
       waitForEnd: true
       onStreamFinished: {
         results = JSON.parse(text)
+        loadingDots.running = false
       }
     }
   }
@@ -29,7 +30,7 @@ Item {
     id: column
     anchors.fill: parent
     anchors.margins: 5
-    anchors.topMargin: Players.trackLyrics.plainLyrics ? 5 : 65
+    anchors.topMargin: Players.defaultLyrics.plainLyrics ? 5 : 65
     spacing: 10
     RowLayout {
       Layout.fillWidth: true
@@ -213,7 +214,9 @@ Item {
         onClicked: {
           results = []
           if (searchField.text != "") {  
+            searchProc.running = false
             searchProc.running = true
+            loadingDots.running = true
           } 
         }
       }
@@ -253,6 +256,12 @@ Item {
             easing.type: Easing.OutCubic
           }
         }
+      }
+
+      LoadingDots {
+        id: loadingDots
+        anchors.fill: parent
+        running: false
       }
 
       delegate: BaseButton {
