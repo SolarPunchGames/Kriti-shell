@@ -126,17 +126,32 @@ ListView {
         if (Players.player.isPlaying) {
           Colors.itemHoveredBackground
         } else {
+          "transparent"
+        }
+      }
+
+      border.color: {
+        if (Players.player.isPlaying) {
+          Colors.itemPressedBackground
+        } else {
           Colors.separator
         }
-      } 
+      }
+      border.width: 1
 
       radius: 10
 
       y: lyricsView.currentItem.y
 
-      opacity: lyricsView.currentItem.contentWidth == 0 || !Config.media.lyrics.highlightRectangle.value ? 0 : 1
+      opacity: lyricsView.currentItem.contentWidth != 0 && Config.media.lyrics.highlightRectangle.value ? 1 : 0
 
       Behavior on color {
+        PropertyAnimation {
+          duration: 100;
+        }
+      }
+
+      Behavior on border.color {
         PropertyAnimation {
           duration: 100;
         }
