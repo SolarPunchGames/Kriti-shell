@@ -44,7 +44,7 @@ Singleton {
   //readonly property color mainPanelBackground: "#1e1e2e"
   //readonly property color itemBackground: "#313244"
   //readonly property color itemHoveredBackground: '#585b70'
-  //readonly property color itemPressedBackground: "#b4befe"
+  //readonly property color itemPressedBackground: '#aa85d8'
   //readonly property color itemWarningBackground: '#923c54'
   //readonly property color itemHoveredWarningBackground: '#923c54'
   //readonly property color itemPressedWarningBackground: '#923c54'
@@ -52,7 +52,7 @@ Singleton {
   //readonly property color text: "#cdd6f4"
   //readonly property color bigText: "#cdd6f4"
   //readonly property color smallText: "#a6adc8"
-  //readonly property color separator: "#999184"
+  //readonly property color separator: "#585b70"
 
   readonly property int colorTransitionTime: 50
 }
