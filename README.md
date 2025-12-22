@@ -7,9 +7,13 @@ This is Kriti-shell. It has many features I have not seen in other configs of an
 ### Media player with synced lyrics
 <img width="633" height="470" alt="image" src="https://github.com/user-attachments/assets/c69a4cb2-8393-45ed-8243-9e40ae1a3594" />
 
-The media player loads lyrics from lrclib. Also works with local files with correct metadata. 
-##### with a pop out window:
-<img width="374" height="482" alt="image" src="https://github.com/user-attachments/assets/6d9d1b42-f496-4288-a6d6-1e57fe6f1d8d" />
+<img width="340" height="440" alt="image" src="https://github.com/user-attachments/assets/f767fcc2-7ba3-464e-9a35-88d93494c418" />
+
+<img width="340" height="470" alt="image" src="https://github.com/user-attachments/assets/5585bdd3-ac94-42a8-a02e-30f4edc71301" />
+
+The media player automatically loads lyrics from lrclib. Also works with local files with correct metadata. 
+
+You can also search for lyrics, if Kriti-shell does not automatically find them.
 
 ### Power menu
 ![2025-09-07 17-34-00](https://github.com/user-attachments/assets/b66d8628-da46-41f9-95e2-39ecee7f2ed8)
@@ -18,7 +22,7 @@ The media player loads lyrics from lrclib. Also works with local files with corr
 <img width="709" height="485" alt="image" src="https://github.com/user-attachments/assets/5036304b-429d-4fb4-b3f2-588d8abe20c4" />
 
 ### Right click menus
-<img width="306" height="286" alt="image" src="https://github.com/user-attachments/assets/2a581313-dae6-4792-ab71-e9469c2bacb9" />
+<img width="242" height="293" alt="image" src="https://github.com/user-attachments/assets/df718dc3-58b8-4bf9-b71c-c84db8ac9379" />
 <img width="297" height="107" alt="image" src="https://github.com/user-attachments/assets/2ce62a31-7213-4dc1-a1d7-9b7b7dac0090" />
 
 ## Known issues
