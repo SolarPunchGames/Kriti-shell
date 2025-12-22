@@ -128,7 +128,7 @@ Item {
 
                 wrapMode: Text.WordWrap
 
-                text: Players.defaultLyrics.artistName ? TextServices.truncate(Players.defaultLyrics.name, (column.width) / font.pointSize) : ""
+                text: Players.defaultLyrics.artistName ? TextServices.truncate(Players.defaultLyrics.artistName, (column.width) / font.pointSize) : ""
 
                 visible: Players.defaultLyrics.artistName ? true : false
               }
