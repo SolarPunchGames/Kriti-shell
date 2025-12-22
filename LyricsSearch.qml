@@ -57,7 +57,7 @@ Item {
       font.pointSize: 11
 
       leftPadding: 15
-      rightPadding: 15
+      rightPadding: 45
 
       text: Players.player.trackTitle
 
@@ -94,10 +94,10 @@ Item {
         text: ""
 
         onClicked: {
+          results = []
           if (searchField.text != "") {  
             searchProc.running = true
-            results = []
-          }
+          } 
         }
       }
     }
