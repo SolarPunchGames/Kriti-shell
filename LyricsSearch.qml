@@ -26,6 +26,7 @@ Item {
   }
 
   ColumnLayout {
+    id: column
     anchors.fill: parent
     anchors.margins: 5
     anchors.topMargin: Players.trackLyrics.plainLyrics ? 5 : 65
@@ -116,7 +117,7 @@ Item {
 
               wrapMode: Text.WordWrap
 
-              text: Players.trackLyrics.artistName ? TextServices.truncate(Players.trackLyrics.name, (width) / font.pointSize) : ""
+              text: Players.trackLyrics.artistName ? TextServices.truncate(Players.trackLyrics.name, (column.width) / font.pointSize) : ""
 
               visible: Players.trackLyrics.artistName ? true : false
             }
