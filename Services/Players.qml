@@ -28,7 +28,30 @@ Singleton {
   property real previousPosition
   property bool wasPlaying
 
-  onPlayerIdChanged: reloadLyrics()
+  readonly property var playerToSwitchTo: {
+    var playingPlayers = []
+    for (var i = 0; i < players.length; i++) {
+      if (players[i].isPlaying == true) {
+        playingPlayers.push(i)
+      }
+    }
+    if (playingPlayers.length == 1) {
+      console.log(playingPlayers[0])
+      console.log(playerId)
+      if (playingPlayers[0] != playerId) {
+        players[playingPlayers[0]]
+      }
+    } else {
+      null
+    }
+  }
+
+  property bool tempDisableSwitchSuggestion: false
+
+  onPlayerIdChanged: {
+    reloadLyrics()
+    tempDisableSwitchSuggestion = false
+  }
 
   signal lyricsChanged()
 
