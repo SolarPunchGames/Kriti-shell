@@ -36,8 +36,6 @@ Singleton {
       }
     }
     if (playingPlayers.length == 1) {
-      console.log(playingPlayers[0])
-      console.log(playerId)
       if (playingPlayers[0] != playerId) {
         players[playingPlayers[0]]
       }
