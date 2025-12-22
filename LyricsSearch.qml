@@ -128,9 +128,9 @@ Item {
 
                 wrapMode: Text.WordWrap
 
-                text: Players.trackLyrics.artistName ? TextServices.truncate(Players.trackLyrics.name, (column.width) / font.pointSize) : ""
+                text: Players.defaultLyrics.artistName ? TextServices.truncate(Players.defaultLyrics.name, (column.width) / font.pointSize) : ""
 
-                visible: Players.trackLyrics.artistName ? true : false
+                visible: Players.defaultLyrics.artistName ? true : false
               }
               Text {
                 id: duration
@@ -153,9 +153,9 @@ Item {
 
                 wrapMode: Text.WordWrap
 
-                text: Players.trackLyrics.duration ? TextServices.secondsToMinutesSeconds(Players.trackLyrics.duration) : ""
+                text: Players.defaultLyrics.duration ? TextServices.secondsToMinutesSeconds(Players.defaultLyrics.duration) : ""
 
-                visible: Players.trackLyrics.duration ? true : false
+                visible: Players.defaultLyrics.duration ? true : false
               }
             }
           }
