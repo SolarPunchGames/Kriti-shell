@@ -13,7 +13,10 @@ PopupWindow {
   implicitWidth: background.width + 20
   implicitHeight: background.height + 20
 
-  mask: Region { item: background }
+  mask: Region { 
+    width: background.width
+    height: background.height
+  }
 
   property bool focusGrab: true
 
@@ -67,6 +70,9 @@ PopupWindow {
 
   Rectangle {
     id: background
+
+    anchors.top: parent.top
+    anchors.left: parent.left
 
     width: 200
     height: list.contentHeight
@@ -128,81 +134,126 @@ PopupWindow {
         }
       }
 
-      delegate: BaseButton {
-        id: listButton
+      delegate: Item {
+        id: listItem
 
         anchors.left: parent.left
         anchors.right: parent.right
 
-        property var data: modelData
-        
-        padding: 5
+        height: {
+          var sum = 0
 
-        backgroundAlias.radius: rightClickMenu.backgroundAlias.radius
-
-        contentItem: Column {
-          Text {
-            id: textItem
-            font.pointSize: listButton.fontSize
-            font.family: "JetBrainsMono Nerd Font"
-
-            width: parent.width
-
-            color: Colors.text
-
-            topPadding: listButton.textTopPadding
-            bottomPadding: listButton.textBottomPadding
-            leftPadding: listButton.textLeftPadding
-            rightPadding: listButton.textRightPadding
-
-            horizontalAlignment: Text.AlignLeft
-            verticalAlignment: Text.AlignVCenter
-
-            wrapMode: Text.WordWrap
-
-            text: listButton.text
+          for (const child of children) {
+            if (child.visible) {
+              sum += child.height + child.anchors.topMargin + child.anchors.bottomMargin
+            }
           }
-          Text {
-            id: descriptionItem
-            font.pointSize: 6
-            font.family: "JetBrainsMono Nerd Font"
 
-            width: parent.width
+          sum
+        }
 
-            color: Colors.text
-            opacity: 0.7
+        property var dataStuff: modelData
 
-            topPadding: listButton.textTopPadding
-            bottomPadding: listButton.textBottomPadding
-            leftPadding: listButton.textLeftPadding
-            rightPadding: listButton.textRightPadding
-
-            horizontalAlignment: Text.AlignLeft
-            verticalAlignment: Text.AlignVCenter
-
-            wrapMode: Text.WordWrap
-
-            text: listButton.data.description ? listButton.data.description : ""
-
-            visible: listButton.data.description ? true : false
+        Rectangle {
+          id: separator
+          anchors.left: listItem.left
+          anchors.right: listItem.right
+          anchors.verticalCenter: listItem.verticalCenter
+          anchors {
+            leftMargin: 10
+            rightMargin: 10
+            topMargin: 2
+            bottomMargin: 2
+          }
+          height: 1
+          color: Colors.separator
+          visible: {
+            if (listItem.dataStuff.separator) {
+              true
+              console.log("separator")
+            } else {
+              false
+            }
           }
         }
 
-        text: {
-          if (data.customText) {
-            data.getText()
-          } else {
-            data.text
-          }
-        }
-        onClicked: {
-          data.activate()
-          if (!data.dontCloseOnActivate) {
-            rightClickMenu.close()
-          }
-        }
+        BaseButton {
+          id: listButton
 
-        textLeftPadding: 10
+          anchors.left: listItem.left
+          anchors.right: listItem.right
+
+          visible: listItem.dataStuff.separator ? false : true
+
+          padding: 5
+
+          backgroundAlias.radius: rightClickMenu.backgroundAlias.radius
+
+          contentItem: Column {
+            Text {
+              id: textItem
+              font.pointSize: listButton.fontSize
+              font.family: "JetBrainsMono Nerd Font"
+
+              width: parent.width
+
+              color: Colors.text
+
+              topPadding: listButton.textTopPadding
+              bottomPadding: listButton.textBottomPadding
+              leftPadding: listButton.textLeftPadding
+              rightPadding: listButton.textRightPadding
+
+              horizontalAlignment: Text.AlignLeft
+              verticalAlignment: Text.AlignVCenter
+
+              wrapMode: Text.WordWrap
+
+              text: listButton.text
+            }
+            Text {
+              id: descriptionItem
+              font.pointSize: 6
+              font.family: "JetBrainsMono Nerd Font"
+
+              width: parent.width
+
+              color: Colors.text
+              opacity: 0.7
+
+              topPadding: listButton.textTopPadding
+              bottomPadding: listButton.textBottomPadding
+              leftPadding: listButton.textLeftPadding
+              rightPadding: listButton.textRightPadding
+
+              horizontalAlignment: Text.AlignLeft
+              verticalAlignment: Text.AlignVCenter
+
+              wrapMode: Text.WordWrap
+
+              text: listItem.dataStuff.description ? listItem.dataStuff.description : ""
+
+              visible: listItem.dataStuff.description ? true : false
+            }
+          }
+
+          text: {
+            if (listItem.dataStuff.customText) {
+              listItem.dataStuff.getText()
+            } else {
+              listItem.dataStuff.text
+            }
+          }
+
+          onClicked: {
+            listItem.dataStuff.activate()
+            if (!listItem.dataStuff.dontCloseOnActivate) {
+              rightClickMenu.close()
+            }
+          }
+
+          textLeftPadding: 10
+        }
       }
     }
     

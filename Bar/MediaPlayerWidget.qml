@@ -1,5 +1,6 @@
 // MediaPlayerWidget.qml
 import QtQuick
+import QtQuick.Layouts
 import Quickshell
 import Quickshell.Widgets
 import Quickshell.Services.Mpris
@@ -80,6 +81,18 @@ Item {
         },
       },
       {
+        separator: true
+      },
+      {
+        text: "Change player",
+        activate() {
+          playersPopup.toggleOpen()
+        },
+      },
+      {
+        separator: true
+      },
+      {
         description: "(Middle mouse button)",
         customText: true,
         getText() {
@@ -110,12 +123,136 @@ Item {
     ]
   }
 
+  Popup {
+    id: playersPopup
+    anchor.item: rect
+    anchor.edges: Edges.Bottom | Edges.Left
+
+    backgroundAlias.width: 11 * 15
+    backgroundAlias.height: {
+      if (playersList.contentHeight > 200) {
+        200
+      } else {
+        playersList.contentHeight
+      }
+    }
+
+    ListView {
+      id: playersList
+
+      model: Players.players
+
+      anchors.fill: parent
+
+      delegate: BaseButton {
+        id: playersListButton
+
+        property var data: modelData
+
+        text: TextServices.truncate(modelData.identity, 13)
+
+        contentItem: RowLayout {
+          Text {
+            id: checkItem
+            font.pointSize: playersListButton.fontSize
+            font.family: "JetBrainsMono Nerd Font"
+
+            Layout.fillWidth: true
+
+            color: Colors.text
+
+            topPadding: playersListButton.textTopPadding
+            bottomPadding: playersListButton.textBottomPadding
+            leftPadding: playersListButton.textLeftPadding
+            rightPadding: playersListButton.textRightPadding
+
+            horizontalAlignment: Text.AlignLeft
+            verticalAlignment: Text.AlignVCenter
+
+            wrapMode: Text.WordWrap
+
+            text: "󰸞"
+
+            opacity: {
+              if (playersListButton.data == Players.player) {
+                1
+              } else {
+                0
+              }
+            }
+          }
+          Column {
+            Layout.fillWidth: true
+            Text {
+              id: textItem
+              font.pointSize: playersListButton.fontSize
+              font.family: "JetBrainsMono Nerd Font"
+
+
+              color: Colors.text
+
+              topPadding: playersListButton.textTopPadding
+              bottomPadding: playersListButton.textBottomPadding
+              leftPadding: playersListButton.textLeftPadding
+              rightPadding: playersListButton.textRightPadding
+
+              horizontalAlignment: Text.AlignLeft
+              verticalAlignment: Text.AlignVCenter
+
+              wrapMode: Text.WordWrap
+
+              text: playersListButton.text
+            }
+            Text {
+              id: descriptionItem
+              font.pointSize: 6
+              font.family: "JetBrainsMono Nerd Font"
+
+              width: playersListButton.width
+
+              color: Colors.text
+              opacity: 0.7
+
+              topPadding: playersListButton.textTopPadding
+              bottomPadding: playersListButton.textBottomPadding
+              leftPadding: playersListButton.textLeftPadding
+              rightPadding: playersListButton.textRightPadding
+
+              horizontalAlignment: Text.AlignLeft
+              verticalAlignment: Text.AlignVCenter
+
+              wrapMode: Text.WordWrap
+
+              text: TextServices.truncate(playersListButton.player.trackTitle, 25)
+            }
+          }
+        }
+
+        textLeftPadding: 5
+
+        anchors.left: parent.left
+        anchors.right: parent.right
+
+        backgroundAlias.radius: playersPopup.backgroundAlias.radius
+        padding: 5
+
+        property var player: Players.players[index]
+
+        onClicked: {
+          playersPopup.close()
+          Players.customPlayerId = index
+        }
+      }
+    }
+  }
+
   Row {
+    id: mainRow
     spacing: -20
     Item {
       MarginWrapperManager { margin: 3 }
       BaseButton {
-        implicitWidth: Players.playerToSwitchTo && !Players.tempDisableSwitchSuggestion && Config.media.widget.suggestPlayerChange.value ? textAlias.contentWidth + rightPadding + leftPadding : 0
+        implicitWidth: Players.playerToSwitchTo && !Players.tempDisableSwitchSuggestion && Config.media.widget.suggestPlayerChange.value && rect.state != "closed" ? textAlias.contentWidth + rightPadding + leftPadding : 0
         implicitHeight: 24
 
         Behavior on implicitWidth {
@@ -139,11 +276,33 @@ Item {
         backgroundAlias.bottomLeftRadius: 10
         backgroundAlias.topLeftRadius: 10
 
-        backgroundAlias.border.color: Colors.separator
+        backgroundAlias.border.color: Colors.itemHoveredBackground
         backgroundAlias.border.width: 1
 
-        onClicked: {
-          Players.customPlayerId = Players.players.indexOf(Players.playerToSwitchTo)
+        MouseArea {
+          anchors.fill: parent
+
+          cursorShape: Qt.PointingHandCursor
+
+          acceptedButtons: Qt.AllButtons
+
+          onClicked: (mouse)=> {
+            if (mouse.button == Qt.LeftButton) {
+              Players.customPlayerId = Players.players.indexOf(Players.playerToSwitchTo)
+            } else {
+              Players.tempDisableSwitchSuggestion = true
+            }
+          }
+
+          onPressed: (mouse)=> {
+            if (mouse.button != Qt.LeftButton) {
+              parent.hoveredBackgroundColor = Colors.itemHoveredWarningBackground
+            }
+          }
+
+          onExited: {
+            parent.hoveredBackgroundColor = Colors.itemHoveredBackground
+          }
         }
 
         BaseButton {
@@ -155,11 +314,18 @@ Item {
 
           width: height
 
-          visible: parent.buttonHovered
+          opacity: parent.buttonHovered ? 1 : 0
 
-          backgroundAlias.radius: 7
+          Behavior on opacity {
+            PropertyAnimation {
+              duration: Colors.colorTransitionTime
+            }
+          }
+
+          backgroundAlias.radius: height / 2
           
-          hoveredBackgroundColor: Colors.separator
+          hoveredBackgroundColor: Colors.itemHoveredWarningBackground
+          pressedBackgroundColor: Colors.itemPressedWarningBackground
 
           text: ""
 
@@ -254,14 +420,14 @@ Item {
 
       states: State {
         name: "closed"
-        PropertyChanges {target: rect; y: -25}
+        PropertyChanges {target: mainRow; y: -25}
       }
 
       transitions: Transition {
-        PropertyAnimation {
+        SpringAnimation {
           property: "y"
-          duration: 200
-          easing.type: Easing.OutCubic
+          spring: 6
+          damping: 0.4
         }
       }
 

@@ -19,7 +19,7 @@ Singleton {
     watchChanges: true
     onFileChanged: {
       this.reload()
-      root.onConfigChanged()
+      root.configChanged()
     }
 
     onLoadFailed: (error) => {
