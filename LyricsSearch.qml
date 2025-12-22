@@ -94,8 +94,10 @@ Item {
         text: ""
 
         onClicked: {
-          searchProc.running = true
-          results = []
+          if (searchField.text != "") {  
+            searchProc.running = true
+            results = []
+          }
         }
       }
     }
