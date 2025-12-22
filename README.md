@@ -5,17 +5,21 @@ This is Kriti-shell. It has many features I have not seen in other configs of an
 
 ## Notable features
 ### Media player with synced lyrics
-<img width="759" height="490" alt="image" src="https://github.com/user-attachments/assets/a2c96269-c7fe-4ee9-a5d4-40f00a0bf933" />
+<img width="633" height="470" alt="image" src="https://github.com/user-attachments/assets/c69a4cb2-8393-45ed-8243-9e40ae1a3594" />
 
 The media player loads lyrics from lrclib. Also works with local files with correct metadata. 
 ##### with a pop out window:
-<img width="431" height="518" alt="image" src="https://github.com/user-attachments/assets/9c913a28-d1ac-4103-89ce-e4a6b5cef901" />
+<img width="374" height="482" alt="image" src="https://github.com/user-attachments/assets/6d9d1b42-f496-4288-a6d6-1e57fe6f1d8d" />
 
 ### Power menu
 ![2025-09-07 17-34-00](https://github.com/user-attachments/assets/b66d8628-da46-41f9-95e2-39ecee7f2ed8)
 
 ### App menu
 <img width="709" height="485" alt="image" src="https://github.com/user-attachments/assets/5036304b-429d-4fb4-b3f2-588d8abe20c4" />
+
+### Right click menus
+<img width="306" height="286" alt="image" src="https://github.com/user-attachments/assets/2a581313-dae6-4792-ab71-e9469c2bacb9" />
+<img width="297" height="107" alt="image" src="https://github.com/user-attachments/assets/2ce62a31-7213-4dc1-a1d7-9b7b7dac0090" />
 
 ## Known issues
 ### ~~Media length not updated correctly when using browser based players~~ 
@@ -35,7 +39,7 @@ This issue is also currently addressed with a setting in `settings.json` called 
 > [!Note]
 > It is recommended to update Kriti-shell when you update Quickshell. If there are any breaking bugs from Quickshell updates, please make an issue!
 >
-> It is also recommended to compare the defaultSettings.json file to your settings.json file, because new settings may have been introduced.
+> The new settings get automatically mergred into your settings.json non-destructively.
 
 Run this in the installation folder (usually `.config/quickshell/Kriti-shell`):
 ```sh
