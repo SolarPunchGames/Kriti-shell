@@ -129,7 +129,7 @@ Item {
               text: {
                 var artist = ""
                 var duration = ""
-                var synced = ""
+                var synced = " • 󱎬 plain"
                 if (Players.defaultLyrics.duration) {
                   duration = " • " + TextServices.secondsToMinutesSeconds(Players.defaultLyrics.duration)
                 }
@@ -328,15 +328,15 @@ Item {
             text: {
               var artist = ""
               var duration = ""
-              var synced = ""
-              if (result.data.artistName) {
-                artist = TextServices.truncate(result.data.artistName, (result.width - (duration.length * font.pointSize) - (synced.length * font.pointSize) - 100) / font.pointSize)
-              }
+              var synced = " • 󱎬 plain"
               if (result.data.duration) {
                 duration = " • " + TextServices.secondsToMinutesSeconds(result.data.duration)
               }
               if (result.data.syncedLyrics) {
                 synced = " • 󱎫 synced"
+              }
+              if (result.data.artistName) {
+                artist = TextServices.truncate(result.data.artistName, (result.width - (duration.length * font.pointSize) - (synced.length * font.pointSize)) / font.pointSize)
               }
               artist + duration + synced
             }
