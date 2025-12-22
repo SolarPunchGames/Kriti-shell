@@ -142,8 +142,20 @@ Item {
         backgroundAlias.border.color: Colors.separator
         backgroundAlias.border.width: 1
 
-        onClicked: {
-          Players.customPlayerId = Players.players.indexOf(Players.playerToSwitchTo)
+        MouseArea {
+          anchors.fill: parent
+
+          cursorShape: Qt.PointingHandCursor
+
+          acceptedButtons: Qt.AllButtons
+
+          onClicked: (mouse)=> {
+            if (mouse.button == Qt.LeftButton) {
+              Players.customPlayerId = Players.players.indexOf(Players.playerToSwitchTo)
+            } else {
+              Players.tempDisableSwitchSuggestion = true
+            }
+          }
         }
 
         BaseButton {
