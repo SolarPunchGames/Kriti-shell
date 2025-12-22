@@ -13,7 +13,9 @@ import qs
 Scope {
   id: root
   property alias mediaMenuVariants: variants
-  
+
+  Component.onCompleted: WindowManager.mediaMenuVariants = mediaMenuVariants
+
   Variants {
     id: variants
     model: Quickshell.screens

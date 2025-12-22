@@ -10,6 +10,8 @@ Scope {
   id: root
   property alias barVariants: variants
 
+  Component.onCompleted: WindowManager.barVariants = barVariants
+  
   IpcHandler {
     target: "bar"
 
@@ -89,10 +91,25 @@ Scope {
 
       function open() {
         mainRect.state = ""
+
       }
 
       function close() {
         mainRect.state = "closed"
+        //for (var i = 0; i < WindowManager.mediaMenuVariants.instances.length; i++) {
+        //  var instance = WindowManager.mediaMenuVariants.instances[i]
+        //  console.log(WindowManager.mediaMenuVariants.instances.length)
+        //  if (instance.screen == mainWindow.screen) {
+        //    instance.open()
+        //    console.log("instance closed on " + instance.screen)
+        //  }
+        //}
+        //for (var i = 0; i < WindowManager.powerMenuVariants.instances.length; i++) {
+        //  var instance = WindowManager.powerMenuVariants.instances[i]
+        //  if (instance.screen == mainWindow.screen) {
+        //    instance.close()
+        //  }
+        //}
       }
 
       function toggleOpen() {
