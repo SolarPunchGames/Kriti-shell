@@ -13,7 +13,10 @@ PopupWindow {
   implicitWidth: background.width + 20
   implicitHeight: background.height + 20
 
-  mask: Region { item: background }
+  mask: Region { 
+    width: background.width
+    height: background.height
+  }
 
   property bool focusGrab: true
 
@@ -67,6 +70,9 @@ PopupWindow {
 
   Rectangle {
     id: background
+
+    anchors.top: parent.top
+    anchors.left: parent.left
 
     width: 200
     height: list.contentHeight
