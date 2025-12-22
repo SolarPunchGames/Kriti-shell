@@ -1,5 +1,6 @@
 // MediaPlayerWidget.qml
 import QtQuick
+import QtQuick.Layouts
 import Quickshell
 import Quickshell.Widgets
 import Quickshell.Services.Mpris
@@ -80,6 +81,18 @@ Item {
         },
       },
       {
+        separator: true
+      },
+      {
+        text: "Change player",
+        activate() {
+          playersPopup.toggleOpen()
+        },
+      },
+      {
+        separator: true
+      },
+      {
         description: "(Middle mouse button)",
         customText: true,
         getText() {
@@ -108,6 +121,129 @@ Item {
         },
       },
     ]
+  }
+
+  Popup {
+    id: playersPopup
+    anchor.item: rect
+    anchor.edges: Edges.Bottom | Edges.Left
+
+    backgroundAlias.width: 11 * 15
+    backgroundAlias.height: {
+      if (playersList.contentHeight > 200) {
+        200
+      } else {
+        playersList.contentHeight
+      }
+    }
+
+    ListView {
+      id: playersList
+
+      model: Players.players
+
+      anchors.fill: parent
+
+      delegate: BaseButton {
+        id: playersListButton
+
+        property var data: modelData
+
+        text: TextServices.truncate(modelData.identity, 13)
+
+        contentItem: RowLayout {
+          Text {
+            id: checkItem
+            font.pointSize: playersListButton.fontSize
+            font.family: "JetBrainsMono Nerd Font"
+
+            Layout.fillWidth: true
+
+            color: Colors.text
+
+            topPadding: playersListButton.textTopPadding
+            bottomPadding: playersListButton.textBottomPadding
+            leftPadding: playersListButton.textLeftPadding
+            rightPadding: playersListButton.textRightPadding
+
+            horizontalAlignment: Text.AlignLeft
+            verticalAlignment: Text.AlignVCenter
+
+            wrapMode: Text.WordWrap
+
+            text: "󰸞"
+
+            opacity: {
+              if (playersListButton.data == Players.player) {
+                1
+              } else {
+                0
+              }
+            }
+          }
+          Column {
+            Layout.fillWidth: true
+            Text {
+              id: textItem
+              font.pointSize: playersListButton.fontSize
+              font.family: "JetBrainsMono Nerd Font"
+
+
+              color: Colors.text
+
+              topPadding: playersListButton.textTopPadding
+              bottomPadding: playersListButton.textBottomPadding
+              leftPadding: playersListButton.textLeftPadding
+              rightPadding: playersListButton.textRightPadding
+
+              horizontalAlignment: Text.AlignLeft
+              verticalAlignment: Text.AlignVCenter
+
+              wrapMode: Text.WordWrap
+
+              text: playersListButton.text
+            }
+            Text {
+              id: descriptionItem
+              font.pointSize: 6
+              font.family: "JetBrainsMono Nerd Font"
+
+              width: playersListButton.width
+
+              color: Colors.text
+              opacity: 0.7
+
+              topPadding: playersListButton.textTopPadding
+              bottomPadding: playersListButton.textBottomPadding
+              leftPadding: playersListButton.textLeftPadding
+              rightPadding: playersListButton.textRightPadding
+
+              horizontalAlignment: Text.AlignLeft
+              verticalAlignment: Text.AlignVCenter
+
+              wrapMode: Text.WordWrap
+
+              text: TextServices.truncate(playersListButton.player.trackTitle, 25)
+            }
+          }
+        }
+
+        textLeftPadding: 5
+
+        anchors.left: parent.left
+        anchors.right: parent.right
+
+        backgroundAlias.radius: playersPopup.backgroundAlias.radius
+        padding: 5
+
+        property var player: Players.players[index]
+
+        onClicked: {
+          playersPopup.close()
+          Players.customPlayerId = index
+        }
+      }
+    }
   }
 
   Row {
