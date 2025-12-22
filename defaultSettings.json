@@ -44,6 +44,23 @@
     }
   },
   "miscellaneous": {
+    "clockWidget": {
+      "changeToRedWhenLate": {
+        "name": "Change clock widget color when late",
+        "type": "switch",
+        "value": false
+      },
+      "lateStartTime": {
+        "name": "Start of late time",
+        "type": "string",
+        "value": "20:00:00"
+      },
+      "lateEndTime": {
+        "name": "End of late time",
+        "type": "string",
+        "value": "06:00:00"
+      }
+    }
   },
   "audio": {
     "volumeWidget": {

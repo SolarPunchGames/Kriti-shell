@@ -17,13 +17,27 @@ Singleton {
     blockLoading: true
 
     watchChanges: true
-    onFileChanged: this.reload()
+    onFileChanged: {
+      this.reload()
+      root.onConfigChanged()
+    }
 
     onLoadFailed: (error) => {
       if (error == FileViewError.FileNotFound) {
         windowComponent.createObject(root)
       }
     }
+  }
+
+  signal configChanged()
+
+  FileView {
+    id: defaultsConfigFile
+    path: Qt.resolvedUrl("../defaultSettings.json")
+    blockLoading: true
+
+    watchChanges: true
+    onFileChanged: this.reload()
   }
 
   Component {
@@ -89,7 +103,51 @@ Singleton {
   }
 
   property var parsedConfig: JSON.parse(configFile.text())
+  property var parsedDefaultConfig: JSON.parse(defaultsConfigFile.text())
 
   property var audio: parsedConfig.audio
   property var media: parsedConfig.media
+
+  function isPlainObject(x) {
+    return typeof x === 'object' && x !== null && !Array.isArray(x);
+  }
+
+  function needsMerge(target = {}, source = {}) {
+    if (!isPlainObject(source)) return false;
+    for (const key of Object.keys(source)) {
+      if (!(key in target)) return true;
+      const sVal = source[key];
+      const tVal = target[key];
+      if (isPlainObject(sVal) && isPlainObject(tVal)) {
+        if (needsMerge(tVal, sVal)) return true;
+      }
+    }
+    return false;
+  }
+
+  function nonDestructiveMerge(target = {}, source = {}) {
+    const result = Array.isArray(target) ? target.slice() : target;
+    if (!isPlainObject(source)) return result;
+    for (const key of Object.keys(source)) {
+      var sVal = source[key];
+      var tVal = result[key];
+      if (!(key in result)) {
+        result[key] = sVal;
+      } else if (isPlainObject(tVal) && isPlainObject(sVal)) {
+        result[key] = nonDestructiveMerge(tVal, sVal);
+      }
+    }
+    return result;
+  }
+
+  Timer {
+    interval: 1000
+    running: true
+    repeat: true
+    onTriggered: {
+      if (needsMerge(parsedConfig, parsedDefaultConfig)) {
+        configFile.setText(JSON.stringify(nonDestructiveMerge(parsedConfig, parsedDefaultConfig), null, 2))
+      }
+    }
+  }
 }

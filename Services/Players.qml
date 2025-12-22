@@ -10,10 +10,20 @@ import Quickshell.Services.Mpris
 Singleton {
   id: root
 
-  property int playerId: 0
+  property int playerId: {
+    if (customPlayerId > (players.length - 1)) {
+      0 //players.length - 1
+    } else {
+      customPlayerId
+    }
+  }
+  property int customPlayerId: 0
   property real pausedTime: 0.0
   readonly property var players: Mpris.players.values
   readonly property MprisPlayer player: players[playerId]
+
+  property int customLyricsId
+  property bool areLyricsCustom: false
 
   property real previousPosition
   property bool wasPlaying
@@ -40,21 +50,20 @@ Singleton {
     lyricsProc.running = false
     trackLyrics = 1
     currentTry = 1
+    areLyricsCustom = false
 
     lyricsChanged()
 
     //console.log("reload lyrics")
   }
 
-  Timer {
-    interval: 100
-    running: true
-    repeat: true
-    onTriggered: {
-      if (playerId > (players.length - 1)) {
-        playerId = 0
-      }
-    }
+  function loadCustomLyrics(id) {
+    customLyricsId = id
+    customLyricsProc.running = true
+    trackLyrics = 1
+    areLyricsCustom = true
+
+    lyricsChanged()
   }
 
   property var trackLyrics: 1
@@ -93,6 +102,18 @@ Singleton {
         } else {
           trackLyrics = JSON.parse(text)
         }
+      }
+    }
+  }
+
+  Process {
+    id: customLyricsProc
+    running: false
+    command: [ "curl", "https://lrclib.net/api/get/" + customLyricsId ]
+    stdout: StdioCollector {
+      waitForEnd: true
+      onStreamFinished: {
+        trackLyrics = JSON.parse(text)
       }
     }
   }

@@ -34,9 +34,152 @@ FloatingWindow {
 
     implicitHeight: parent.height - buttonRow.height - 30
 
-    LyricsView {
-      id: lyricsView
-      lyricsSizeMult: 1.2
+    StackLayout {
+      id: tabs
+      anchors.fill: parent
+      currentIndex: 0
+
+      Connections {
+        target: searchTab
+        function onLyricsFound() {
+          tabs.currentIndex = 0
+        }
+      }
+
+      Item {
+        id: lyricsTab
+        LyricsView {
+          id: lyricsView
+          lyricsSizeMult: 1.2
+        }
+
+        Row {
+          anchors.top: parent.top
+          anchors.left: parent.left
+          anchors.topMargin: 5
+          anchors.leftMargin: 5
+
+          BaseButton {
+            id: minusButton
+
+            backgroundAlias.radius: 7
+            backgroundColor: "transparent"
+
+            width: 30
+            height: width
+
+            text: "󰍴"
+
+            onClicked: {
+              if (lyricsView.lyricsSizeMult > 0.5) {
+                lyricsView.lyricsSizeMult -= 0.1
+              }
+            }
+          }
+
+          BaseButton {
+            id: plusButton
+
+            backgroundAlias.radius: 7
+            backgroundColor: "transparent"
+
+            width: 30
+            height: width
+
+            text: "󰐕"
+
+            onClicked: {
+              if (lyricsView.lyricsSizeMult < 2) {
+                lyricsView.lyricsSizeMult += 0.1
+              }
+            }
+          }
+
+        }
+
+        Row {
+          anchors.top: parent.top
+          anchors.right: parent.right
+          anchors.topMargin: 5
+          anchors.rightMargin: 5
+
+          BaseButton {
+            id: lyricsSearchButton
+
+            backgroundAlias.radius: 7
+            backgroundColor: "transparent"
+
+            width: 30
+            height: width
+
+            text: ""
+
+            onClicked: {
+              tabs.currentIndex = 1
+            }
+          }
+
+          BaseButton {
+            id: lyricsCopyButton
+
+            backgroundAlias.radius: 7
+            backgroundColor: "transparent"
+
+            width: 30
+            height: width
+
+            textAlias.rightPadding: 3
+            text: "󰆏"
+
+            onClicked: {
+              Quickshell.clipboardText = Players.trackLyrics.plainLyrics
+            }
+          }
+
+          BaseButton {
+            id: lyricsReloadButton
+
+            backgroundAlias.radius: 7
+            backgroundColor: "transparent"
+
+            width: 30
+            height: width
+
+            textAlias.rightPadding: 3
+            text: "󰑓"
+
+            onClicked: {
+              Players.reloadLyrics()
+            }
+          }
+        }
+      }
+
+      LyricsSearch {
+        id: searchTab
+        Row {
+          anchors.top: parent.top
+          anchors.left: parent.left
+          anchors.topMargin: 5
+          anchors.leftMargin: 5
+
+          BaseButton {
+            id: lyricsSearchTabBackButton
+
+            backgroundAlias.radius: 7
+            backgroundColor: "transparent"
+
+            width: 30
+            height: width
+
+            text: "󰁍"
+
+            onClicked: {
+              tabs.currentIndex = 0
+            }
+          }
+        }
+      }
     }
 
     Rectangle {
@@ -75,90 +218,6 @@ FloatingWindow {
         }
 
         radius: mainRect.radius
-      }
-    }
-
-    Row {
-      anchors.top: parent.top
-      anchors.left: parent.left
-      anchors.topMargin: 5
-      anchors.leftMargin: 5
-
-      BaseButton {
-        id: minusButton
-
-        backgroundAlias.radius: 7
-        backgroundColor: "transparent"
-
-        width: 30
-        height: width
-
-        text: "󰍴"
-
-        onClicked: {
-          if (lyricsView.lyricsSizeMult > 0.5) {
-            lyricsView.lyricsSizeMult -= 0.1
-          }
-        }
-      }
-
-      BaseButton {
-        id: plusButton
-
-        backgroundAlias.radius: 7
-        backgroundColor: "transparent"
-
-        width: 30
-        height: width
-
-        text: "󰐕"
-
-        onClicked: {
-          if (lyricsView.lyricsSizeMult < 2) {
-            lyricsView.lyricsSizeMult += 0.1
-          }
-        }
-      }
-
-    }
-    Row {
-      anchors.top: parent.top
-      anchors.right: parent.right
-      anchors.topMargin: 5
-      anchors.rightMargin: 5
-
-      BaseButton {
-        id: lyricsCopyButton
-
-        backgroundAlias.radius: 7
-        backgroundColor: "transparent"
-
-        width: 30
-        height: width
-
-        textAlias.rightPadding: 3
-        text: "󰆏"
-
-        onClicked: {
-          Quickshell.clipboardText = Players.trackLyrics.plainLyrics
-        }
-      }
-
-      BaseButton {
-        id: lyricsReloadButton
-
-        backgroundAlias.radius: 7
-        backgroundColor: "transparent"
-
-        width: 30
-        height: width
-
-        textAlias.rightPadding: 3
-        text: "󰑓"
-
-        onClicked: {
-          Players.reloadLyrics()
-        }
       }
     }
   }
@@ -329,7 +388,7 @@ FloatingWindow {
 
             onClicked: {
               playersPopup.close()
-              Players.playerId = index
+              Players.customPlayerId = index
             }
           }
         }

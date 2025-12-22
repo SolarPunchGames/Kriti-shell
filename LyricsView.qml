@@ -9,7 +9,13 @@ ListView {
   id: lyricsView
   anchors.fill: parent
 
-  topMargin: 40
+  topMargin: {
+//    if (Players.areLyricsCustom) {
+//      100
+//    } else {
+      40
+//    }
+  }
   bottomMargin: 20
 
   maximumFlickVelocity: 2000
@@ -25,6 +31,59 @@ ListView {
   property var lyricsSizeMult: 1
 
   Component.onCompleted: forceLayout()
+
+//  Column {
+//    id: customLyricsColumn
+//    anchors.top: parent.top
+//    topPadding: 20
+//
+//    Text {
+//      id: customLyricsText
+//
+//      font.pointSize: 8
+//      font.family: "JetBrainsMono Nerd Font"
+//
+//      width: lyricsRect.width - lyricsView.rightMargin - lyricsView.leftMargin
+//      height: 30 * lineCount
+//
+//      bottomPadding: -20
+//
+//      wrapMode: Text.WordWrap
+//
+//      horizontalAlignment: Text.AlignHCenter
+//      verticalAlignment: Text.AlignVCenter
+//
+//      color: Colors.text
+//
+//      visible: Players.areLyricsCustom
+//
+//      text: "Custom Lyrics:"
+//    }
+//
+//    Text {
+//      id: customLyricsTitle
+//
+//      font.weight: 800
+//
+//      font.pointSize: 12
+//      font.family: "JetBrainsMono Nerd Font"
+//
+//      width: lyricsRect.width - lyricsView.rightMargin - lyricsView.leftMargin
+//      height: 30 * lineCount
+//
+//      wrapMode: Text.WordWrap
+//
+//      horizontalAlignment: Text.AlignHCenter
+//      verticalAlignment: Text.AlignVCenter
+//
+//      color: Colors.text
+//
+//      visible: Players.areLyricsCustom
+//
+//      text: Players.trackLyrics.name
+//    }
+//  }
+
 
   Text {
     id: lyricsLoadingText

@@ -81,11 +81,18 @@ PopupWindow {
     scale: 0.6
     opacity: 0
 
-    states: State {
-      name: "open"
-      PropertyChanges {target: background; scale: 1}
-      PropertyChanges {target: background; opacity: 1}
-    }
+    states: [
+      State {
+        name: "open"
+        PropertyChanges {target: background; scale: 1}
+        PropertyChanges {target: background; opacity: 1}
+      },
+      State {
+        name: ""
+        PropertyChanges {target: background; scale: 0.6}
+        PropertyChanges {target: background; opacity: 0}
+      }
+    ]
 
     transitions: Transition {
       SpringAnimation {
