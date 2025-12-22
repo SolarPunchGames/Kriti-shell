@@ -22,6 +22,9 @@ Singleton {
   readonly property var players: Mpris.players.values
   readonly property MprisPlayer player: players[playerId]
 
+  property int customLyricsId
+  property bool areLyricsCustom: false
+
   property real previousPosition
   property bool wasPlaying
 
@@ -47,10 +50,20 @@ Singleton {
     lyricsProc.running = false
     trackLyrics = 1
     currentTry = 1
+    areLyricsCustom = false
 
     lyricsChanged()
 
     //console.log("reload lyrics")
+  }
+
+  function loadCustomLyrics(id) {
+    customLyricsId = id
+    customLyricsProc.running = true
+    trackLyrics = 1
+    areLyricsCustom = true
+
+    lyricsChanged()
   }
 
   property var trackLyrics: 1
@@ -89,6 +102,18 @@ Singleton {
         } else {
           trackLyrics = JSON.parse(text)
         }
+      }
+    }
+  }
+
+  Process {
+    id: customLyricsProc
+    running: false
+    command: [ "curl", "https://lrclib.net/api/get/" + customLyricsId ]
+    stdout: StdioCollector {
+      waitForEnd: true
+      onStreamFinished: {
+        trackLyrics = JSON.parse(text)
       }
     }
   }
