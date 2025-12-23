@@ -24,6 +24,19 @@ Item {
 
     listAlias.model: [
       {
+        customText: true,
+        getText() {
+          if (rect.state == "closed") {
+            return "Show widget"
+          } else {
+            return "Hide widget"
+          }
+        },
+        activate() {
+          rect.toggleOpen()
+        },
+      },
+      {
         description: "(Left mouse button)",
         customText: true,
         getText() {
@@ -54,19 +67,6 @@ Item {
         },
       },
       {
-        customText: true,
-        getText() {
-          if (rect.state == "closed") {
-            return "Show widget"
-          } else {
-            return "Hide widget"
-          }
-        },
-        activate() {
-          rect.toggleOpen()
-        },
-      },
-      {
         text: "Open lyrics window",
         activate() {
           if (mediaMenuLoader.item) {
@@ -81,12 +81,20 @@ Item {
         },
       },
       {
-        separator: true
+        separator: true,
       },
       {
         text: "Change player",
         activate() {
-          playersPopup.toggleOpen()
+          if (Players.players.length == 2) {
+            if (Players.playerId == 1) {
+              Players.customPlayerId = 0
+            } else {
+              Players.customPlayerId = 1
+            }
+          } else {
+            playersPopup.toggleOpen()
+          }
         },
       },
       {
