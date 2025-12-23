@@ -278,7 +278,7 @@ Item {
         backgroundAlias.border.width: 1
 
         onClicked: {
-          Players.loadCustomLyrics(data.id)
+          Players.loadCustomLyrics(data)
           root.lyricsFound()
         }
 
