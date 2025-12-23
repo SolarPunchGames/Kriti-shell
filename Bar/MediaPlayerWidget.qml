@@ -81,12 +81,20 @@ Item {
         },
       },
       {
-        separator: true
+        separator: true,
       },
       {
         text: "Change player",
         activate() {
-          playersPopup.toggleOpen()
+          if (Players.players.length == 2) {
+            if (Players.playerId == 1) {
+              Players.customPlayerId = 0
+            } else {
+              Players.customPlayerId = 1
+            }
+          } else {
+            playersPopup.toggleOpen()
+          }
         },
       },
       {
