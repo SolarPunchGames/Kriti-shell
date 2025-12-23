@@ -79,10 +79,8 @@ Singleton {
     //console.log("reload lyrics")
   }
 
-  function loadCustomLyrics(id) {
-    customLyricsId = id
-    customLyricsProc.running = true
-    customLyrics = 1
+  function loadCustomLyrics(data) {
+    customLyrics = data
     areLyricsCustom = true
 
     lyricsChanged()
