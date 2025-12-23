@@ -24,6 +24,19 @@ Item {
 
     listAlias.model: [
       {
+        customText: true,
+        getText() {
+          if (rect.state == "closed") {
+            return "Show widget"
+          } else {
+            return "Hide widget"
+          }
+        },
+        activate() {
+          rect.toggleOpen()
+        },
+      },
+      {
         description: "(Left mouse button)",
         customText: true,
         getText() {
@@ -51,19 +64,6 @@ Item {
               }
             }
           }
-        },
-      },
-      {
-        customText: true,
-        getText() {
-          if (rect.state == "closed") {
-            return "Show widget"
-          } else {
-            return "Hide widget"
-          }
-        },
-        activate() {
-          rect.toggleOpen()
         },
       },
       {
