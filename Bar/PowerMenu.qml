@@ -91,7 +91,7 @@ Scope {
           anchors.right: mainPanel.left
           roundingColor: mainPanel.color
           opacity: mainPanel.opacity
-          rounding: 13
+          rounding: 15
         }
 
         InvertedRounding {
@@ -99,7 +99,7 @@ Scope {
           anchors.left: mainPanel.right
           roundingColor: mainPanel.color
           opacity: mainPanel.opacity
-          rounding: 13
+          rounding: 15
           rotation: -90
         }
 
@@ -111,7 +111,7 @@ Scope {
 
           color: Colors.mainPanelBackground
 
-          bottomLeftRadius: 13
+          bottomLeftRadius: 15
           bottomRightRadius: bottomLeftRadius
 
           anchors.right: parent.right

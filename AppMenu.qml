@@ -106,7 +106,7 @@ Scope {
 
           color: Colors.mainPanelBackground
 
-          topLeftRadius: 13
+          topLeftRadius: 15
           topRightRadius: topLeftRadius
 
           anchors.horizontalCenter: parent.horizontalCenter
@@ -135,8 +135,10 @@ Scope {
                 id: appsView
                 anchors.fill: parent
 
-                topMargin: 20
-                bottomMargin: 20
+                topMargin: 5
+                bottomMargin: 5
+
+                spacing: 5
 
                 maximumFlickVelocity: 2000
 
@@ -190,6 +192,11 @@ Scope {
                   bottomPadding: 10
 
                   text: modelData.name
+
+                  backgroundAlias.border.color: Colors.itemHoveredBackground
+                  backgroundAlias.border.width: 1
+                  
+                  backgroundAlias.radius: 5
 
                   fontSize: 11
 
