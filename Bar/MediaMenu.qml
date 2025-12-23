@@ -153,22 +153,9 @@ Scope {
 
                     radius: 7
 
-                    Rectangle {
-                      id: progressBar
-
-                      anchors.bottom: parent.bottom
-                      anchors.left: parent.left
-
-                      color: {
-                        if (Config.media.widget.progressBar.value == 0 || (Config.media.widget.progressBar.value == 1 && Players.trackLyrics != 404 && Players.trackLyrics != 1)) {
-                          Colors.itemPressedBackground
-                        } else {
-                          "transparent"
-                        }
-                      }
-
-                      height: 3
-                      width: parent.width * ((Players.player.position - Players.pausedTime) / Players.player.length)
+                    ProgressBar {
+                      anchors.fill: parent
+                      radius: parent.radius
                     }
                   }
 
