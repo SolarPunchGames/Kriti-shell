@@ -3,6 +3,7 @@ import QtQuick
 import Quickshell
 import Quickshell.Io
 import Quickshell.Hyprland
+import Quickshell.Widgets
 import qs.Services
 import qs
 
@@ -83,7 +84,7 @@ Scope {
 //        roundingColor: mainWindow.color
 //      }
 
-      color: Colors.mainPanelBackground
+      color: "transparent"
 
       implicitHeight: 36
 
@@ -161,7 +162,7 @@ Scope {
       Rectangle {
         id: mainRect
         anchors.fill: parent
-        color: "transparent"
+        color: Colors.mainPanelBackground
 
         visible: {
           if (opacity == 0) {
@@ -175,48 +176,51 @@ Scope {
           State {
             name: "closed"
             PropertyChanges {target: mainWindow; implicitHeight: 3}
-            PropertyChanges {target: mainRect; opacity: 0}
+            PropertyChanges {target: widgets; opacity: 0}
           },
           State {
             name: ""
             PropertyChanges {target: mainWindow; implicitHeight: 36}
-            PropertyChanges {target: mainRect; opacity: 1}
+            PropertyChanges {target: widgets; opacity: 1}
           }
         ]
 
-        // Left widgets
-        Row {
-          anchors.verticalCenter: parent.verticalCenter
-          anchors.left: parent.left
-          Separator {}
-          WorkspaceWidget {currentScreen: screen}
-          Separator {}
-          CurrentAppWidget {}
-        }
+        Item {
+          id: widgets
+          anchors.fill: parent
+          // Left widgets
+          Row {
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.left: parent.left
+            Separator {}
+            WorkspaceWidget {currentScreen: screen}
+            Separator {}
+            CurrentAppWidget {}
+          }
 
-        // Center widgets
-        Row {
-          anchors.centerIn: parent
-          //LegacyMediaPlayerWidget {}
-          MediaPlayerWidget {currentScreen: screen.name}
-        }
+          // Center widgets
+          Row {
+            anchors.centerIn: parent
+            //LegacyMediaPlayerWidget {}
+            MediaPlayerWidget {currentScreen: screen.name}
+          }
 
-        // Right widgets
-        Row {
-          anchors.verticalCenter: parent.verticalCenter
-          anchors.right: parent.right
-          ShutdownTimerWidget {}
-          Separator {}
-          VolumeWidget {}
-          ClockWidget {}
-          DateWidget {}
-          PowerButtonWidget {currentScreen: screen.name}
-          Separator {}
-          TrayWidget {}
-          Separator {}
+          // Right widgets
+          Row {
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.right: parent.right
+            ShutdownTimerWidget {}
+            Separator {}
+            VolumeWidget {}
+            ClockWidget {}
+            DateWidget {}
+            PowerButtonWidget {currentScreen: screen.name}
+            Separator {}
+            TrayWidget {}
+            Separator {}
+          }
         }
       }
-
       Popup {
         id: rightClickMenu
         anchor.item: mainRect
