@@ -17,3 +17,7 @@
 * Make sure you understand and test AI code.
 * Try to keep AI use minimal.
 * Please mention its use in commit description.
+
+### What is the dev branch for?
+* When I make a change, I do it on the dev branch and then PR it into main.
+* It doesn't have any other purpose.
