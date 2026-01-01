@@ -8,6 +8,8 @@ Item {
   property var radius: 10
   property var animationTime: 150
 
+  property bool hovered: progressMouseArea.containsMouse || progressMouseArea.pressed
+
   MouseArea {
     id: progressMouseArea
     anchors.bottom: parent.bottom
@@ -58,7 +60,7 @@ Item {
     anchors.bottom: parent.bottom
     anchors.left: parent.left
     anchors.right: parent.right
-    anchors.bottomMargin: progressMouseArea.containsMouse ? 11 : 0
+    anchors.bottomMargin: root.hovered ? 11 : 0
 
     clip: true
 
@@ -78,13 +80,13 @@ Item {
       }
     }
 
-    height: progressMouseArea.containsMouse ? 2 : 1
+    height: root.hovered ? 2 : 1
 
     Rectangle {
       anchors.bottom: parent.bottom
       anchors.left: parent.left
       anchors.right: parent.right
-      anchors.bottomMargin: progressMouseArea.containsMouse ? -11 : 0
+      anchors.bottomMargin: root.hovered ? -11 : 0
 
       height: root.height
 
@@ -105,7 +107,7 @@ Item {
 
       color: {
         if (Config.media.widget.progressBar.value == 0 || (Config.media.widget.progressBar.value == 1 && Players.trackLyrics != 404 && Players.trackLyrics != 1)) {
-          if (progressMouseArea.containsMouse) {
+          if (root.hovered) {
             Colors.mainPanelBackground
           } else {
             "transparent"
@@ -122,7 +124,7 @@ Item {
 
     anchors.bottom: parent.bottom
     anchors.left: parent.left
-    anchors.bottomMargin: progressMouseArea.containsMouse ? 10 : 0
+    anchors.bottomMargin: root.hovered ? 10 : 0
 
     radius: 2
 
@@ -151,7 +153,7 @@ Item {
       }
     }
 
-    height: progressMouseArea.containsMouse ? 4 : 2
+    height: root.hovered ? 4 : 2
     width: 0
 
     Timer {
@@ -166,7 +168,7 @@ Item {
     Rectangle {
       anchors.bottom: parent.bottom
       anchors.left: parent.left
-      anchors.bottomMargin: progressMouseArea.containsMouse ? -10 : 0
+      anchors.bottomMargin: root.hovered ? -10 : 0
 
       height: root.height
       width: root.width
@@ -188,7 +190,7 @@ Item {
       
       color: {
         if (Config.media.widget.progressBar.value == 0 || (Config.media.widget.progressBar.value == 1 && Players.trackLyrics != 404 && Players.trackLyrics != 1)) {
-          if (progressMouseArea.containsMouse) {
+          if (root.hovered) {
             Colors.itemPressedBackground
           } else {
             Colors.itemHoveredBackground
@@ -207,13 +209,13 @@ Item {
 
     anchors.verticalCenter: progressBar.verticalCenter
     anchors.left: progressBar.right
-    anchors.bottomMargin: progressMouseArea.containsMouse ? 10 : 0
+    anchors.bottomMargin: root.hovered ? 10 : 0
 
     radius: width / 2
 
     transform: Translate {x: -progressCircle.width / 2}
 
-    scale: progressMouseArea.containsMouse ? 1 : 0
+    scale: root.hovered ? 1 : 0
 
     Behavior on scale {
       PropertyAnimation {
@@ -237,7 +239,7 @@ Item {
 
     color: {
       if (Config.media.widget.progressBar.value == 0 || (Config.media.widget.progressBar.value == 1 && Players.trackLyrics != 404 && Players.trackLyrics != 1)) {
-        if (progressMouseArea.containsMouse) {
+        if (root.hovered) {
           Colors.itemPressedBackground
         } else {
           Colors.itemHoveredBackground
