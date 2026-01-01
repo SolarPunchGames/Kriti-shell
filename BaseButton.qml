@@ -32,6 +32,12 @@ AbstractButton {
     horizontalAlignment: Text.AlignHCenter
     verticalAlignment: Text.AlignVCenter
 
+    Behavior on opacity {
+      PropertyAnimation {
+        duration: Colors.colorTransitionTime
+      }
+    }
+
     text: button.text
   }
 
