@@ -159,7 +159,7 @@ Item {
     Timer {
       running: true
       repeat: true
-      interval: Players.player.isPlaying ? 250 : 50
+      interval: 50
       onTriggered: {
         progressBar.width = progressBar.parent.width * ((Players.player.position - Players.pausedTime) / Players.player.length)
       }
