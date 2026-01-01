@@ -356,8 +356,19 @@ Item {
 
         color: "transparent"
 
-        width: {
-          parent.width * ((Players.player.position - Players.pausedTime) / Players.player.length)
+        Timer {
+          running: true
+          repeat: true
+          interval: 50
+          onTriggered: {
+            parent.width = parent.parent.width * ((Players.player.position - Players.pausedTime) / Players.player.length)
+          }
+        }
+
+        Behavior on width {
+          PropertyAnimation {
+            duration: 100
+          }
         }
 
         Rectangle {
