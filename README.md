@@ -43,7 +43,7 @@ This issue is also currently addressed with a setting in `settings.json` called 
 > [!Note]
 > It is recommended to update Kriti-shell when you update Quickshell. If there are any breaking bugs from Quickshell updates, please make an issue!
 >
-> The new settings get automatically mergred into your settings.json non-destructively.
+> The new settings get automatically merged into your settings.json non-destructively.
 
 Run this in the installation folder (usually `.config/quickshell/Kriti-shell`):
 ```sh
