@@ -14,31 +14,38 @@ Item {
     id: button
 
     implicitHeight: 30
-    implicitWidth: 70
+    implicitWidth: contentItem.contentWidth + 20
 
-    anchors.centerIn: parent
+    clip: true
 
-    Process {
-      id: getVolProc
-
-      command: ["wpctl", "get-volume", "@DEFAULT_SINK@"]
-
-      running: true
-
-      stdout: StdioCollector {
-        onStreamFinished: button.text = " " + this.text.slice(8, 12) * 1000 / 10 + "%" // ik this looks dumb, but 0.58 * 100 is apparently 57.9999999.. this fixes that.
+    Behavior on implicitWidth {
+      SpringAnimation {
+        spring: 5
+        damping: 0.3
       }
     }
 
-    Timer {
-      interval: 50
+    anchors.centerIn: parent
 
-      running: true
-
-      repeat: true
-
-      onTriggered: getVolProc.running = true
+    text: {
+      if (volumeText) {
+        if (Audio.muted) {
+          "󰟎 " + volumeText
+        } else {
+          "󰋋 " + volumeText
+        }
+      } else {
+        if (Audio.muted) {
+          "󰟎"
+        } else {
+          "󰋋"
+        }
+      }
     }
+
+    contentItem.opacity: Audio.muted ? 0.8 : 1
+
+    property var volumeText: Math.round(Audio.volume * 100) + "%"
 
     MouseArea {
       id: mouseArea
@@ -48,7 +55,7 @@ Item {
       cursorShape: Qt.PointingHandCursor
       hoverEnabled: true
 
-      // onPressed: // make custom volume window
+      // make custom volume window
 
       //LazyLoader {  
       //  id: powerMenuLoader  
