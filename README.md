@@ -65,7 +65,7 @@ git pull
    git clone https://github.com/SolarPunchGames/Kriti-shell/ ~/.config/quickshell/Kriti-shell
    ```
 
-5. Add `exec-once qs -c Kriti-shell` to your hyprland.conf (You can also run once from the terminal with `qs -c Kriti-shell`)
+5. Add `exec-once = qs -c Kriti-shell` to your hyprland.conf (You can also run once from the terminal with `qs -c Kriti-shell`)
 6. Add `bind = SUPER, SPACE , exec, qs -c Kriti-shell ipc call appMenu toggle` to your hyprland.conf (edit keybind, if needed)
 7. Add `windowrulev2 = float, class:org.quickshell` to your hyprland.conf
 8. Profit.
