@@ -101,23 +101,31 @@ Item {
             id: icon
 
             anchors.fill: button
-            source: modelData.icon
+            source: {
+              if (modelData.icon.includes("?path=")) {
+                const [name, path] = modelData.icon.split("?path=");
+                Qt.resolvedUrl(`${path}/${name.slice(name.lastIndexOf("/") + 1)}`)
+              }
+              else {
+                modelData.icon
+              }
+            }
 
             mipmap: true
             smooth: true
           }
 
-          ColorOverlay {
-            anchors.fill: icon
-            source: icon
-            color: {
-              if (!Colors.isDark && modelData.title == "Free Download Manager") {
-                "#517ac5"
-              } else {
-                "transparent"
-              }
-            }
-          }
+          //ColorOverlay {
+          //  anchors.fill: icon
+          //  source: icon
+          //  color: {
+          //    if (!Colors.isDark && modelData.title == "Free Download Manager") {
+          //      "#517ac5"
+          //    } else {
+          //      "transparent"
+          //    }
+          //  }
+          //}
         }
       }
     }
