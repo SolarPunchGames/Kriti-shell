@@ -24,7 +24,6 @@ Scope {
         }
       }
     }
-
     function closeCurrent() {
       for (var i = 0; i < barVariants.instances.length; i++) {
         var instance = barVariants.instances[i]
@@ -79,10 +78,6 @@ Scope {
         left: true
         right: true
       }
-
-//      InvertedRounding {
-//        roundingColor: mainWindow.color
-//      }
 
       color: "transparent"
 

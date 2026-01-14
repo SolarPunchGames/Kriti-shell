@@ -6,7 +6,6 @@ import Quickshell
 import Quickshell.Wayland
 import Quickshell.Widgets
 import Quickshell.Io
-import Qt5Compat.GraphicalEffects
 import qs.Services
 import qs
 

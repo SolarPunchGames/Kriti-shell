@@ -1,6 +1,6 @@
 // TrayWidget.qml
 import QtQuick
-import Qt5Compat.GraphicalEffects
+//import Qt5Compat.GraphicalEffects
 import Quickshell
 import Quickshell.Widgets
 import Quickshell.Services.SystemTray
