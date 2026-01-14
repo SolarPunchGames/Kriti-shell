@@ -171,12 +171,12 @@ Scope {
           State {
             name: "closed"
             PropertyChanges {target: mainWindow; implicitHeight: 3}
-            PropertyChanges {target: widgets; opacity: 0}
+            PropertyChanges {target: widgets; visible: false}
           },
           State {
             name: ""
             PropertyChanges {target: mainWindow; implicitHeight: 36}
-            PropertyChanges {target: widgets; opacity: 1}
+            PropertyChanges {target: widgets; visible: true}
           }
         ]
 
