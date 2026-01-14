@@ -108,7 +108,7 @@ Item {
       color: {
         if (Config.media.widget.progressBar.value == 0 || (Config.media.widget.progressBar.value == 1 && Players.trackLyrics != 404 && Players.trackLyrics != 1)) {
           if (root.hovered) {
-            Colors.mainPanelBackground
+            Colors.itemHoveredBackground
           } else {
             "transparent"
           }
