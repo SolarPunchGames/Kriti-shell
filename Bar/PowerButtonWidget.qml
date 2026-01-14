@@ -18,7 +18,7 @@ Item {
     implicitHeight: 30
     implicitWidth: 30
 
-    textRightPadding: 0
+    textRightPadding: 3
 
     LazyLoader {  
       id: powerMenuLoader  

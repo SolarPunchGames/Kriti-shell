@@ -570,6 +570,8 @@ Scope {
 
                       text: ""
 
+                      textRightPadding: 4
+
                       onClicked: {
                         tabs.currentIndex = 1
                       }

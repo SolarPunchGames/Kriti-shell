@@ -139,6 +139,8 @@ FloatingWindow {
 
             text: ""
 
+            textRightPadding: 3
+
             onClicked: {
               tabs.currentIndex = 1
             }
@@ -170,7 +172,7 @@ FloatingWindow {
             width: 30
             height: width
 
-            textRightPadding: 3
+            textRightPadding: 4
             text: "󰑓"
 
             onClicked: {

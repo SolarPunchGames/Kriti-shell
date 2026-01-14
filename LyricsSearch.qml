@@ -208,6 +208,8 @@ Item {
 
         text: ""
 
+        textRightPadding: 4
+
         onClicked: {
           results = []
           if (searchField.text != "") {  
