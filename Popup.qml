@@ -75,13 +75,13 @@ PopupWindow {
     anchors.left: parent.left
 
     width: 200
-    height: list.contentHeight
+    height: list.contentHeight + list.anchors.margins * 2
 
     transformOrigin: Item.TopLeft
 
-    color: Colors.itemBackground
+    color: Colors.menuBackground
 
-    radius: 5
+    radius: 10
     clip: true
 
     scale: 0.6
@@ -118,6 +118,8 @@ PopupWindow {
       anchors.fill: parent
 
       boundsBehavior: Flickable.StopAtBounds
+
+      anchors.margins: 2
 
       populate: Transition {
         id: populateTransition
@@ -186,7 +188,9 @@ PopupWindow {
 
           padding: 5
 
-          backgroundAlias.radius: rightClickMenu.backgroundAlias.radius
+          backgroundAlias.radius: rightClickMenu.backgroundAlias.radius - list.anchors.margins
+
+          backgroundColor: Colors.menuBackground
 
           contentItem: Column {
             Text {
