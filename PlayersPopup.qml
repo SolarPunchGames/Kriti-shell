@@ -9,39 +9,55 @@ Popup {
   id: playersPopup
 
   backgroundAlias.width: 11 * 15
-  backgroundAlias.height: {
-    if (playersList.contentHeight + playersList.anchors.margins * 2 > 200) {
-      200
-    } else {
-      playersList.contentHeight + playersList.anchors.margins * 2
-    }
-  }
 
-  ListView {
-    id: playersList
+  listAlias.model: Players.players
 
-    model: Players.players
+  listAlias.delegate: BaseButton {
+    id: playersListButton
 
-    anchors.fill: parent
+    property var data: modelData
 
-    anchors.margins: 2
+    text: TextServices.truncate(modelData.identity, 13)
 
-    delegate: BaseButton {
-      id: playersListButton
+    backgroundColor: Colors.menuBackground
 
-      property var data: modelData
+    contentItem: RowLayout {
+      Text {
+        id: checkItem
+        font.pointSize: playersListButton.fontSize
+        font.family: "JetBrainsMono Nerd Font"
 
-      text: TextServices.truncate(modelData.identity, 13)
+        Layout.fillWidth: true
 
-      backgroundColor: Colors.menuBackground
+        color: Colors.text
 
-      contentItem: RowLayout {
+        topPadding: playersListButton.textTopPadding
+        bottomPadding: playersListButton.textBottomPadding
+        leftPadding: playersListButton.textLeftPadding
+        rightPadding: playersListButton.textRightPadding
+
+        horizontalAlignment: Text.AlignLeft
+        verticalAlignment: Text.AlignVCenter
+
+        wrapMode: Text.WordWrap
+
+        text: "󰸞"
+
+        opacity: {
+          if (playersListButton.data == Players.player) {
+            1
+          } else {
+            0
+          }
+        }
+      }
+      Column {
+        Layout.fillWidth: true
         Text {
-          id: checkItem
+          id: textItem
           font.pointSize: playersListButton.fontSize
           font.family: "JetBrainsMono Nerd Font"
 
-          Layout.fillWidth: true
 
           color: Colors.text
 
@@ -55,77 +71,46 @@ Popup {
 
           wrapMode: Text.WordWrap
 
-          text: "󰸞"
-
-          opacity: {
-            if (playersListButton.data == Players.player) {
-              1
-            } else {
-              0
-            }
-          }
+          text: playersListButton.text
         }
-        Column {
-          Layout.fillWidth: true
-          Text {
-            id: textItem
-            font.pointSize: playersListButton.fontSize
-            font.family: "JetBrainsMono Nerd Font"
+        Text {
+          id: descriptionItem
+          font.pointSize: 6
+          font.family: "JetBrainsMono Nerd Font"
 
+          width: playersListButton.width
 
-            color: Colors.text
+          color: Colors.text
+          opacity: 0.7
 
-            topPadding: playersListButton.textTopPadding
-            bottomPadding: playersListButton.textBottomPadding
-            leftPadding: playersListButton.textLeftPadding
-            rightPadding: playersListButton.textRightPadding
+          topPadding: playersListButton.textTopPadding
+          bottomPadding: playersListButton.textBottomPadding
+          leftPadding: playersListButton.textLeftPadding
+          rightPadding: playersListButton.textRightPadding
 
-            horizontalAlignment: Text.AlignLeft
-            verticalAlignment: Text.AlignVCenter
+          horizontalAlignment: Text.AlignLeft
+          verticalAlignment: Text.AlignVCenter
 
-            wrapMode: Text.WordWrap
+          wrapMode: Text.WordWrap
 
-            text: playersListButton.text
-          }
-          Text {
-            id: descriptionItem
-            font.pointSize: 6
-            font.family: "JetBrainsMono Nerd Font"
-
-            width: playersListButton.width
-
-            color: Colors.text
-            opacity: 0.7
-
-            topPadding: playersListButton.textTopPadding
-            bottomPadding: playersListButton.textBottomPadding
-            leftPadding: playersListButton.textLeftPadding
-            rightPadding: playersListButton.textRightPadding
-
-            horizontalAlignment: Text.AlignLeft
-            verticalAlignment: Text.AlignVCenter
-
-            wrapMode: Text.WordWrap
-
-            text: TextServices.truncate(playersListButton.player.trackTitle, 25)
-          }
+          text: TextServices.truncate(playersListButton.player.trackTitle, 25)
         }
       }
+    }
 
-      textLeftPadding: 5
+    textLeftPadding: 5
 
-      anchors.left: parent.left
-      anchors.right: parent.right
+    anchors.left: parent.left
+    anchors.right: parent.right
 
-      backgroundAlias.radius: playersPopup.backgroundAlias.radius - playersList.anchors.margins
-      padding: 5
+    backgroundAlias.radius: playersPopup.backgroundAlias.radius - playersList.anchors.margins
+    padding: 5
 
-      property var player: Players.players[index]
+    property var player: Players.players[index]
 
-      onClicked: {
-        playersPopup.close()
-        Players.customPlayerId = index
-      }
+    onClicked: {
+      playersPopup.close()
+      Players.customPlayerId = index
     }
   }
 }
