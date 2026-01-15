@@ -115,6 +115,4 @@ Singleton {
   readonly property color separator: theme.separator
 
   readonly property int colorTransitionTime: 50
-
-  Component.onCompleted: console.log(catppuccinMocha.mainPanelBackground)
 }
