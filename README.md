@@ -58,7 +58,7 @@ git pull
    pacman -S quickshell
    ```
 
-2. Make sure you have installed: `curl` (and optionally: `pw-volume`)
+2. Optionally, install `pw-volume`
 3. Clone this repo into `.config/quickshell/Kriti-shell`
    
    ```sh
