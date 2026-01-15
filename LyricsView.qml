@@ -357,7 +357,7 @@ ListView {
     font.weight: 300
 
     font.pointSize: 10 * lyricsView.lyricsSizeMult
-    //font.family: "JetBrainsMono Nerd Font"
+    font.family: "JetBrainsMono Nerd Font"
 
     width: lyricsView.width
     height: contentHeight + 20 * lyricsView.lyricsSizeMult

@@ -24,7 +24,6 @@ Scope {
         }
       }
     }
-
     function closeCurrent() {
       for (var i = 0; i < barVariants.instances.length; i++) {
         var instance = barVariants.instances[i]
@@ -79,10 +78,6 @@ Scope {
         left: true
         right: true
       }
-
-//      InvertedRounding {
-//        roundingColor: mainWindow.color
-//      }
 
       color: "transparent"
 
@@ -176,12 +171,12 @@ Scope {
           State {
             name: "closed"
             PropertyChanges {target: mainWindow; implicitHeight: 3}
-            PropertyChanges {target: widgets; opacity: 0}
+            PropertyChanges {target: widgets; visible: false}
           },
           State {
             name: ""
             PropertyChanges {target: mainWindow; implicitHeight: 36}
-            PropertyChanges {target: widgets; opacity: 1}
+            PropertyChanges {target: widgets; visible: true}
           }
         ]
 

@@ -1,32 +1,42 @@
 // RoundedImage.qml
 import QtQuick
-import Qt5Compat.GraphicalEffects
+import QtQuick.Effects
 
-Image {
-  id: img
-  source: Players.player.trackArtUrl
+Item {
+  id: root
+  property var source
+  property var radius
+  property var fillMode
 
-  fillMode: Image.PreserveAspectCrop
+  smooth: true
 
-  anchors.fill: parent
+  MultiEffect {
+    source: image
+    anchors.fill: image
+    maskEnabled: true
+    maskSource: mask
 
-  mipmap: true
+    layer.smooth: true
 
-  property bool rounded: true
-  property int radius: 10
-  property bool adapt: true
+    maskThresholdMin: 0.5
+    maskSpreadAtMin: 1.0
+  }
 
-  layer.enabled: rounded
-  layer.effect: OpacityMask {
-    maskSource: Item {
-      width: img.width
-      height: img.height
-      Rectangle {
-        anchors.centerIn: parent
-        width: img.adapt ? img.width : Math.min(img.width, img.height)
-        height: img.adapt ? img.height : width
-        radius: img.radius
-      }
-    }
+  Image {
+    id: image
+    anchors.fill: root
+    source: root.source
+    fillMode: root.fillMode
+    visible: false
+    smooth: true
+  }
+
+  Item {
+    id: mask
+    anchors.fill: image
+    layer.enabled: true
+    visible: false
+    smooth: true
+    Rectangle { anchors.fill: parent; radius: root.radius }
   }
 }

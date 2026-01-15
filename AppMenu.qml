@@ -8,7 +8,6 @@ import Quickshell.Wayland
 import Quickshell.Widgets
 import Quickshell.Io
 import Quickshell.Hyprland
-import Qt5Compat.GraphicalEffects
 import qs.Services
 import qs
 
