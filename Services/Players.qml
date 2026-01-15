@@ -6,7 +6,6 @@ import QtQml
 import Quickshell
 import Quickshell.Io
 import Quickshell.Services.Mpris
-import "../Scripts/httpRequest.js" as HTTPR
 
 Singleton {
   id: root
@@ -70,8 +69,7 @@ Singleton {
   function reloadLyrics() {
     lyricsTimer.running = false
     lyricsTimer.running = true
-    gettingLyrics = false
-    gettingCustomLyrics = false
+    lyricsProc.running = false
     defaultLyrics = 1
     currentTry = 1
     areLyricsCustom = false
@@ -95,32 +93,6 @@ Singleton {
   readonly property int maxTries: 5
   property int currentTry: 1
 
-  property bool gettingLyrics: false
-
-  onGettingLyricsChanged: {
-    if (gettingLyrics) {
-      HTTPR.sendRequest("https://lrclib.net/api/get?artist_name=" + encodeURI(player.trackArtist) + 
-                        "&track_name=" + encodeURI(player.trackTitle) + 
-                        "&album_name=" + encodeURI(player.trackAlbum) + 
-                        "&duration=" + player.length, 
-      function(response) {
-        if (gettingLyrics) {
-          gettingLyrics = false
-          if (JSON.parse(response.content).statusCode) {
-            if (currentTry < maxTries) {
-              lyricsTimer.running = true
-              currentTry += 1
-            } else {
-              defaultLyrics = 404
-            }
-          } else {
-            defaultLyrics = JSON.parse(response.content)
-          }
-        }
-      })
-    }
-  }
-
   Timer {
     id: lyricsTimer
     interval: 100
@@ -129,7 +101,42 @@ Singleton {
       true
     }
     onTriggered: {
-      gettingLyrics = true
+      lyricsProc.running = true
+    }
+  }
+
+  Process {
+    id: lyricsProc
+    running: false
+    command: [ "curl", "https://lrclib.net/api/get?artist_name=" + encodeURI(player.trackArtist) + "&track_name=" + encodeURI(player.trackTitle) + "&album_name=" + encodeURI(player.trackAlbum) + "&duration=" + player.length]
+    stdout: StdioCollector {
+      waitForEnd: true
+      onStreamFinished: {
+        //console.log(text)
+        if (JSON.parse(text).statusCode) {
+          if (currentTry < maxTries) {
+            lyricsTimer.running = true
+            currentTry += 1
+          } else {
+            defaultLyrics = 404
+          }
+          //console.log("lyrics failed")
+        } else {
+          defaultLyrics = JSON.parse(text)
+        }
+      }
+    }
+  }
+
+  Process {
+    id: customLyricsProc
+    running: false
+    command: [ "curl", "https://lrclib.net/api/get/" + customLyricsId ]
+    stdout: StdioCollector {
+      waitForEnd: true
+      onStreamFinished: {
+        customLyrics = JSON.parse(text)
+      }
     }
   }
 
