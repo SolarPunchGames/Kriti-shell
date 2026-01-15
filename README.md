@@ -94,7 +94,7 @@ These themes can be set in `settings.json`.
 > [!Note]
 > This will change.
 
-Edit `Services/Colors.qml` property `themes`. Check the other themes for refrence. Transparency is supported.
+Edit `Services/Colors.qml` property `themes`. Check the other themes for refrence. Use `"transparent"` for colors that should be entirely transparent.
 
 Then you can set the theme in `settings.json`. Theme falls back to default, if it is not found.
 
