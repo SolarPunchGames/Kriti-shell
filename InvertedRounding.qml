@@ -2,7 +2,7 @@
 import Quickshell
 import QtQuick
 import QtQuick.Shapes
-import Qt5Compat.GraphicalEffects
+import QtQuick.Effects
 
 Item {
   id: root
@@ -12,20 +12,32 @@ Item {
   property color roundingColor
   property int rounding: 10
 
+  MultiEffect {
+    source: background
+    anchors.fill: background
+    maskEnabled: true
+    maskSource: mask
+
+    layer.smooth: true
+
+    maskThresholdMin: 0.5
+    maskSpreadAtMin: 1.0
+  }
+
   Rectangle {
     id: background
     anchors.fill: parent
-
-    color: root.roundingColor
-
     visible: false
+    smooth: true
+    color: root.roundingColor
   }
-  
+
   Shape {
     id: mask
     anchors.fill: parent
 
     visible: false
+    layer.enabled: true
 
     preferredRendererType: Shape.CurveRenderer
     ShapePath {
@@ -42,11 +54,5 @@ Item {
       PathLine {x: root.width; y: 0}
       PathLine {x: 0; y: 0}
     }
-  }
-
-  OpacityMask {
-    anchors.fill: parent
-    source: background
-    maskSource: mask
   }
 }
