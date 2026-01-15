@@ -27,11 +27,11 @@ Singleton {
   }
 
   readonly property bool isLate: {
-    var start = TextServices.hoursMinutesSecondsToSeconds(Config.parsedConfig.miscellaneous?.clockWidget?.lateStartTime?.value)
-    var end = TextServices.hoursMinutesSecondsToSeconds(Config.parsedConfig.miscellaneous?.clockWidget?.lateEndTime?.value)
+    var start = TextServices.hoursMinutesSecondsToSeconds(Config.miscellaneous?.clockWidget?.lateStartTime?.value)
+    var end = TextServices.hoursMinutesSecondsToSeconds(Config.miscellaneous?.clockWidget?.lateEndTime?.value)
     var secs = TextServices.hoursMinutesSecondsToSeconds(hoursMinutesSeconds)
 
-    if (Config.parsedConfig.miscellaneous?.clockWidget?.changeToRedWhenLate?.value ?? false) {
+    if (Config.miscellaneous?.clockWidget?.changeToRedWhenLate?.value ?? false) {
       if (start <= end) {
         secs > start && secs < end 
       } else {
@@ -55,7 +55,7 @@ Singleton {
     repeat: true
 
     onTriggered: {
-      if (Config.parsedConfig.miscellaneous?.shutdownWidget?.enableShutdown?.value) {
+      if (Config.miscellaneous?.shutdownWidget?.enableShutdown?.value) {
         if (shutdownObject.timeToTargetTimeSeconds == 900) {
           Quickshell.execDetached(["notify-send", " 15 minutes", " Your PC will shut down in 15 minutes"])
         } else if (shutdownObject.timeToTargetTimeSeconds == 600) {
@@ -78,9 +78,9 @@ Singleton {
   QtObject {
     id: shutdownObject
 
-    property int responseTime: Config.parsedConfig.miscellaneous?.shutdownWidget?.responseTime?.value ?? 120
+    property int responseTime: Config.miscellaneous?.shutdownWidget?.responseTime?.value ?? 120
 
-    property string targetTime: Config.parsedConfig.miscellaneous?.shutdownWidget?.shutdownTime?.value ?? "25:00:00"
+    property string targetTime: Config.miscellaneous?.shutdownWidget?.shutdownTime?.value ?? "25:00:00"
 
     readonly property int targetTimeSeconds: TextServices.hoursMinutesSecondsToSeconds(targetTime)
     readonly property int timeSeconds: TextServices.hoursMinutesSecondsToSeconds(Time.hoursMinutesSeconds)

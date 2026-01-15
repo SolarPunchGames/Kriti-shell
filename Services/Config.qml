@@ -107,6 +107,8 @@ Singleton {
 
   property var audio: parsedConfig.audio
   property var media: parsedConfig.media
+  property var miscellaneous: parsedConfig.miscellaneous
+  property var style: parsedConfig.style
 
   function isPlainObject(x) {
     return typeof x === 'object' && x !== null && !Array.isArray(x);

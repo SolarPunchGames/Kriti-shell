@@ -78,6 +78,26 @@ If you want to reset to default settings, remove settings.json. Kriti-shell will
 
 *Multi choice settings have the value as a number. Remember that the values start from 0, so the first choice is 0 and the second is 1 and so on.
 
+## Themes
+
+Kriti-shell currently comes with 5 themes:
+* `legacy` (The one in the pictures)
+* `catppuccinMocha` (Default)
+* `catppuccinMacchiato`
+* `catppuccinFrappe`
+* `catppuccinLatte` (Needs tweaking)
+
+These themes can be set in `settings.json`.
+
+#### Making custom themes
+
+> [!Note]
+> This will change.
+
+Edit `Services/Colors.qml` property `themes`. Check the other themes for refrence.
+
+Then you can set the theme in `settings.json`. Theme falls back to default, if it is not found.
+
 ## Ipc calls
 
 You can use these for example to make keybinds for Kriti-shell.
