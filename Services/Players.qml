@@ -71,7 +71,6 @@ Singleton {
     lyricsTimer.running = false
     lyricsTimer.running = true
     gettingLyrics = false
-    gettingCustomLyrics = false
     defaultLyrics = 1
     currentTry = 1
     areLyricsCustom = false
@@ -124,10 +123,7 @@ Singleton {
   Timer {
     id: lyricsTimer
     interval: 100
-    running: {
-      //console.log("https://lrclib.net/api/get?artist_name=" + encodeURI(player.trackArtist) + "&track_name=" + encodeURI(player.trackTitle) + "&album_name=" + encodeURI(player.trackAlbum) + "&duration=" + player.length)
-      true
-    }
+    running: true
     onTriggered: {
       gettingLyrics = true
     }
