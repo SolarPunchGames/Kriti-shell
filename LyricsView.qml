@@ -252,8 +252,14 @@ ListView {
               var nextTime = 0
             }
 
+            if (lines[i].substring(10, 11) == " ") {
+              var lyricText = lines[i].substring(11)
+            } else {
+              var lyricText = lines[i].substring(10)
+            }
+
             lyricsList.append({ 
-              "lyricText": lines[i].substring(11), 
+              "lyricText": lyricText, 
               "time": 60 * parseFloat(lines[i].substring(1,3)) + parseFloat(lines[i].substring(4,9)), 
               "index": i, 
               "nextTime": nextTime

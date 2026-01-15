@@ -88,8 +88,7 @@ Singleton {
       "bigText": "#cdd6f4", //Text
       "smallText": "#a6adc8", //Subtext 0
       "separator": "#585b70" //Surface 2
-    },
-
+    }
   }
 
   property var theme: {
