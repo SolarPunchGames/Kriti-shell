@@ -5,6 +5,7 @@ import Quickshell
 import Quickshell.Io
 import qs.Services
 import qs
+import "Scripts/httpRequest.js" as HTTPR
 
 Item {
   id: root
@@ -12,19 +13,6 @@ Item {
   property var results
 
   signal lyricsFound()
-
-  Process {
-    id: searchProc
-    running: false
-    command: [ "curl", "https://lrclib.net/api/search?q=" + encodeURI(searchField.text)]
-    stdout: StdioCollector {
-      waitForEnd: true
-      onStreamFinished: {
-        results = JSON.parse(text)
-        loadingDots.running = false
-      }
-    }
-  }
 
   ColumnLayout {
     id: column
@@ -213,9 +201,11 @@ Item {
         onClicked: {
           results = []
           if (searchField.text != "") {  
-            searchProc.running = false
-            searchProc.running = true
             loadingDots.running = true
+            HTTPR.sendRequest("https://lrclib.net/api/search?q=" + encodeURI(searchField.text), function(response) {
+              results = JSON.parse(response.content)
+              loadingDots.running = false
+            })
           } 
         }
       }
