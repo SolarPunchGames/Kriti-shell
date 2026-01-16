@@ -376,7 +376,8 @@ Scope {
                       id: minusButton
 
                       backgroundAlias.radius: 7
-                      backgroundColor: "transparent"
+
+                      transparent: true
 
                       width: 30
                       height: width
@@ -394,7 +395,8 @@ Scope {
                       id: plusButton
 
                       backgroundAlias.radius: 7
-                      backgroundColor: "transparent"
+
+                      transparent: true
 
                       width: 30
                       height: width
@@ -412,7 +414,8 @@ Scope {
                       id: lyricsSyncButton
 
                       backgroundAlias.radius: 7
-                      backgroundColor: "transparent"
+
+                      transparent: true
 
                       width: 30
                       height: width
@@ -446,7 +449,8 @@ Scope {
                       id: lyricsSearchButton
 
                       backgroundAlias.radius: 7
-                      backgroundColor: "transparent"
+
+                      transparent: true
 
                       width: 30
                       height: width
@@ -464,7 +468,8 @@ Scope {
                       id: lyricsCopyButton
 
                       backgroundAlias.radius: 7
-                      backgroundColor: "transparent"
+
+                      transparent: true
 
                       width: 30
                       height: width
@@ -481,7 +486,8 @@ Scope {
                       id: lyricsWindowButton
 
                       backgroundAlias.radius: 7
-                      backgroundColor: "transparent"
+
+                      transparent: true
 
                       width: 30
                       height: width
@@ -498,7 +504,8 @@ Scope {
                       id: lyricsReloadButton
 
                       backgroundAlias.radius: 7
-                      backgroundColor: "transparent"
+
+                      transparent: true
 
                       width: 30
                       height: width
@@ -525,7 +532,8 @@ Scope {
                       id: lyricsSearchTabBackButton
 
                       backgroundAlias.radius: 7
-                      backgroundColor: "transparent"
+
+                      transparent: true
 
                       width: 30
                       height: width
@@ -545,7 +553,8 @@ Scope {
 
                     BaseButton {
                       backgroundAlias.radius: 7
-                      backgroundColor: "transparent"
+
+                      transparent: true
 
                       width: 30
                       height: width
