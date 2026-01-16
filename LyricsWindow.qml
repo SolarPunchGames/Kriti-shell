@@ -62,7 +62,8 @@ FloatingWindow {
             id: minusButton
 
             backgroundAlias.radius: 7
-            backgroundColor: "transparent"
+
+            transparent: true
 
             width: 30
             height: width
@@ -80,7 +81,8 @@ FloatingWindow {
             id: plusButton
 
             backgroundAlias.radius: 7
-            backgroundColor: "transparent"
+
+            transparent: true
 
             width: 30
             height: width
@@ -98,7 +100,8 @@ FloatingWindow {
             id: lyricsSyncButton
 
             backgroundAlias.radius: 7
-            backgroundColor: "transparent"
+
+            transparent: true
 
             width: 30
             height: width
@@ -132,7 +135,8 @@ FloatingWindow {
             id: lyricsSearchButton
 
             backgroundAlias.radius: 7
-            backgroundColor: "transparent"
+
+            transparent: true
 
             width: 30
             height: width
@@ -150,7 +154,8 @@ FloatingWindow {
             id: lyricsCopyButton
 
             backgroundAlias.radius: 7
-            backgroundColor: "transparent"
+
+            transparent: true
 
             width: 30
             height: width
@@ -167,7 +172,8 @@ FloatingWindow {
             id: lyricsReloadButton
 
             backgroundAlias.radius: 7
-            backgroundColor: "transparent"
+
+            transparent: true
 
             width: 30
             height: width
@@ -198,7 +204,8 @@ FloatingWindow {
             id: lyricsSearchTabBackButton
 
             backgroundAlias.radius: 7
-            backgroundColor: "transparent"
+
+            transparent: true
 
             width: 30
             height: width
@@ -218,7 +225,8 @@ FloatingWindow {
 
           BaseButton {
             backgroundAlias.radius: 7
-            backgroundColor: "transparent"
+
+            transparent: true
 
             width: 30
             height: width

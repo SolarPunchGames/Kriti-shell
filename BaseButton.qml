@@ -17,6 +17,8 @@ AbstractButton {
   property bool buttonHovered: mouseArea.hovered
   property bool buttonPressed: down
 
+  property bool transparent: false
+
   contentItem: Text {
     id: textItem
     font.pointSize: button.fontSize
@@ -72,7 +74,21 @@ AbstractButton {
       }
     }
 
+    opacity: {
+      if (button.transparent & !button.buttonHovered & !button.buttonPressed) {
+        0
+      } else {
+        1
+      }
+    }
+
     Behavior on color {
+      PropertyAnimation {
+        duration: Colors.colorTransitionTime;
+      }
+    }
+
+    Behavior on opacity {
       PropertyAnimation {
         duration: Colors.colorTransitionTime;
       }
