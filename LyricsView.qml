@@ -139,7 +139,7 @@ ListView {
       }
       border.width: 1
 
-      radius: 10
+      radius: 10 * lyricsSizeMult
 
       y: lyricsView.currentItem.y
 
