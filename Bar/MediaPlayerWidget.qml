@@ -220,6 +220,8 @@ Item {
 
           text: ""
 
+          tooltipText: "Temporarily disable suggestion"
+
           onClicked: Players.tempDisableSwitchSuggestion = true
         }
       }

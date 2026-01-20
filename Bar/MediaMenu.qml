@@ -174,6 +174,8 @@ Scope {
                     textAlias.rightPadding: 5
                     text: ""
 
+                    tooltipText: lyricsRect.closed ? "Show lyrics" : "Hide lyrics"
+
                     onClicked: {
                       lyricsRect.toggleOpen()
                     }
@@ -194,6 +196,8 @@ Scope {
 
                     textAlias.rightPadding: 5
                     text: "󰦚"
+
+                    tooltipText: "Change media player"
 
                     onClicked: {
                       if (Players.players.length == 2) {
@@ -384,6 +388,10 @@ Scope {
 
                       text: "󰍴"
 
+                      tooltipText: "Decrease lyrics size (" + Math.round(lyricsView.lyricsSizeMult * 10) / 10 + ")"
+
+                      visuallyDisabled: lyricsView.lyricsSizeMult > 0.5 ? false : true
+
                       onClicked: {
                         if (lyricsView.lyricsSizeMult > 0.5) {
                           lyricsView.lyricsSizeMult -= 0.1
@@ -402,6 +410,10 @@ Scope {
                       height: width
 
                       text: "󰐕"
+
+                      tooltipText: "Increase lyrics size (" + Math.round(lyricsView.lyricsSizeMult * 10) / 10 + ")"
+
+                      visuallyDisabled: lyricsView.lyricsSizeMult < 2 ? false : true
 
                       onClicked: {
                         if (lyricsView.lyricsSizeMult < 2) {
@@ -429,6 +441,8 @@ Scope {
                           "󰔛"
                         }
                       }
+
+                      tooltipText: lyricsView.synced ? "Disable synced lyrics" : "Enable synced lyrics"
 
                       visible: Players.trackLyrics.syncedLyrics ? true : false
 
@@ -459,6 +473,8 @@ Scope {
 
                       textRightPadding: 4
 
+                      tooltipText: "Search for lyrics"
+
                       onClicked: {
                         tabs.currentIndex = 1
                       }
@@ -476,6 +492,8 @@ Scope {
 
                       textRightPadding: 3
                       text: "󰆏"
+
+                      tooltipText: "Copy lyrics"
 
                       onClicked: {
                         Quickshell.clipboardText = Players.trackLyrics.plainLyrics
@@ -495,6 +513,8 @@ Scope {
                       textRightPadding: 3
                       text: ""
 
+                      tooltipText: "Open lyrics window"
+
                       onClicked: {
                         window.openLyricsWindow()
                       }
@@ -512,6 +532,8 @@ Scope {
 
                       textRightPadding: 3
                       text: "󰑓"
+
+                      tooltipText: "Reload lyrics"
 
                       onClicked: {
                         Players.reloadLyrics()
@@ -540,6 +562,8 @@ Scope {
 
                       text: "󰁍"
 
+                      tooltipText: "Back"
+
                       onClicked: {
                         tabs.currentIndex = 0
                       }
@@ -561,6 +585,8 @@ Scope {
 
                       textRightPadding: 3
                       text: "󰑓"
+
+                      tooltipText: "Reload lyrics"
 
                       onClicked: {
                         Players.reloadLyrics()

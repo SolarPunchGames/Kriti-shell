@@ -70,6 +70,10 @@ FloatingWindow {
 
             text: "󰍴"
 
+            tooltipText: "Increase lyrics size (" + Math.round(lyricsView.lyricsSizeMult * 10) / 10 + ")"
+
+            visuallyDisabled: lyricsView.lyricsSizeMult > 0.5 ? false : true
+
             onClicked: {
               if (lyricsView.lyricsSizeMult > 0.5) {
                 lyricsView.lyricsSizeMult -= 0.1
@@ -88,6 +92,10 @@ FloatingWindow {
             height: width
 
             text: "󰐕"
+
+            tooltipText: "Increase lyrics size (" + Math.round(lyricsView.lyricsSizeMult * 10) / 10 + ")"
+
+            visuallyDisabled: lyricsView.lyricsSizeMult < 2 ? false : true
 
             onClicked: {
               if (lyricsView.lyricsSizeMult < 2) {
@@ -145,6 +153,8 @@ FloatingWindow {
 
             textRightPadding: 3
 
+            tooltipText: "Search for lyrics"
+
             onClicked: {
               tabs.currentIndex = 1
             }
@@ -163,6 +173,8 @@ FloatingWindow {
             textRightPadding: 3
             text: "󰆏"
 
+            tooltipText: "Copy lyrics"
+
             onClicked: {
               Quickshell.clipboardText = Players.trackLyrics.plainLyrics
             }
@@ -180,6 +192,8 @@ FloatingWindow {
 
             textRightPadding: 4
             text: "󰑓"
+
+            tooltipText: "Reload lyrics"
 
             onClicked: {
               Players.reloadLyrics()
@@ -212,6 +226,8 @@ FloatingWindow {
 
             text: "󰁍"
 
+            tooltipText: "Back"
+
             onClicked: {
               tabs.currentIndex = 0
             }
@@ -233,6 +249,8 @@ FloatingWindow {
 
             textRightPadding: 3
             text: "󰑓"
+
+            tooltipText: "Reload lyrics"
 
             onClicked: {
               Players.reloadLyrics()
@@ -287,6 +305,8 @@ FloatingWindow {
             }
           }
           pressedBackgroundColor: "grey"
+
+          tooltipText: "Change media player"
 
           onClicked: {
             if (Players.players.length == 2) {
