@@ -121,7 +121,7 @@ PopupWindow {
       anchors.fill: parent
 
       font.pointSize: 10
-      font.family: "JetBrainsMono Nerd Font"
+      font.family: Config.style.font.value
 
       color: Colors.text
 

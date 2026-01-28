@@ -27,7 +27,7 @@ AbstractButton {
   contentItem: Text {
     id: textItem
     font.pointSize: button.fontSize
-    font.family: "JetBrainsMono Nerd Font"
+    font.family: Config.style.font.value
 
     color: Colors.text
 

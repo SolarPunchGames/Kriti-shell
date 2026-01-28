@@ -62,7 +62,7 @@ Singleton {
           text: "No config file found. Copy defaults?"
           color: Colors.text
           font.pointSize: 11
-          font.family: "JetBrainsMono Nerd Font"
+          font.family: Config.style.font.value
         }
         RowLayout {
           Layout.fillWidth: true

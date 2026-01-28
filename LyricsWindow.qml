@@ -333,7 +333,7 @@ FloatingWindow {
           text: TextServices.truncate(Players.player.trackTitle, (window.width - 270) / 11)
 
           font.pointSize: 11
-          font.family: "JetBrainsMono Nerd Font"
+          font.family: Config.style.font.value
           
           color: Colors.text
         }
@@ -342,7 +342,7 @@ FloatingWindow {
           text: TextServices.truncate(Players.player.trackArtist, (window.width - 255) / 8)
 
           font.pointSize: 8
-          font.family: "JetBrainsMono Nerd Font"
+          font.family: Config.style.font.value
 
           color: Colors.text
         }
@@ -351,7 +351,7 @@ FloatingWindow {
           text: TextServices.secondsToMinutesSeconds(Math.round(Players.player.position)) + "/" + TextServices.secondsToMinutesSeconds(Players.player.length)
 
           font.pointSize: 8
-          font.family: "JetBrainsMono Nerd Font"
+          font.family: Config.style.font.value
 
           color: Colors.text
         }

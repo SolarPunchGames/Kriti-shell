@@ -73,7 +73,7 @@ Item {
       text: Hyprland.activeToplevel ? TextServices.truncate(appTitle, maxLetters) : ""
       font.pointSize: 11
       color: Colors.text
-      font.family: "JetBrainsMono Nerd Font"
+      font.family: Config.style.font.value
     }
   }
 }

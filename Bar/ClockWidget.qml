@@ -24,7 +24,7 @@ Item {
       color: Colors.text
 
       font.pointSize: 11
-      font.family: "JetBrainsMono Nerd Font"
+      font.family: Config.style.font.value
 
       leftPadding: -10
 
@@ -40,7 +40,7 @@ Item {
 
       font.pointSize: 7
       font.italic: true
-      font.family: "JetBrainsMono Nerd Font"
+      font.family: Config.style.font.value
 
       topPadding: -3
 

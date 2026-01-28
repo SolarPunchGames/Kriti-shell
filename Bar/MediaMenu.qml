@@ -228,7 +228,7 @@ Scope {
                   horizontalAlignment: Text.AlignHCenter
 
                   font.pointSize: 11
-                  font.family: "JetBrainsMono Nerd Font"
+                  font.family: Config.style.font.value
 
                   color: Colors.text
                 }
@@ -240,7 +240,7 @@ Scope {
                   horizontalAlignment: Text.AlignHCenter
 
                   font.pointSize: 8
-                  font.family: "JetBrainsMono Nerd Font"
+                  font.family: Config.style.font.value
 
                   color: Colors.text
                 }

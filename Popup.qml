@@ -196,7 +196,7 @@ PopupWindow {
             Text {
               id: textItem
               font.pointSize: listButton.fontSize
-              font.family: "JetBrainsMono Nerd Font"
+              font.family: Config.style.font.value
 
               width: parent.width
 
@@ -217,7 +217,7 @@ PopupWindow {
             Text {
               id: descriptionItem
               font.pointSize: 6
-              font.family: "JetBrainsMono Nerd Font"
+              font.family: Config.style.font.value
 
               width: parent.width
 
