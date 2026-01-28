@@ -70,6 +70,10 @@ FloatingWindow {
 
             text: "󰍴"
 
+            tooltipText: "Increase lyrics size (" + Math.round(lyricsView.lyricsSizeMult * 10) / 10 + ")"
+
+            visuallyDisabled: lyricsView.lyricsSizeMult > 0.5 ? false : true
+
             onClicked: {
               if (lyricsView.lyricsSizeMult > 0.5) {
                 lyricsView.lyricsSizeMult -= 0.1
@@ -88,6 +92,10 @@ FloatingWindow {
             height: width
 
             text: "󰐕"
+
+            tooltipText: "Increase lyrics size (" + Math.round(lyricsView.lyricsSizeMult * 10) / 10 + ")"
+
+            visuallyDisabled: lyricsView.lyricsSizeMult < 2 ? false : true
 
             onClicked: {
               if (lyricsView.lyricsSizeMult < 2) {
@@ -145,6 +153,8 @@ FloatingWindow {
 
             textRightPadding: 3
 
+            tooltipText: "Search for lyrics"
+
             onClicked: {
               tabs.currentIndex = 1
             }
@@ -163,6 +173,8 @@ FloatingWindow {
             textRightPadding: 3
             text: "󰆏"
 
+            tooltipText: "Copy lyrics"
+
             onClicked: {
               Quickshell.clipboardText = Players.trackLyrics.plainLyrics
             }
@@ -180,6 +192,8 @@ FloatingWindow {
 
             textRightPadding: 4
             text: "󰑓"
+
+            tooltipText: "Reload lyrics"
 
             onClicked: {
               Players.reloadLyrics()
@@ -212,6 +226,8 @@ FloatingWindow {
 
             text: "󰁍"
 
+            tooltipText: "Back"
+
             onClicked: {
               tabs.currentIndex = 0
             }
@@ -233,6 +249,8 @@ FloatingWindow {
 
             textRightPadding: 3
             text: "󰑓"
+
+            tooltipText: "Reload lyrics"
 
             onClicked: {
               Players.reloadLyrics()
@@ -288,6 +306,8 @@ FloatingWindow {
           }
           pressedBackgroundColor: "grey"
 
+          tooltipText: "Change media player"
+
           onClicked: {
             if (Players.players.length == 2) {
               if (Players.playerId == 1) {
@@ -313,7 +333,7 @@ FloatingWindow {
           text: TextServices.truncate(Players.player.trackTitle, (window.width - 270) / 11)
 
           font.pointSize: 11
-          font.family: "JetBrainsMono Nerd Font"
+          font.family: Config.style.font.value
           
           color: Colors.text
         }
@@ -322,7 +342,7 @@ FloatingWindow {
           text: TextServices.truncate(Players.player.trackArtist, (window.width - 255) / 8)
 
           font.pointSize: 8
-          font.family: "JetBrainsMono Nerd Font"
+          font.family: Config.style.font.value
 
           color: Colors.text
         }
@@ -331,7 +351,7 @@ FloatingWindow {
           text: TextServices.secondsToMinutesSeconds(Math.round(Players.player.position)) + "/" + TextServices.secondsToMinutesSeconds(Players.player.length)
 
           font.pointSize: 8
-          font.family: "JetBrainsMono Nerd Font"
+          font.family: Config.style.font.value
 
           color: Colors.text
         }

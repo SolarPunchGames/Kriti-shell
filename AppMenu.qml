@@ -214,6 +214,7 @@ Scope {
               Layout.preferredHeight: 50
 
               font.pointSize: 12
+              font.family: Config.style.font.value
 
               leftPadding: 10
               rightPadding: 10

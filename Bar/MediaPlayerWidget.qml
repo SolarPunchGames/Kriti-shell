@@ -220,6 +220,8 @@ Item {
 
           text: ""
 
+          tooltipText: "Temporarily disable suggestion"
+
           onClicked: Players.tempDisableSwitchSuggestion = true
         }
       }
@@ -389,7 +391,7 @@ Item {
           color: Colors.text
 
           font.pointSize: 11
-          font.family: "JetBrainsMono Nerd Font"
+          font.family: Config.style.font.value
 
           leftPadding: 5
 

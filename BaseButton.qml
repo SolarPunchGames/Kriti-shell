@@ -4,6 +4,7 @@ import QtQuick.Controls
 import Quickshell
 import Quickshell.Widgets
 import qs.Services
+import qs
 
 AbstractButton {
   id: button
@@ -19,10 +20,14 @@ AbstractButton {
 
   property bool transparent: false
 
+  property bool visuallyDisabled: false
+
+  property string tooltipText
+
   contentItem: Text {
     id: textItem
     font.pointSize: button.fontSize
-    font.family: "JetBrainsMono Nerd Font"
+    font.family: Config.style.font.value
 
     color: Colors.text
 
@@ -50,10 +55,23 @@ AbstractButton {
   property real textLeftPadding
   property real textRightPadding
 
+  opacity: visuallyDisabled ? 0.5 : 1
+
   HoverHandler {
     id: mouseArea
     blocking: false
-    cursorShape: Qt.PointingHandCursor
+    cursorShape: visuallyDisabled ? Qt.ArrowCursor : Qt.PointingHandCursor
+  }
+
+  HoverPopup {
+    anchor.item: button
+    hovered: {
+      buttonHovered
+
+      // Make popup show only when mouse is stationary
+      //mouseArea.point.state == EventPoint.Stationary ? buttonHovered : false
+    }
+    text: button.tooltipText
   }
 
   property color pressedBackgroundColor: Colors.itemPressedBackground
@@ -63,10 +81,10 @@ AbstractButton {
   background: Rectangle {
     id: rectangle
     color: {
-      if (button.buttonPressed) {
+      if (button.buttonPressed & !visuallyDisabled) {
         pressedBackgroundColor
       }
-      else if (button.buttonHovered) {
+      else if (button.buttonHovered & !visuallyDisabled) {
         hoveredBackgroundColor
       }
       else {
@@ -75,7 +93,7 @@ AbstractButton {
     }
 
     opacity: {
-      if (button.transparent & !button.buttonHovered & !button.buttonPressed) {
+      if (button.transparent & !button.buttonHovered & !button.buttonPressed || visuallyDisabled) {
         0
       } else {
         1

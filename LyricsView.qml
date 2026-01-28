@@ -42,7 +42,7 @@ ListView {
 //      id: customLyricsText
 //
 //      font.pointSize: 8
-//      font.family: "JetBrainsMono Nerd Font"
+//      font.family: Config.style.font.value
 //
 //      width: lyricsRect.width - lyricsView.rightMargin - lyricsView.leftMargin
 //      height: 30 * lineCount
@@ -67,7 +67,7 @@ ListView {
 //      font.weight: 800
 //
 //      font.pointSize: 12
-//      font.family: "JetBrainsMono Nerd Font"
+//      font.family: Config.style.font.value
 //
 //      width: lyricsRect.width - lyricsView.rightMargin - lyricsView.leftMargin
 //      height: 30 * lineCount
@@ -94,7 +94,7 @@ ListView {
     text: "Lyrics not found"
 
     font.pointSize: 15
-    font.family: "JetBrainsMono Nerd Font"
+    font.family: Config.style.font.value
 
     width: lyricsRect.width - lyricsView.rightMargin - lyricsView.leftMargin
     height: 30 * lineCount
@@ -363,7 +363,7 @@ ListView {
     font.weight: 300
 
     font.pointSize: 10 * lyricsView.lyricsSizeMult
-    font.family: "JetBrainsMono Nerd Font"
+    font.family: Config.style.font.value
 
     width: lyricsView.width
     height: contentHeight + 20 * lyricsView.lyricsSizeMult

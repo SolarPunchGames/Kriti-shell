@@ -83,6 +83,11 @@
       "name": "Current theme (More info in README.md)",
       "type": "string",
       "value": "catppuccinMocha"
+    },
+    "font": {
+      "name": "The font Kriti-shell uses (Needs be a Nerd Font for icons to work)",
+      "type": "string",
+      "value": "JetBrainsMono Nerd Font"
     }
   }
 }

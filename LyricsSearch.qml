@@ -44,7 +44,7 @@ Item {
           verticalAlignment: Text.AlignTop
 
           font.pointSize: 8
-          font.family: "JetBrainsMono Nerd Font"
+          font.family: Config.style.font.value
 
           color: Colors.text
         }
@@ -75,7 +75,7 @@ Item {
             Text {
               id: textItem
               font.pointSize: defaultLyricsButton.fontSize
-              font.family: "JetBrainsMono Nerd Font"
+              font.family: Config.style.font.value
 
               width: parent.width
 
@@ -99,7 +99,7 @@ Item {
               Layout.fillWidth: true
 
               font.pointSize: 6
-              font.family: "JetBrainsMono Nerd Font"
+              font.family: Config.style.font.value
 
               color: Colors.text
               opacity: 0.7
@@ -144,7 +144,7 @@ Item {
       horizontalAlignment: Text.AlignHCenter
 
       font.pointSize: 14
-      font.family: "JetBrainsMono Nerd Font"
+      font.family: Config.style.font.value
       font.weight: 700
 
       color: Colors.text
@@ -158,6 +158,7 @@ Item {
       Layout.preferredHeight: 40
 
       font.pointSize: 11
+      font.family: Config.style.font.value
 
       leftPadding: 15
       rightPadding: 45
@@ -278,7 +279,7 @@ Item {
           Text {
             id: textItem
             font.pointSize: result.fontSize
-            font.family: "JetBrainsMono Nerd Font"
+            font.family: Config.style.font.value
 
             width: parent.width
 
@@ -302,7 +303,7 @@ Item {
             Layout.fillWidth: true
 
             font.pointSize: 7
-            font.family: "JetBrainsMono Nerd Font"
+            font.family: Config.style.font.value
 
             color: Colors.text
             opacity: 0.7

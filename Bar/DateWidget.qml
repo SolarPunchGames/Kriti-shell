@@ -23,7 +23,7 @@ Item {
       color: Colors.text
 
       font.pointSize: 11
-      font.family: "JetBrainsMono Nerd Font"
+      font.family: Config.style.font.value
 
       text: " " + Time.date
     }

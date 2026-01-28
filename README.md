@@ -58,7 +58,7 @@ git pull
    pacman -S quickshell
    ```
 
-2. Optionally, install `pw-volume`
+2. Optionally, install `pw-volume` and JetBrains Mono Nerd Font (tho you can change the font in `settings.json`).
 3. Clone this repo into `.config/quickshell/Kriti-shell`
    
    ```sh
@@ -95,6 +95,8 @@ Kriti-shell currently comes with 5 themes:
 * `catppuccinLatte` (Needs tweaking)
 
 These themes can be set in `settings.json`.
+
+You can also change your font in `settings.json`.
 
 #### Making custom themes
 

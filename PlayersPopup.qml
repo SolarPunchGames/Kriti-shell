@@ -25,7 +25,7 @@ Popup {
       Text {
         id: checkItem
         font.pointSize: playersListButton.fontSize
-        font.family: "JetBrainsMono Nerd Font"
+        font.family: Config.style.font.value
 
         Layout.fillWidth: true
 
@@ -56,7 +56,7 @@ Popup {
         Text {
           id: textItem
           font.pointSize: playersListButton.fontSize
-          font.family: "JetBrainsMono Nerd Font"
+          font.family: Config.style.font.value
 
 
           color: Colors.text
@@ -76,7 +76,7 @@ Popup {
         Text {
           id: descriptionItem
           font.pointSize: 6
-          font.family: "JetBrainsMono Nerd Font"
+          font.family: Config.style.font.value
 
           width: playersListButton.width
 
