@@ -67,8 +67,15 @@ git pull
 
 5. Add `exec-once = qs -c Kriti-shell` to your hyprland.conf (You can also run once from the terminal with `qs -c Kriti-shell`)
 6. Add `bind = SUPER, SPACE , exec, qs -c Kriti-shell ipc call appMenu toggle` to your hyprland.conf (edit keybind, if needed)
-7. Add `windowrulev2 = float, class:org.quickshell` to your hyprland.conf
-8. Profit.
+7. Add `windowrule = float 1, match:class org.quickshell` to your hyprland.conf
+8. Optionally, make the lyrics window show on all workspaces: `windowrule = pin 1, match:class org.quickshell`
+> [!Note]
+> Hyprland syntax was different in previous Hyprland versions:
+> 
+> `windowrulev2 = float, class:org.quickshell`
+> 
+> `windowrulev2 = float, class:org.quickshell`
+9. Profit.
 
 ## Editing settings
 
