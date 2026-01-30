@@ -58,7 +58,7 @@ git pull
    pacman -S quickshell
    ```
 
-2. Optionally, install `pw-volume` and JetBrains Mono Nerd Font (tho you can change the font in `settings.json`).
+2. Optionally, install `pw-volume` and JetBrains Mono Nerd Font (though, you can change the font in `settings.json`).
 3. Clone this repo into `.config/quickshell/Kriti-shell`
    
    ```sh
