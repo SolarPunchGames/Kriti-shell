@@ -58,7 +58,7 @@ git pull
    pacman -S quickshell
    ```
 
-2. Optionally, install `pw-volume` and JetBrains Mono Nerd Font (tho you can change the font in `settings.json`).
+2. Optionally, install `pw-volume` and JetBrains Mono Nerd Font (though, you can change the font in `settings.json`).
 3. Clone this repo into `.config/quickshell/Kriti-shell`
    
    ```sh
@@ -101,7 +101,7 @@ You can also change your font in `settings.json`.
 #### Making custom themes
 
 > [!Note]
-> This will change.
+> This is subject to change
 
 Edit `Services/Colors.qml` property `themes`. Check the other themes for refrence. Use `"transparent"` for colors that should be entirely transparent.
 
