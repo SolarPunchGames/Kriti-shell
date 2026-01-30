@@ -295,6 +295,26 @@ ListView {
 
     property bool isEmpty: lyricText == ""
 
+    property var isCurrentItem: ListView.isCurrentItem
+
+    font.weight: 300
+
+    font.pointSize: 10 * lyricsView.lyricsSizeMult
+    font.family: Config.style.font.value
+
+    width: lyricsView.width
+    height: contentHeight + 20 * lyricsView.lyricsSizeMult
+
+    leftPadding: 30 / lyricsView.lyricsSizeMult * 2
+    rightPadding: 30 / lyricsView.lyricsSizeMult * 2
+
+    wrapMode: Text.WordWrap
+
+    horizontalAlignment: Text.AlignHCenter
+    verticalAlignment: Text.AlignVCenter
+
+    color: Colors.text
+
     text: {
       if (isEmpty) {
         Config.media.lyrics.characterBetween.choices[Config.media.lyrics.characterBetween.value]
@@ -303,8 +323,6 @@ ListView {
       }
     }
 
-    property var isCurrentItem: ListView.isCurrentItem
-
     state: {
       if (index == lyricsView.currentIndex) {
         "highlighted"
@@ -312,22 +330,6 @@ ListView {
         "faded"
       } else {
         ""
-      }
-    }
-
-    Timer {
-      running: true
-      interval: 10
-      repeat: true
-      
-      onTriggered: {
-        if (time) {
-          if ((Players.player.position >= time && Players.player.position <= nextTime - 0.1) || (nextTime == 0 && Players.player.position >= time && Players.player.position <= time + 1)) {
-            lyricsView.currentIndex = index
-          } else if (Players.player.position < time - 0.1 && index == 0) {
-            lyricsView.currentIndex = -1
-          }
-        } 
       }
     }
 
@@ -360,23 +362,21 @@ ListView {
       }
     }
 
-    font.weight: 300
-
-    font.pointSize: 10 * lyricsView.lyricsSizeMult
-    font.family: Config.style.font.value
-
-    width: lyricsView.width
-    height: contentHeight + 20 * lyricsView.lyricsSizeMult
-
-    leftPadding: 30 / lyricsView.lyricsSizeMult * 2
-    rightPadding: 30 / lyricsView.lyricsSizeMult * 2
-
-    wrapMode: Text.WordWrap
-
-    horizontalAlignment: Text.AlignHCenter
-    verticalAlignment: Text.AlignVCenter
-
-    color: Colors.text
+    Timer {
+      running: true
+      interval: 10
+      repeat: true
+      
+      onTriggered: {
+        if (time) {
+          if ((Players.player.position >= time && Players.player.position <= nextTime - 0.1) || (nextTime == 0 && Players.player.position >= time && Players.player.position <= time + 1)) {
+            lyricsView.currentIndex = index
+          } else if (Players.player.position < time - 0.1 && index == 0) {
+            lyricsView.currentIndex = -1
+          }
+        } 
+      }
+    }
 
     MouseArea {
       anchors.fill: parent
