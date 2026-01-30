@@ -29,6 +29,8 @@ Singleton {
   property real previousPosition
   property bool wasPlaying
 
+  property bool ytDlpAvailable: false
+
   readonly property var playerToSwitchTo: {
     var playingPlayers = []
     for (var i = 0; i < players.length; i++) {
@@ -75,6 +77,8 @@ Singleton {
     currentTry = 1
     areLyricsCustom = false
 
+    ytTranscriptProc.running = true
+
     lyricsChanged()
 
     //console.log("reload lyrics")
@@ -90,6 +94,10 @@ Singleton {
   property var trackLyrics: areLyricsCustom ? customLyrics : defaultLyrics
   property var defaultLyrics: 1
   property var customLyrics: 1
+
+  property var ytTranscript: JSON.parse(ytTranscriptProc.text())
+
+  onYtTranscriptChanged: console.log(ytTranscript)
 
   readonly property int maxTries: 5
   property int currentTry: 1
@@ -146,6 +154,39 @@ Singleton {
         previousPosition = player.position
       }*/ // YT (or Firefox idk) made an update that makes this unnecessary
       wasPlaying = player.isPlaying
+    }
+  }
+
+  Process {
+    id: ytTranscriptProc
+    running: false
+    command: {
+      [ "yt-dlp", "--no-write-auto-subs", "--write-subs", "--sub-format=json3", "--skip-download", "-o " + Quickshell.shelldir + "/.cache/yt-transcript", player.metadata["xesam:url"].toString() ]
+    }
+    stderr: StdioCollector {
+      onStreamFinished: {
+        console.log(this.text)
+        console.log("yt-dlp finished")
+      }
+    }
+  }
+
+  FileView {
+    id: configFile
+    path: Quickshell.shellPath("/.cache/yt-transcript.en.json3")
+    blockLoading: true
+
+    watchChanges: true
+    onFileChanged: {
+      this.reload()
+    }
+
+    onLoadFailed: (error) => {
+      if (error == FileViewError.FileNotFound) {
+        ytTranscriptProc.running = true
+        console.log(player.metadata.value("xesam:url").toString())
+        console.log("yt-dlp --no-write-auto-subs --write-subs --sub-format=json3 --skip-download -o " + Quickshell.shelldir + "/.cache/yt-transcript " + player.metadata.value("xesam:url").toString())
+      }
     }
   }
 }

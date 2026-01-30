@@ -279,6 +279,9 @@ ListView {
           }
         }
 
+      } else if (Players.ytTranscript) {
+        console.log(JSON.stringify(Players.ytTranscript))
+        console.log("yt transcript found")
       } else if (Players.trackLyrics == 1) {
         showLyricsTimer.running = true
       }
