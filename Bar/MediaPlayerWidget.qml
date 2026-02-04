@@ -86,7 +86,7 @@ Item {
       {
         text: "Change player",
         activate() {
-          if (Players.players.length == 2) {
+          if (Players.players.length == 2 && Config.media.widget.quickPlayerChange.value) {
             if (Players.playerId == 1) {
               Players.customPlayerId = 0
             } else {

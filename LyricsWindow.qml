@@ -309,7 +309,7 @@ FloatingWindow {
           tooltipText: "Change media player"
 
           onClicked: {
-            if (Players.players.length == 2) {
+            if (Players.players.length == 2 && Config.media.widget.quickPlayerChange.value && Config.media.widget.quickPlayerChange.value) {
               if (Players.playerId == 1) {
                 Players.customPlayerId = 0
               } else {
