@@ -46,6 +46,13 @@ Singleton {
       id: confirmationWindow
       color: Colors.mainPanelBackground
 
+      Connections {
+        target: configFile
+        function onLoaded() {
+          confirmationWindow.destroy()
+        }
+      }
+
       minimumSize: Qt.size(400, 200)
       maximumSize: Qt.size(400, 200)
       ColumnLayout {
